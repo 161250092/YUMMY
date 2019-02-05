@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/goods.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/public.css}"/>
+</head>
+<body>
+<div id="app">
+    <!-- header -->
+    <el-menu mode="horizontal" :default-active="activeIndex">
+        <el-menu-item index="0" id="logo">美 滋 滋</el-menu-item>
+        <el-menu-item index="1"><a href="/memberMainPage">主页</a></el-menu-item>
+        <el-menu-item index="2"><a href="/memberOrders">订单</a></el-menu-item>
+        <el-menu-item index="3"><a href="/memberStatisticsPage">统计信息</a></el-menu-item>
+
+        <el-menu-item id="author" index="4">
+            <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
+            <el-dropdown>
+                <span class="el-dropdown-link">TyCoding<i class="el-icon-arrow-down el-icon--right"></i></span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item divided><a href="/memberPersonPage">信息中心</a></el-dropdown-item>
+                    <el-dropdown-item divided><a href="/member/logout">退出</a></el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </el-menu-item>
+    </el-menu>
+
+    <div id="main">
+        <el-col>
+            <el-card shadow="hover">
+                <div>
+                    <el-row>
+                        <el-button @click="showOrder" type="primary" icon="el-icon-plus">提交订单</el-button>
+                    </el-row>
+                </div>
+                <!-- 列表 -->
+
+                <el-table :data="dishes" style="width: 100%">
+                    <el-table-column type="expand">
+                        <template slot-scope="props">
+                            <el-form label-position="left" inline class="demo-table-expand">
+                                <el-form-item label="菜品名称">
+                                    <span>{{ props.row.name }}</span>
+                                </el-form-item>
+
+                                <el-form-item label="启售时间">
+                                    <span>{{ props.row.startTime }}</span>
+                                </el-form-item>
+
+                                <el-form-item label="截止时间">
+                                    <span>{{ props.row.endTime }}</span>
+                                </el-form-item>
+
+                                <el-form-item label="描述">
+                                    <span>{{ props.row.description }}</span>
+                                </el-form-item>
+
+                            </el-form>
+                        </template>
+                    </el-table-column>
+
+
+                    <el-table-column label="菜名" prop="name">
+                    </el-table-column>
+
+                    <el-table-column label="剩余数量" prop="quantity">
+                    </el-table-column>
+
+                    <el-table-column label="单价" prop="price">
+                    </el-table-column>
+
+                    <el-table-column label="选择数量" prop="selectQuantity">
+                        <template slot-scope="scope">
+                            <el-input-number @change="selectNum(scope.row)" v-model="scope.row.selectQuantity" :min="0"  label=""></el-input-number>
+                        </template>
+                    </el-table-column>
+
+
+                    <el-table-column label="操作" align="center" fixed="right">
+                        <template slot-scope="scope">
+
+                            <el-button
+                                    v-if="scope.row.canAdd"
+                                    size="mini"
+                                    type="primary"
+                                    @click="addToCart(scope.row)">加入购物车
+                            </el-button>
+
+                            <el-button
+                                    v-if="scope.row.canCancel"
+                                    size="danger"
+                                    type="primary"
+                                    @click="removeFromCart(scope.row)">取消
+                            </el-button>
+
+                        </template>
+                    </el-table-column>
+
+
+                </el-table>
+                <br/>
+                <br/>
+            </el-card>
+        </el-col>
+    </div>
+
+    <!--提交订单-->
+    <el-dialog title="提交订单" :visible.sync="showOrderForm" width="30%" :close-on-click-modal="false"
+               :close-on-press-escape="false">
+
+
+        <el-input
+                type="textarea"
+                :autosize="{ minRows: 5, maxRows: 10}"
+                v-model="cartDetails">
+        </el-input>
+
+        <div>
+            <el-select v-model="cart.userLocation" placeholder="请选择" value-key="locationId">
+                <el-option
+                        v-for="item in userLocations"
+                        :key="item.locationId"
+                        :label="item.address"
+                        :value="item">
+                </el-option>
+            </el-select>
+        </div>
+
+        <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="submitOrder">提交</el-button>
+            <el-button type="primary" @click="toPay">去支付</el-button>
+        </div>
+    </el-dialog>
+
+
+
+</div>
+</body>
+<script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/member/enterMerchant.js}"></script>
+
+</html>

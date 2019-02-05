@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/login.css}">
+    <link rel="stylesheet" th:href="@{../../lib/font/icon/iconfont.css}">
+</head>
+
+<body>
+<div id="app">
+    <div>
+        <el-main>
+            <el-row type="flex" class="row-bg" justify="center">
+                <el-col :span="7">
+                    <el-card class="box-card">
+                        <div solt="header" class="header">
+                            <span class="item">注册</span>
+                        </div>
+                        <div id="form">
+                            <!-- 注册表单 -->
+                            <el-form :model="register" status-icon ref="register">
+
+                                <el-form-item label="密码" prop="password"
+                                              :rules="[{ required: true, message: '密码不能为空'}]">
+                                    <el-input prefix-icon="el-icon-ump-mima" type="password" v-model="register.password"
+                                              auto-complete="off"></el-input>
+                                </el-form-item>
+
+                                <el-form-item
+                                        label="重复密码"  prop="repeatPassword">
+                                    <el-input prefix-icon="el-icon-ump-anquan" type="password" v-model="repeatPassword"
+                                              auto-complete="off"></el-input>
+                                </el-form-item>
+
+
+                                <el-form-item prop="bankAccount" label="银行账户"
+                                              :rules="[{ required: true, message: '银行账户不能为空'}]">
+                                    <el-input prefix-icon="el-icon-ump-mima"  v-model="register.bankAccount"
+                                              auto-complete="off"></el-input>
+                                </el-form-item>
+
+
+                                <el-form-item prop="restaurantName"
+                                              :rules="[{ required: true, message: '商店名不能为空'}]"
+                                              label="店名">
+                                    <el-input prefix-icon="el-icon-ump-mima"  v-model="register.restaurantName"
+                                              auto-complete="off"></el-input>
+                                </el-form-item>
+
+                                <el-form-item prop="phone"
+                                              :rules="[{ required: true, message: '手机号码不能为空'}]"
+                                              label="手机号码">
+                                    <el-input prefix-icon="el-icon-ump-mima"  v-model="register.phone"
+                                              auto-complete="off"></el-input>
+                                </el-form-item>
+
+                                <el-form-item>
+                                    <el-button class="btn" type="primary" @click="submitForm()">注册</el-button>
+                                </el-form-item>
+
+                            </el-form>
+
+                        <div>
+                            <p><a href="/merchant" class="tips">已经有账号？点我去登录</a></p>
+                        </div>
+
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </el-main>
+
+    </div>
+
+
+    <el-dialog title="注册码" :visible.sync="showIdCode" width="30%" :close-on-click-modal="false"
+               :close-on-press-escape="false">
+                <span>您的注册码:{{idCode}}</span>
+        <div slot="footer" class="dialog-footer">
+            <el-button type="danger" @click="confirm">我已经牢记</el-button>
+        </div>
+    </el-dialog>
+
+</div>
+</body>
+<script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
+<!--<script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>-->
+<!-- 核心js代码 -->
+<script type="text/javascript" th:src="@{../../js/merchant/register.js}"></script>
+</html>

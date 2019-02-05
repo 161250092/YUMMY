@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/goods.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/public.css}"/>
+</head>
+<body>
+<div id="app">
+    <!-- header -->
+    <el-menu mode="horizontal" :default-active="activeIndex">
+        <el-menu-item index="0" id="logo">美 滋 滋</el-menu-item>
+        <el-menu-item index="1"><a href="/reviewApplications">申请</a></el-menu-item>
+        <el-menu-item index="2"><a href="/managerStatistics">统计信息</a></el-menu-item>
+
+        <el-menu-item id="author" index="3">
+            <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
+            <el-dropdown>
+                <span class="el-dropdown-link">TyCoding<i class="el-icon-arrow-down el-icon--right"></i></span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item divided><a href="/manager/logout">退出</a></el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </el-menu-item>
+    </el-menu>
+
+    <div id="main">
+        <el-col>
+            <el-card shadow="hover">
+                <!-- 列表 -->
+                <el-table
+                        ref="applications"
+                        :data="applications"
+                        height="500"
+                        border
+                        tooltip-effect="dark"
+                        style="width: 100%">
+
+
+                    <el-table-column type="expand">
+                        <template slot-scope="props">
+                            <el-form label-position="left" inline class="demo-table-expand">
+                                <el-form-item label="旧信息">
+                                    <span>{{ props.row.oldMerchantInfo.infoDetails}}</span>
+                                </el-form-item>
+
+                                <el-form-item label="新信息">
+                                    <span>{{ props.row.newMerchantInfo.infoDetails}}</span>
+                                </el-form-item>
+                            </el-form>
+                        </template>
+                    </el-table-column>
+
+
+                    <el-table-column
+                            prop="applicationId"
+                            align="center"
+                            sortable
+                            fixed
+                            label="申请号"
+                            width="120">
+                    </el-table-column>
+
+                    <el-table-column
+                            prop="oldMerchantInfo.idCode"
+                            align="center"
+                            sortable
+                            fixed
+                            label="用户ID"
+                            width="120">
+                    </el-table-column>
+
+
+                    <el-table-column label="操作" align="center" fixed="right">
+                        <template slot-scope="scope">
+
+                            <el-button
+                                       size="mini"
+                                       type="primary"
+                                       @click="passApplications(scope.row.applicationId)">通过
+                            </el-button>
+
+                            <el-button
+                                       size="mini"
+                                       type="danger"
+                                       @click="refuseApplications(scope.row.applicationId)">驳回
+                            </el-button>
+
+                        </template>
+                    </el-table-column>
+
+                </el-table>
+
+                <br/>
+                <br/>
+            </el-card>
+        </el-col>
+    </div>
+
+
+
+
+</div>
+</body>
+<script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/manager/reviewApplications.js}"></script>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/goods.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/public.css}"/>
+</head>
+<body>
+<div id="app">
+    <!-- header -->
+    <el-menu mode="horizontal" :default-active="activeIndex">
+        <el-menu-item index="0" id="logo">美 滋 滋</el-menu-item>
+        <el-menu-item index="1"><a href="/merchantEditPage">菜品编辑</a></el-menu-item>
+        <el-menu-item index="2"><a href="/merchantStatisticsPage">统计信息</a></el-menu-item>
+        <el-menu-item index="3"><a href="/merchantOrderRecords">订单统计</a></el-menu-item>
+        <el-menu-item id="author" index="4">
+            <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
+            <el-dropdown>
+                <span class="el-dropdown-link">TyCoding<i class="el-icon-arrow-down el-icon--right"></i></span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item divided><a href="/merchantPersonPage">信息中心</a></el-dropdown-item>
+                    <el-dropdown-item divided><a href="/merchantLogout">退出</a></el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </el-menu-item>
+    </el-menu>
+
+    <div id="main">
+        <el-col>
+            <el-card shadow="hover">
+                <!-- 搜索框 -->
+                <el-form :inline="true" :model="search" class="demo-form-inline">
+
+
+                    <el-form-item label="起始时间">
+                        <el-date-picker
+                                v-model="search.startTime"
+                                type="date"
+                                placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+
+                    <el-form-item label="截止时间">
+                        <el-date-picker
+                                v-model="search.endTime"
+                                type="date"
+                                placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+
+                    <el-form-item label="最低总价">
+                        <el-input v-model="search.lowPrice" placeholder="最低总价"
+                                  auto-complete="off">
+                        </el-input>
+                    </el-form-item>
+
+                    <el-form-item label="最高总价">
+                        <el-input v-model="search.highPrice" placeholder="最高总价"
+                                  auto-complete="off">
+                        </el-input>
+                    </el-form-item>
+
+                    <el-form-item label="起始会员等级">
+                        <el-input v-model="search.lowLevel" placeholder="起始会员等级"
+                                  auto-complete="off">
+                        </el-input>
+                    </el-form-item>
+
+                    <el-form-item label="截止会员等级">
+                        <el-input v-model="search.highLevel" placeholder="截止会员等级"
+                                  auto-complete="off">
+                        </el-input>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button
+                                type="primary"
+                                icon="el-icon-search"
+                                @click="check">查询
+                        </el-button>
+                    </el-form-item>
+                </el-form>
+
+                <!-- 列表 -->
+                <el-table
+                        ref="orders"
+                        :data="orders"
+                        border
+                        tooltip-effect="dark"
+                        style="width: 100%">
+
+                    <el-table-column
+                            prop="orderId"
+                            align="center"
+                            sortable
+                            fixed
+                            label="订单号"
+                            width="120">
+                    </el-table-column>
+
+                    <el-table-column
+                            align="center"
+                            prop="account"
+                            sortable
+                            label="用户号"
+                            width="120">
+                    </el-table-column>
+
+                    <el-table-column
+                            align="center"
+                            prop="userLocation.address"
+                            label="送达地址"
+                            width="150">
+                    </el-table-column>
+
+                    <el-table-column
+                            align="center"
+                            prop="totalPrice"
+                            sortable
+                            label="总价"
+                            width="260"
+                            show-overflow-tooltip>
+                    </el-table-column>
+
+                    <el-table-column label="查看" align="center" fixed="right">
+                        <template slot-scope="scope">
+                             <el-button
+                                     size="mini"
+                                     type="primary"
+                                     @click="checkOrderDetails(scope.row)">详情
+                             </el-button>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column label="状态" align="center" fixed="right">
+                        <template slot-scope="scope">
+
+                            <el-button v-if="scope.row.orderState.payed"
+                                    size="mini"
+                                    type="primary">已支付
+                            </el-button>
+
+                            <el-button v-if="scope.row.orderState.received"
+                                       size="mini"
+                                       type="primary">已接受
+                            </el-button>
+
+                            <el-button v-if="scope.row.orderState.abolished"
+                                       size="mini"
+                                       type="danger">已退订
+                            </el-button>
+
+                        </template>
+                    </el-table-column>
+
+                </el-table>
+
+                <br/>
+                <br/>
+            </el-card>
+        </el-col>
+    </div>
+
+    <!-- 订单详情的dialog -->
+    <el-dialog title="订单详情" :visible.sync="showOrderDetails" width="30%" :close-on-click-modal="false"
+               :close-on-press-escape="false">
+        <el-form class="editor-form" :model="orderDetails" status-icon ref="orderDetails"
+                 label-width="100px">
+
+            <el-form-item >
+                <el-input
+                        type="textarea"
+                        :autosize="{ minRows: 5, maxRows: 10}"
+                        v-model="orderDetails">
+                </el-input>
+            </el-form-item>
+
+        </el-form>
+
+        <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="showOrderDetails = false">确认</el-button>
+        </div>
+    </el-dialog>
+
+</div>
+</body>
+<script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/merchant/order.js}"></script>
+</html>

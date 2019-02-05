@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/goods.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/public.css}"/>
+</head>
+
+<body>
+<div id="app">
+
+    <!-- header -->
+    <el-menu mode="horizontal" :default-active="activeIndex">
+        <el-menu-item index="0" id="logo">美 滋 滋</el-menu-item>
+        <el-menu-item index="1"><a href="/merchantEditPage">菜品编辑</a></el-menu-item>
+        <el-menu-item index="2"><a href="/merchantStatisticsPage">统计信息</a></el-menu-item>
+        <el-menu-item index="3"><a href="/merchantOrderRecords">订单统计</a></el-menu-item>
+        <el-menu-item id="author" index="4">
+            <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
+            <el-dropdown>
+                <span class="el-dropdown-link">TyCoding<i class="el-icon-arrow-down el-icon--right"></i></span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item divided><a href="/merchantPersonPage">信息中心</a></el-dropdown-item>
+                    <el-dropdown-item divided><a href="/merchantLogout">退出</a></el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </el-menu-item>
+    </el-menu>
+
+    <div id="main">
+    <el-col>
+        <el-card shadow="hover">
+
+            <div>
+                <el-row>
+                    <el-button @click="openCreate" type="primary" icon="el-icon-plus">新增</el-button>
+
+                    <el-button icon="el-icon-refresh"
+                               @click="search(pageConf.pageCode,pageConf.pageSize)">刷新
+                    </el-button>
+                </el-row>
+            </div>
+            <!-- 列表 -->
+            <el-table :data="dishes" style="width: 100%">
+                <el-table-column type="expand">
+                    <template slot-scope="props">
+                        <el-form label-position="left" inline class="demo-table-expand">
+                            <el-form-item label="菜品名称">
+                                <span>{{ props.row.name }}</span>
+                            </el-form-item>
+
+                            <el-form-item label="启售时间">
+                                <span>{{ props.row.startTime }}</span>
+                            </el-form-item>
+
+                            <el-form-item label="截止时间">
+                                <span>{{ props.row.endTime }}</span>
+                            </el-form-item>
+
+                            <el-form-item label="单价">
+                                <span>{{ props.row.price }}</span>
+                            </el-form-item>
+
+                            <el-form-item label="数量">
+                                <span>{{ props.row.quantity }}</span>
+                            </el-form-item>
+
+                            <el-form-item label="描述">
+                                <span>{{ props.row.description }}</span>
+                            </el-form-item>
+                        </el-form>
+                    </template>
+                </el-table-column>
+
+                <el-table-column label="菜品 ID" prop="dishId">
+                </el-table-column>
+
+                <el-table-column label="菜名" prop="name">
+                </el-table-column>
+
+                <el-table-column label="数量" prop="quantity">
+                </el-table-column>
+
+                <el-table-column label="操作" align="center" fixed="right">
+                    <template slot-scope="scope">
+                        <el-button
+                                size="mini"
+                                plain icon="el-icon-edit"
+                                @click="handleEdit(scope.row.dishId)">编辑
+                        </el-button>
+
+                        <el-button
+                                size="mini"
+                                type="danger"
+                                @click="deleteDish(scope.row.dishId)">删除
+                        </el-button>
+                    </template>
+                </el-table-column>
+
+
+            </el-table>
+
+
+            <!-- 分页 -->
+            <div class="pagination">
+                <el-pagination
+                        background
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page="pageConf.pageCode"
+                        :page-sizes="pageConf.pageOption"
+                        :page-size="pageConf.pageSize"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="pageConf.totalPage">
+                </el-pagination>
+            </div>
+            <br/>
+            <br/>
+        </el-card>
+
+    </el-col>
+</div>
+
+
+    <div class="footer">
+        <el-container>
+            <el-footer>
+                <el-row :gutter="20">
+                    <el-col :span="8" :offset="10">
+                        <div class="footer-inner">
+                            <label>优雅的入门Spring Boot框架，实现简单的CRUD。页面使用Vue和ElementUI制作</label>
+                        </div>
+                    </el-col>
+                </el-row>
+            </el-footer>
+        </el-container>
+    </div>
+
+
+    <!-- 新增按钮的dialog -->
+    <el-dialog title="编辑信息" :visible.sync="showCreate" width="30%" :close-on-click-modal="false"
+               :close-on-press-escape="false">
+        <el-form class="editor-form" :model="editor" status-icon ref="editor"
+                 label-width="100px">
+
+            <el-form-item prop="name" label="菜名" class="is-required"
+                          :rules="[{ required: true, message: '不能为空'}]">
+                <el-input v-model.number="editor.name" placeholder="名字"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item label="启售时间" >
+                <el-date-picker
+                        v-model="editor.startTime"
+                        type="date"
+                        placeholder="选择日期">
+                </el-date-picker>
+            </el-form-item>
+
+            <el-form-item label="结束时间" >
+                <el-date-picker
+                        v-model="editor.endTime"
+                        type="date"
+                        placeholder="选择日期">
+                </el-date-picker>
+            </el-form-item>
+
+            <el-form-item prop="price" label="单价" class="is-required"
+                          :rules="[{ required: true, message: '不能为空'}]">
+                <el-input v-model="editor.price" placeholder="单价"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+
+            <el-form-item prop="quantity" label="数量" class="is-required"
+                          :rules="[{ required: true, message: '不能为空'}]">
+                <el-input v-model="editor.quantity" placeholder="数量"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+
+            <el-form-item prop="type" label="类型" class="is-required"
+                          :rules="[{ required: true, message: '不能为空'}]">
+                <el-input v-model="editor.type" placeholder="类型"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item prop="description" label="描述" class="is-required"
+                          :rules="[{ required: true, message: '不能为空'}]">
+                <el-input v-model="editor.description" placeholder="描述"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+        </el-form>
+
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="showCreate = false">取 消</el-button>
+            <el-button type="primary" @click="save('editor')">修改</el-button>
+        </div>
+    </el-dialog>
+
+    <!-- 编辑的dialog -->
+    <el-dialog title="编辑" :visible.sync="showEditor" width="30%" :close-on-click-modal="false"
+               :close-on-press-escape="false">
+        <el-form class="editor-form" :model="updateDish" status-icon ref="updateDish"
+                 label-width="100px">
+
+            <el-form-item prop="dishId" label="菜号：" class="is-required">
+                <span>{{updateDish.dishId}} </span>
+            </el-form-item>
+
+            <el-form-item prop="name" label="菜名" class="is-required"
+                          :rules="[{ required: true, message: '不能为空'}]">
+                <el-input v-model="updateDish.name" placeholder="名字"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item label="启售时间" >
+                <el-date-picker
+                        v-model="updateDish.startTime"
+                        type="date"
+                        placeholder="选择日期">
+                </el-date-picker>
+            </el-form-item>
+
+            <el-form-item label="结束时间" >
+                <el-date-picker
+                        v-model="updateDish.endTime"
+                        type="date"
+                        placeholder="选择日期">
+                </el-date-picker>
+            </el-form-item>
+
+            <el-form-item prop="price" label="单价" class="is-required"
+                          :rules="[{ required: true, message: '不能为空'}]">
+                <el-input v-model="updateDish.price" placeholder="单价"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+
+            <el-form-item prop="quantity" label="数量" class="is-required"
+                          :rules="[{ required: true, message: '不能为空'}]">
+                <el-input v-model="updateDish.quantity" placeholder="数量"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+
+            <el-form-item prop="type" label="类型" class="is-required"
+                          :rules="[{ required: true, message: '不能为空'}]">
+                <el-input v-model="updateDish.type" placeholder="类型"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item prop="description" label="描述" class="is-required"
+                          :rules="[{ required: true, message: '不能为空'}]">
+                <el-input v-model="updateDish.description" placeholder="描述"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="showEditor = false">取 消</el-button>
+            <el-button type="primary" @click="edit">修改</el-button>
+        </div>
+    </el-dialog>
+
+
+
+
+</div>
+</body>
+<script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/merchant/edit.js}"></script>
+</html>
