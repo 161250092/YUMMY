@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 public class SearchEntity implements Serializable{
 
+    private String idCode;
     private LocalDate  startTime;
     private LocalDate  endTime;
     private double   lowPrice;
@@ -13,6 +14,14 @@ public class SearchEntity implements Serializable{
     private int      highLevel;
 
     public SearchEntity() {
+    }
+
+    public String getIdCode() {
+        return idCode;
+    }
+
+    public void setIdCode(String idCode) {
+        this.idCode = idCode;
     }
 
     public LocalDate getStartTime() {

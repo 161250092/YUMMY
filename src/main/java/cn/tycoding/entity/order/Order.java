@@ -2,6 +2,7 @@ package cn.tycoding.entity.order;
 
 
 
+import cn.tycoding.entity.member.DishForMember;
 import cn.tycoding.entity.merchant.Dish;
 import cn.tycoding.entity.merchant.Location;
 
@@ -23,7 +24,7 @@ public class Order implements Serializable {
 
     private LocalDateTime expectedArriveTime;
 
-    private List<Dish> dishes;
+    private List<DishForMember> dishes;
 
     private double totalPrice;
 
@@ -40,10 +41,10 @@ public class Order implements Serializable {
         this.expectedArriveTime =LocalDateTime.now();
         this.orderAcceptedTime = LocalDateTime.now();
         this.userLocation = new Location(3.33,1.11,"鼓楼");
-        this.dishes = new ArrayList<Dish>();
-        Dish dish1 = new Dish(1,idCode);
-        Dish dish2 = new Dish(2,idCode);
-        Dish dish3 = new Dish(3,idCode);
+        this.dishes = new ArrayList<DishForMember>();
+        DishForMember dish1 = new DishForMember(1,idCode);
+        DishForMember dish2 = new DishForMember(2,idCode);
+        DishForMember dish3 = new DishForMember(3,idCode);
         dishes.add(dish1);
         dishes.add(dish2);
         dishes.add(dish3);
@@ -51,17 +52,9 @@ public class Order implements Serializable {
         this.orderState = orderState;
     }
 
-    public Order(long orderId, String account, String idCode, Location userLocation, LocalDateTime orderAcceptedTime, LocalDateTime expectedArriveTime, List<Dish> dishes, double totalPrice, OrderState orderState) {
-        this.orderId = orderId;
-        this.account = account;
-        this.idCode = idCode;
-        this.userLocation = userLocation;
-        this.orderAcceptedTime = orderAcceptedTime;
-        this.expectedArriveTime = expectedArriveTime;
-        this.dishes = dishes;
-        this.totalPrice = totalPrice;
-        this.orderState = orderState;
-    }
+
+
+
 
     public long getOrderId() {
         return orderId;
@@ -85,10 +78,6 @@ public class Order implements Serializable {
 
     public LocalDateTime getExpectedArriveTime() {
         return expectedArriveTime;
-    }
-
-    public List<Dish> getDishes() {
-        return dishes;
     }
 
     public double getTotalPrice() {
@@ -123,9 +112,7 @@ public class Order implements Serializable {
         this.expectedArriveTime = expectedArriveTime;
     }
 
-    public void setDishes(List<Dish> dishes) {
-        this.dishes = dishes;
-    }
+
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
@@ -133,5 +120,13 @@ public class Order implements Serializable {
 
     public void setOrderState(OrderState orderState) {
         this.orderState = orderState;
+    }
+
+    public List<DishForMember> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(List<DishForMember> dishes) {
+        this.dishes = dishes;
     }
 }

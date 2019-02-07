@@ -48,8 +48,8 @@ public class MerchantInfo implements Serializable{
         restaurantType="中餐";
         minDeliveryCost=20;
         deliveryCost=2;
-        Discount discount1 = new Discount("1","0000001",40,10);
-        Discount discount2 = new Discount("2","0000001",80,20);
+        Discount discount1 = new Discount(1,"0000001",40,10);
+        Discount discount2 = new Discount(2,"0000001",80,20);
         discounts = new ArrayList<Discount>();
         discounts.add(discount1);
         discounts.add(discount2);

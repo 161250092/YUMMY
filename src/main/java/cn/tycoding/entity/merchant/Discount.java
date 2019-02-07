@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Discount implements Serializable{
-    private String discountId;
+    private long  discountId;
     //识别码
     private String  idCode;
 
@@ -16,7 +16,7 @@ public class Discount implements Serializable{
     public Discount() {
     }
 
-    public Discount(String discountId, String idCode, double totalPrice, double reducePrice) {
+    public Discount(long discountId, String idCode, double totalPrice, double reducePrice) {
         this.discountId = discountId;
         this.idCode = idCode;
         this.totalPrice = totalPrice;
@@ -47,13 +47,11 @@ public class Discount implements Serializable{
         this.reducePrice = reducePrice;
     }
 
-    public String getDiscountId() {
+    public long getDiscountId() {
         return discountId;
     }
 
-    public void setDiscountId(String discountId) {
+    public void setDiscountId(long discountId) {
         this.discountId = discountId;
     }
-
-
 }

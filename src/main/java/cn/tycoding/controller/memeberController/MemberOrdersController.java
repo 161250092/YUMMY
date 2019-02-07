@@ -1,10 +1,9 @@
 package cn.tycoding.controller.memeberController;
 
 import cn.tycoding.entity.Result;
-import cn.tycoding.entity.member.Member;
+
 import cn.tycoding.entity.order.Order;
 import cn.tycoding.entity.order.OrderState;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +20,7 @@ public class MemberOrdersController {
     @RequestMapping("/submitOrder")
     public Result submitOrder(@RequestBody Order order) {
          System.out.println("订单项:"+order.getDishes().size());
+         System.out.println(order.getDishes().get(0).getSelectQuantity());
          System.out.println("地址"+order.getUserLocation().getAddress());
         return new Result(true, "80.8");
     }

@@ -28,15 +28,15 @@ public class MerchantInformationController {
     }
 
     @RequestMapping("/addNewDiscount")
-    public Result addNewDiscount(@RequestParam("totalPrice")String totalPrice,
-                                 @RequestParam("reducePrice")String reducePrice){
+    public Result addNewDiscount(@RequestParam("totalPrice")double totalPrice,
+                                 @RequestParam("reducePrice")double reducePrice){
         System.out.println(totalPrice+" "+reducePrice);
         return new Result(true,"添加新优惠成功");
     }
 
 
     @RequestMapping("/deleteDiscount")
-    public Result deleteDiscount(@RequestParam("discountId")String discountId){
+    public Result deleteDiscount(@RequestParam("discountId")long discountId){
         System.out.println(discountId);
         return new Result(true,"删除成功");
     }

@@ -23,7 +23,7 @@ public class MemberInformationController {
             System.out.println("account: "+account);
         List rows = new ArrayList();
         for(int i=0;i<3;i++){
-            rows.add(new Location(i+""));
+            rows.add(new Location(i));
         }
         PageBean pageBean =new PageBean(3,rows);
         return pageBean;
@@ -52,7 +52,7 @@ public class MemberInformationController {
 
 
     @RequestMapping("/deleteLocation")
-    public Result deleteLocation(@RequestParam("locationId")String locationId){
+    public Result deleteLocation(@RequestParam("locationId")long locationId){
         System.out.println(locationId);
         return new Result(true,"删除成功");
     }

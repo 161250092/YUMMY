@@ -7,7 +7,7 @@ import cn.tycoding.entity.merchant.MerchantInfo;
 import java.util.List;
 
 public class ApplicationFromMerchants {
-    private String applicationId;
+    private long applicationId;
 
     private MerchantInfo oldMerchantInfo;
 
@@ -20,7 +20,7 @@ public class ApplicationFromMerchants {
 
 
     public ApplicationFromMerchants() {
-        this.applicationId = "1";
+        this.applicationId = 1;
         this.oldMerchantInfo = new MerchantInfo();
         this.newMerchantInfo = new MerchantInfo();
         isRead = false;
@@ -62,11 +62,11 @@ public class ApplicationFromMerchants {
         isApproved = approved;
     }
 
-    public String getApplicationId() {
-        return applicationId;
+    public void setApplicationId(long applicationId) {
+        this.applicationId = applicationId;
     }
 
-    public void setApplicationId(String applicationId) {
-        this.applicationId = applicationId;
+    public long getApplicationId() {
+        return applicationId;
     }
 }

@@ -6,6 +6,10 @@ public class MemberLevel {
     public MemberLevel() {
     }
 
+    public MemberLevel(int level) {
+        this.level = level;
+    }
+
     public int getLevel() {
         return level;
     }

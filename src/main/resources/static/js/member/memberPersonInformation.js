@@ -14,7 +14,7 @@ var vm = new Vue({
                 nickName:'',
                 phone:'',
                 locations:[{
-                    locationId:'',
+                    locationId:0,
                     account:'',
                     lat:0.0,
                     lng:0.0,

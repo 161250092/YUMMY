@@ -31,14 +31,14 @@ var vm = new Vue({
 
             //更新表
             updateDish:{
-                dishId:'',
-                startTime:'',
-                endTime:'',
-                type:'',
-                name:'',
-                price:'',
-                quantity:'',
-                description:''
+                // dishId:'',
+                // startTime:'',
+                // endTime:'',
+                // type:'',
+                // name:'',
+                // price:'',
+                // quantity:'',
+                // description:''
             },
 
 
@@ -215,9 +215,11 @@ var vm = new Vue({
         },
 
 
-        handleEdit(id){
+        handleEdit(dish){
+            this.updateDish.dishId = dish.dishId;
+            this.updateDish = dish;
             this.showEditor = true;
-            this.updateDish.dishId = id;
+
         },
 
         //修改

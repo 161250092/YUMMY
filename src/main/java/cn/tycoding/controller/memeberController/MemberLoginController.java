@@ -4,7 +4,6 @@ import cn.tycoding.entity.Result;
 import cn.tycoding.entity.member.Member;
 import cn.tycoding.mail.VerificationCode;
 import cn.tycoding.util.GenerateVerification;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

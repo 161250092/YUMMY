@@ -33,9 +33,9 @@ public class Member {
         memberLevel = new MemberLevel();
         memberLevel.setLevel(1);
         locations = new ArrayList<Location>();
-        Location location1 = new Location("1");
-        Location location2 = new Location("2");
-        Location location3 = new Location("2");
+        Location location1 = new Location(1);
+        Location location2 = new Location(1);
+        Location location3 = new Location(1);
         locations.add(location1);
         locations.add(location2);
         locations.add(location3);

@@ -8,7 +8,7 @@ var vm = new Vue({
         return {
 
             userLocations:[{
-                locationId:'',
+                locationId:0,
                 lat:0.0,
                 lng:0.0,
                 address:''
@@ -37,7 +37,7 @@ var vm = new Vue({
                 idCode:'',
                 dishes: [],
                 userLocation:{
-                    locationId:'',
+                    locationId:0,
                     lat:0.0,
                     lng:0.0,
                     address:''
@@ -64,7 +64,7 @@ var vm = new Vue({
     methods: {
 
         selectNum(dish){
-            if(dish.selectQuantity>=1)
+            if(dish.selectQuantity>=1&&dish.canCancel===false)
             dish.canAdd = true;
         },
 
@@ -149,9 +149,6 @@ var vm = new Vue({
 
             window.location.href = "/memberOrders";
         },
-
-
-
 
 
 

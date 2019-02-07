@@ -3,7 +3,7 @@ package cn.tycoding.entity.merchant;
 import java.io.Serializable;
 
 public class Location implements Serializable{
-    private String locationId;
+    private long locationId;
     private String account;
     private double lat;
     private double lng;
@@ -18,7 +18,7 @@ public class Location implements Serializable{
         this.address = address;
     }
 
-    public Location(String locationId) {
+    public Location(long locationId) {
         this.locationId = locationId;
         account = "00000001";
         lat = 0;
@@ -26,17 +26,20 @@ public class Location implements Serializable{
         address = "起个地名:"+locationId;
     }
 
-    public String getLocationId() {
+
+    public long getLocationId() {
         return locationId;
+    }
+
+    public void setLocationId(long locationId) {
+        this.locationId = locationId;
     }
 
     public String getAccount() {
         return account;
     }
 
-    public void setLocationId(String locationId) {
-        this.locationId = locationId;
-    }
+
 
     public void setAccount(String account) {
         this.account = account;
