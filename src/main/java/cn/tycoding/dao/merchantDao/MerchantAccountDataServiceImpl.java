@@ -1,14 +1,13 @@
-package cn.tycoding.dao.merchant;
+package cn.tycoding.dao.merchantDao;
 
 import cn.tycoding.dao.mysql.MySQLConnector;
-import cn.tycoding.entity.merchant.MerchantInfo;
 import cn.tycoding.entity.merchant.MerchantRegisterInf;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class MerchantAccountServiceImpl implements MerchantAccountService {
+public class MerchantAccountDataServiceImpl implements MerchantAccountDataService {
 
     private Connection conn;
 

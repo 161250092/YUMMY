@@ -6,7 +6,7 @@ import cn.tycoding.entity.merchant.MerchantInfo;
 
 import java.util.List;
 
-public class ApplicationFromMerchants {
+public class ApplicationFromMerchant {
     private long applicationId;
 
     private MerchantInfo oldMerchantInfo;
@@ -19,7 +19,7 @@ public class ApplicationFromMerchants {
 
 
 
-    public ApplicationFromMerchants() {
+    public ApplicationFromMerchant() {
         this.applicationId = 1;
         this.oldMerchantInfo = new MerchantInfo();
         this.newMerchantInfo = new MerchantInfo();

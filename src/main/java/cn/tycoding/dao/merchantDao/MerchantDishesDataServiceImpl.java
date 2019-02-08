@@ -1,4 +1,4 @@
-package cn.tycoding.dao.merchant;
+package cn.tycoding.dao.merchantDao;
 
 import cn.tycoding.dao.mysql.MySQLConnector;
 import cn.tycoding.entity.PageBean;
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MerchantDishesServiceImpl implements MerchantDishesService{
+public class MerchantDishesDataServiceImpl implements MerchantDishesDataService {
 
     private Connection conn;
 

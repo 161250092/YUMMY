@@ -1,11 +1,11 @@
-package cn.tycoding.dao.merchant;
+package cn.tycoding.dao.merchantDao;
 
 import cn.tycoding.entity.PageBean;
 import cn.tycoding.entity.merchant.Dish;
 
 import java.util.List;
 
-public interface MerchantDishesService {
+public interface MerchantDishesDataService {
     public List getMerchantDish(String idCode);
 
     public PageBean findDishesByConPage(String idCode, int pageCode,int pageSize);

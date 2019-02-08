@@ -1,11 +1,11 @@
-package cn.tycoding.dao.merchant;
+package cn.tycoding.dao.merchantDao;
 
 import cn.tycoding.entity.SearchEntity;
 import cn.tycoding.entity.order.Order;
 
 import java.util.List;
 
-public interface MerchantOrdersService {
+public interface MerchantOrdersDataService {
 
     public List<Order> getMerchantAllOrders(String idCode);
 

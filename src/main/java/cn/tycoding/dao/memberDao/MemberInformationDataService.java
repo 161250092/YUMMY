@@ -1,4 +1,4 @@
-package cn.tycoding.dao.member;
+package cn.tycoding.dao.memberDao;
 
 
 import cn.tycoding.entity.member.Member;
@@ -6,7 +6,7 @@ import cn.tycoding.entity.merchant.Location;
 
 import java.util.List;
 
-public interface MemberInformationService {
+public interface MemberInformationDataService {
 
     public List<Location> getMemberLocation(String account);
 

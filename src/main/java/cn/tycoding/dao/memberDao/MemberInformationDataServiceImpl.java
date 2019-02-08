@@ -1,4 +1,4 @@
-package cn.tycoding.dao.member;
+package cn.tycoding.dao.memberDao;
 
 import cn.tycoding.dao.mysql.MySQLConnector;
 import cn.tycoding.entity.member.Member;
@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberInformationServiceImpl implements  MemberInformationService{
+public class MemberInformationDataServiceImpl implements MemberInformationDataService {
 
     private Connection conn;
 

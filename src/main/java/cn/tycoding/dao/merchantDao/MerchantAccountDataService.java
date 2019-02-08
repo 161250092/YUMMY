@@ -1,9 +1,8 @@
-package cn.tycoding.dao.merchant;
+package cn.tycoding.dao.merchantDao;
 
-import cn.tycoding.entity.merchant.MerchantInfo;
 import cn.tycoding.entity.merchant.MerchantRegisterInf;
 
-public interface MerchantAccountService {
+public interface MerchantAccountDataService {
 
     public int getMerchantNum();
 

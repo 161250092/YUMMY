@@ -1,4 +1,4 @@
-package cn.tycoding.dao.merchant;
+package cn.tycoding.dao.merchantDao;
 
 import cn.tycoding.dao.mysql.MySQLConnector;
 import cn.tycoding.entity.SearchEntity;
@@ -6,7 +6,6 @@ import cn.tycoding.entity.member.DishForMember;
 import cn.tycoding.entity.merchant.Location;
 import cn.tycoding.entity.order.Order;
 import cn.tycoding.entity.order.OrderState;
-import org.aspectj.weaver.ast.Or;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +13,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MerchantOrdersServiceImpl implements MerchantOrdersService{
+public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService {
 
     private Connection conn;
 
@@ -115,8 +114,6 @@ public class MerchantOrdersServiceImpl implements MerchantOrdersService{
             stmt.setString(1,idCode);
             ResultSet rs = stmt.executeQuery();
 
-
-
             while(rs.next()){
                 Order order = new Order();
                 order.setOrderId(rs.getLong("orderId"));
@@ -168,7 +165,7 @@ public class MerchantOrdersServiceImpl implements MerchantOrdersService{
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "select * from dishInOrder,dish where dishInOrder.dishId =dish.dishId and dishInOrder.orderId=?";
+            sql = "select dishInOrder.selectQuantity,dishInOrder.dishId,dish.idCode,dish.startTime,dish.endTime,dish.dishType,dish.dishName,dish.price,quantity,dish.description from dishInOrder,dish where dishInOrder.dishId =dish.dishId and dishInOrder.orderId=?";
 
             stmt = conn.prepareStatement(sql);
             stmt.setLong(1,order.getOrderId());

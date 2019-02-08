@@ -1,4 +1,4 @@
-package cn.tycoding.dao.merchant;
+package cn.tycoding.dao.merchantDao;
 
 import cn.tycoding.dao.mysql.MySQLConnector;
 import cn.tycoding.entity.merchant.MerchantInfo;
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MerchantInformationServiceImpl implements  MerchantInformationService{
+public class MerchantInformationDataServiceImpl implements MerchantInformationDataService {
     private Connection conn;
 
     @Override
@@ -86,18 +86,19 @@ public class MerchantInformationServiceImpl implements  MerchantInformationServi
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "insert into application(idCode,bankAccount,restaurantName,phone,minDeliveryCost,deliveryCost,isRead,isApproved)VALUES(?,?,?,?,?,?,?,?)";
+            sql = "insert into application(idCode,bankAccount,restaurantName,restaurantType,phone,minDeliveryCost,deliveryCost,isRead,isApproved)VALUES(?,?,?,?,?,?,?,?,?)";
 
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1,merchantInfo.getIdCode());
             stmt.setString(2,merchantInfo.getBankAccount());
             stmt.setString(3,merchantInfo.getRestaurantName());
-            stmt.setString(4,merchantInfo.getPhone());
-            stmt.setDouble(5,merchantInfo.getMinDeliveryCost());
-            stmt.setDouble(6,merchantInfo.getDeliveryCost());
-            stmt.setBoolean(7,false);
+            stmt.setString(4,merchantInfo.getRestaurantType());
+            stmt.setString(5,merchantInfo.getPhone());
+            stmt.setDouble(6,merchantInfo.getMinDeliveryCost());
+            stmt.setDouble(7,merchantInfo.getDeliveryCost());
             stmt.setBoolean(8,false);
+            stmt.setBoolean(9,false);
             stmt.executeUpdate();
 
             stmt.close();

@@ -1,10 +1,10 @@
-package cn.tycoding.dao.merchant;
+package cn.tycoding.dao.merchantDao;
 
 import cn.tycoding.entity.merchant.MerchantInfo;
 
 import java.util.List;
 
-public interface MerchantInformationService {
+public interface MerchantInformationDataService {
 
 
     public List<MerchantInfo>  getAllMerchant();

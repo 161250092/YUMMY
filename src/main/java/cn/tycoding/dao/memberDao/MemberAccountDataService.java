@@ -1,8 +1,8 @@
-package cn.tycoding.dao.member;
+package cn.tycoding.dao.memberDao;
 
 import cn.tycoding.entity.member.Member;
 
-public interface MemberAccountService {
+public interface MemberAccountDataService {
 
     public String getPassword(String account);
 

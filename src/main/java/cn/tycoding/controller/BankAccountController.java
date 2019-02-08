@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class BankAccountController {
 
 
-    @RequestMapping("/in")
-    public Result in() {
-
-        return new Result(true,"转入成功");
-    }
+//    @RequestMapping("/in")
+//    public Result in() {
+//
+//        return new Result(true,"转入成功");
+//    }
 
 
     @RequestMapping("/out")
