@@ -39,18 +39,18 @@ public class MemberOrdersController {
 
 
     @RequestMapping("/confirmOrder")
-    public Result confirmOrder(@RequestParam("orderId")String orderId) {
+    public Result confirmOrder(@RequestParam("orderId")long orderId) {
         return new Result(true,"已收到");
     }
 
 
     @RequestMapping("/abolishOrder")
-    public Result abolishOrder(@RequestParam("orderId")String orderId) {
+    public Result abolishOrder(@RequestParam("orderId")long orderId) {
         return new Result(true,"该订单已经废弃");
     }
 
     @RequestMapping("/cancelOrder")
-    public Result cancelOrder(@RequestParam("orderId")String orderId) {
+    public Result cancelOrder(@RequestParam("orderId")long orderId) {
         return new Result(true,"该订单已经撤销");
     }
 
