@@ -37,7 +37,7 @@
             <el-card shadow="hover">
                 <div>
                     <el-row>
-                        <el-button @click="Information()" type="primary" icon="el-icon-plus">查看信息</el-button>
+                        <el-button @click="Information()" type="primary" icon="el-icon-info">查看信息</el-button>
 
                         <el-button icon="el-icon-edit"
                                    @click="Editor()">修改个人信息
@@ -95,9 +95,6 @@
                 <span>{{details.idCode}} </span>
             </el-form-item>
 
-            <el-form-item prop="location" label="地址">
-                <span>{{details.location.address}} </span>
-            </el-form-item>
 
             <el-form-item prop="bankAccount" label="银行账号">
                 <span>{{details.bankAccount}} </span>
@@ -158,18 +155,16 @@
                 </el-form-item>
 
                 <el-form-item prop="location" label=" 地址" class="is-required">
-                    <el-input v-model="details.location.address" placeholder="details.restaurantName"
+                    <el-input v-model="details.location.address" placeholder=""
                               auto-complete="off"></el-input>
-                    <el-button type="primary" @click="address()">重新获取地址</el-button>
+                    <el-button type="primary" @click="address()" icon="el-icon-location">重新获取地址</el-button>
                 </el-form-item>
-
 
 
                 <el-form-item prop="phone" label="电话" class="is-required">
                     <el-input v-model="details.phone" placeholder="details.phone"
                               auto-complete="off"></el-input>
                 </el-form-item>
-
 
 
                 <el-form-item prop="restaurantType" label="类型" class="is-required">
@@ -188,8 +183,8 @@
                 </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button>取 消</el-button>
-            <el-button type="primary" @click="updateInformation">修改</el-button>
+            <el-button @click="showEditor = false">取 消</el-button>
+            <el-button type="primary" @click="updateInformation">提交修改申请</el-button>
         </div>
     </el-dialog>
 
@@ -212,7 +207,7 @@
 
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button >取 消</el-button>
+            <el-button @click="showDiscountEditor = false">取 消</el-button>
             <el-button type="primary" @click="addNewDiscount()">添加</el-button>
         </div>
     </el-dialog>

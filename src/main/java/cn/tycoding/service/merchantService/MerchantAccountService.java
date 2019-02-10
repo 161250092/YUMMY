@@ -2,13 +2,14 @@ package cn.tycoding.service.merchantService;
 
 
 import cn.tycoding.entity.Result;
+import cn.tycoding.entity.merchant.MerchantRegisterInf;
 
-public interface MerchantAccountManagerService {
+public interface MerchantAccountService {
 
     public Result login(String idCode, String password);
 
     //message里是idCode
-    public Result register(String password, String verificationCode);
+    public Result register(MerchantRegisterInf merchantRegisterInf);
 
 
 

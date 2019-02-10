@@ -3,13 +3,14 @@ package cn.tycoding.dao.merchantDao;
 import cn.tycoding.dao.mysql.MySQLConnector;
 import cn.tycoding.entity.PageBean;
 import cn.tycoding.entity.merchant.Dish;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class MerchantDishesDataServiceImpl implements MerchantDishesDataService {
 
     private Connection conn;
@@ -36,8 +37,8 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
                dish.setIdCode(rs.getString("idCode"));
                dish.setEndTime(rs.getDate("endTime").toLocalDate());
                dish.setStartTime(rs.getDate("startTime").toLocalDate());
-               dish.setType(rs.getString("type"));
-               dish.setName(rs.getString("name"));
+               dish.setType(rs.getString("dishType"));
+               dish.setName(rs.getString("dishName"));
                dish.setPrice(rs.getDouble("price"));
                dish.setQuantity(rs.getInt("quantity"));
                dish.setDescription(rs.getString("description"));
@@ -127,8 +128,7 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
         }
 
 
-
-        return false;
+        return true;
     }
 
     @Override
@@ -161,7 +161,7 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
         }
 
 
-        return false;
+        return true;
     }
 
 

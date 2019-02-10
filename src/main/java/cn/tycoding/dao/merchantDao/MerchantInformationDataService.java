@@ -9,6 +9,7 @@ public interface MerchantInformationDataService {
 
     public List<MerchantInfo>  getAllMerchant();
 
+
     public MerchantInfo getMerchantInfo(String idCode);
 
     public boolean updateMerchantInfo(MerchantInfo merchantInfo );

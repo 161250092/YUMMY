@@ -29,14 +29,6 @@ var vm = new Vue({
                 totalPrice:0.0,
                 reducePrice:0.0
             }],
-            arrivalLocations:[{
-                arrivalLocationId:1,
-                province :"jiangsu",
-                city:"suqian",
-                town:"suyu",
-                distance:2
-            }],
-
 
 
             discountEditor:{
@@ -142,6 +134,8 @@ var vm = new Vue({
                     });
                     //刷新信息
                     this.reloadInformation();
+
+                    this.showEditor = false;
                 } else {
                     //更新失败
                     this.$message({

@@ -39,23 +39,22 @@ public class MerchantInfo implements Serializable{
 
     public MerchantInfo() {
 
-
-        idCode="0000001";
-        bankAccount="123456";
-        restaurantName="西子醋鱼";
-        phone="12580";
-        location = new Location(3.333333,111.11111,"南京鼓楼珠江路1号");
-        restaurantType="中餐";
-        minDeliveryCost=20;
-        deliveryCost=2;
-        Discount discount1 = new Discount(1,"0000001",40,10);
-        Discount discount2 = new Discount(2,"0000001",80,20);
-        discounts = new ArrayList<Discount>();
-        discounts.add(discount1);
-        discounts.add(discount2);
-
-
-        this.infoToString();
+//        idCode="0000001";
+//        bankAccount="123456";
+//        restaurantName="西子醋鱼";
+//        phone="12580";
+//        location = new Location(3.333333,111.11111,"南京鼓楼珠江路1号");
+//        restaurantType="中餐";
+//        minDeliveryCost=20;
+//        deliveryCost=2;
+//        Discount discount1 = new Discount(1,"0000001",40,10);
+//        Discount discount2 = new Discount(2,"0000001",80,20);
+//        discounts = new ArrayList<Discount>();
+//        discounts.add(discount1);
+//        discounts.add(discount2);
+//
+//
+//        this.infoToString();
     }
 
     public String getIdCode() {
@@ -149,7 +148,7 @@ public class MerchantInfo implements Serializable{
     }
 
 
-    private void infoToString(){
+    public void infoToString(){
         infoDetails = "";
         infoDetails +="账号: "+this.bankAccount+"  \n";
         infoDetails +="店铺名: "+this.restaurantName+"  \n";
@@ -158,6 +157,5 @@ public class MerchantInfo implements Serializable{
         infoDetails +="餐馆类型: "+this.getRestaurantType()  +"  \n";
         infoDetails +="配送费: "+this.getDeliveryCost()  +"  \n";
         infoDetails +="起送价: "+this.getMinDeliveryCost()  +"  \n";
-
     }
 }

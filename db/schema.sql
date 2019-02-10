@@ -81,11 +81,17 @@ create table if not exists `application`(
 `isRead` boolean,
 `isApproved` boolean,
 
+
 `idCode` varchar(7) ,
 `bankAccount` varchar(20),
 `restaurantName` varchar(20),
 `restaurantType` varchar(20),
 `phone` varchar(20),
+
+`address`  varchar(100),
+`lat`   double,
+`lng`  double,
+
 `minDeliveryCost` double(16,2),
 `deliveryCost` double(16,2)
 )ENGINE = InnoDB DEFAULT CHARSET =utf8;

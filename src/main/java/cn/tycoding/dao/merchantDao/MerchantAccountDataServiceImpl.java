@@ -2,11 +2,13 @@ package cn.tycoding.dao.merchantDao;
 
 import cn.tycoding.dao.mysql.MySQLConnector;
 import cn.tycoding.entity.merchant.MerchantRegisterInf;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+@Service
 public class MerchantAccountDataServiceImpl implements MerchantAccountDataService {
 
     private Connection conn;
@@ -98,7 +100,8 @@ public class MerchantAccountDataServiceImpl implements MerchantAccountDataServic
 
 
     public void createMerchantInfo(String idCode, MerchantRegisterInf merchantRegisterInf){
-
+        //初始化位置信息
+        this.initLocation(idCode);
 
         PreparedStatement stmt;
         String sql;
@@ -123,6 +126,33 @@ public class MerchantAccountDataServiceImpl implements MerchantAccountDataServic
         }
 
     }
+
+    //初始化位置信息
+    private void initLocation(String idCode){
+
+        PreparedStatement stmt;
+        String sql;
+        conn = new MySQLConnector().getConnection("Yummy");
+
+        try{
+            sql = "insert into location(account,lat,lng,address)VALUES (?,?,?,?)";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1,idCode);
+            stmt.setDouble(2,0);
+            stmt.setDouble(3,0);
+            stmt.setString(4,"");
+            stmt.executeUpdate();
+            stmt.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
+
 
 
 

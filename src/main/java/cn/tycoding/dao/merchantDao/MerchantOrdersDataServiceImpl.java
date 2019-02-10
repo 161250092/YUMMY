@@ -6,6 +6,7 @@ import cn.tycoding.entity.member.DishForMember;
 import cn.tycoding.entity.merchant.Location;
 import cn.tycoding.entity.order.Order;
 import cn.tycoding.entity.order.OrderState;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService {
 
     private Connection conn;
@@ -108,7 +110,7 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
         List<Order> orders = new ArrayList<>();
         try{
             sql ="select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
-                    "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.lat,location.lng,location.locationId from order_tb,location where order_tb.userLocation = location.locationId and order_tb.idCode =? ";
+                    "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.lat,location.lng,location.locationId,location.address from order_tb,location where order_tb.userLocation = location.locationId and order_tb.idCode =? ";
 
             stmt = conn.prepareStatement(sql);
             stmt.setString(1,idCode);

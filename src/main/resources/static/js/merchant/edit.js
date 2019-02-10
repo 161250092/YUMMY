@@ -83,12 +83,12 @@ var vm = new Vue({
         search(pageCode, pageSize) {
             this.loadings();
             this.$http.post('/dishes/findDishedByConPage',{
-                idCode:sessionStorage.getItem("account"),
+                // idCode:sessionStorage.getItem("account"),
                 pageSize:pageSize,
                 pageCode:pageCode
             }).then(result => {
                 console.log(result);
-                this.dishes = result.body.rows,
+                this.dishes = result.body.rows;
                 this.pageConf.totalPage = result.body.total;
                 this.loading.close(); //数据更新成功就手动关闭动画
             });
@@ -184,6 +184,7 @@ var vm = new Vue({
                             this.reloadList();
                             this.editor = {};
                             this.$refs.editor.resetFields();
+                            this.showCreate = false;
                         } else {
                             //保存失败
                             this.$emit(

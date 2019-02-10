@@ -2,21 +2,22 @@ package cn.tycoding.service.merchantService;
 
 
 import cn.tycoding.entity.Result;
+import cn.tycoding.entity.merchant.MerchantInfo;
+
+import java.util.List;
 
 public interface MerchantInformationService {
 
-    public Result modifyBankAccount(String idCode,String newBankAccount);
+    public List<MerchantInfo> getAllMerchant();
 
-    public Result modifyRestaurantName(String idCode, String newName);
+    public MerchantInfo getMerchantInfo(String idCode);
 
-    public Result modifyPhone(String idCode, String newPhone);
+    public boolean updateMerchantInfo(MerchantInfo merchantInfo );
 
-    public Result modifyLocation(String idCode, String newLocation);
 
-    public Result modifyLocationRestaurantType(String idCode, String newType);
+    public boolean addNewDiscount(String idCode,double totalPrice,double reducePrice);
 
-    public Result modifyMinDeliveryCost(String idCode, double newMinDeliveryCost);
 
-    public Result modifyDeliveryCost(String idCode, double newDeliveryCost);
+    public boolean deleteDiscount(long discountId);
 
 }

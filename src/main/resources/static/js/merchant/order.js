@@ -65,7 +65,7 @@ var vm = new Vue({
                 idCode:sessionStorage.getItem("account"),
             }).then(result => {
                 console.log(result);
-                this.orders = result.body.rows;
+                this.orders = result.body;
             });
         },
 
@@ -73,7 +73,7 @@ var vm = new Vue({
         check(){
             this.$http.post('/merchantOrders/checkMerchantOrders',JSON.stringify(this.search)).then(result => {
                 console.log(result);
-                this.orders = result.body.rows;
+                this.orders = result.body;
             });
         },
 

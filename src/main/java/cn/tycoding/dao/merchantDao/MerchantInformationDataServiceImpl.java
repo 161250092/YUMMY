@@ -1,7 +1,10 @@
 package cn.tycoding.dao.merchantDao;
 
 import cn.tycoding.dao.mysql.MySQLConnector;
+import cn.tycoding.entity.merchant.Discount;
+import cn.tycoding.entity.merchant.Location;
 import cn.tycoding.entity.merchant.MerchantInfo;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +12,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class MerchantInformationDataServiceImpl implements MerchantInformationDataService {
     private Connection conn;
 
@@ -76,8 +80,74 @@ public class MerchantInformationDataServiceImpl implements MerchantInformationDa
             e.printStackTrace();
         }
 
+        merchantInfo.setLocation(this.getMerchantLocation(idCode));
+        merchantInfo.setDiscounts(this.getMerchantDiscounts(idCode));
+        merchantInfo.infoToString();
         return merchantInfo;
     }
+
+
+    private Location getMerchantLocation(String idCode){
+
+        PreparedStatement stmt;
+        String sql;
+        conn = new MySQLConnector().getConnection("Yummy");
+        Location location = new Location();
+        try{
+            sql = "select * from location where account=?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1,idCode);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                location.setLocationId(rs.getLong("locationId"));
+                location.setLat(rs.getDouble("lat"));
+                location.setLng(rs.getDouble("lng"));
+                location.setAddress(rs.getString("address"));
+                location.setAccount(rs.getString("account"));
+            }
+
+            stmt.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return location;
+
+    }
+
+    private List<Discount> getMerchantDiscounts(String idCode){
+        PreparedStatement stmt;
+        String sql;
+        conn = new MySQLConnector().getConnection("Yummy");
+        List<Discount> discounts = new ArrayList<>();
+        try{
+            sql = "select * from discount where idCode=?";
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1,idCode);
+
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Discount discount = new Discount();
+                discount.setDiscountId(rs.getLong("discountId"));
+                discount.setIdCode(rs.getString("idCode"));
+                discount.setTotalPrice(rs.getDouble("totalPrice"));
+                discount.setReducePrice(rs.getDouble("reducePrice"));
+                discounts.add(discount);
+            }
+            stmt.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return discounts;
+    }
+
 
     @Override
     public boolean updateMerchantInfo(MerchantInfo merchantInfo) {
@@ -86,7 +156,7 @@ public class MerchantInformationDataServiceImpl implements MerchantInformationDa
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "insert into application(idCode,bankAccount,restaurantName,restaurantType,phone,minDeliveryCost,deliveryCost,isRead,isApproved)VALUES(?,?,?,?,?,?,?,?,?)";
+            sql = "insert into application(idCode,bankAccount,restaurantName,restaurantType,phone,minDeliveryCost,deliveryCost,isRead,isApproved,address,lat,lng)VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 
             stmt = conn.prepareStatement(sql);
 
@@ -99,6 +169,10 @@ public class MerchantInformationDataServiceImpl implements MerchantInformationDa
             stmt.setDouble(7,merchantInfo.getDeliveryCost());
             stmt.setBoolean(8,false);
             stmt.setBoolean(9,false);
+            stmt.setString(10,merchantInfo.getLocation().getAddress());
+            stmt.setDouble(11,merchantInfo.getLocation().getLat());
+            stmt.setDouble(12,merchantInfo.getLocation().getLng());
+
             stmt.executeUpdate();
 
             stmt.close();
@@ -161,8 +235,6 @@ public class MerchantInformationDataServiceImpl implements MerchantInformationDa
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
 
         return true;
     }
