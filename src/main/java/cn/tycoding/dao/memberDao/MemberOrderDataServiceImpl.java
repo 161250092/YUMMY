@@ -2,6 +2,7 @@ package cn.tycoding.dao.memberDao;
 
 import cn.tycoding.dao.merchantDao.MerchantOrdersDataServiceImpl;
 import cn.tycoding.dao.mysql.MySQLConnector;
+import cn.tycoding.entity.MemberSearchEntity;
 import cn.tycoding.entity.member.DishForMember;
 import cn.tycoding.entity.merchant.Dish;
 import cn.tycoding.entity.merchant.Location;
@@ -179,8 +180,152 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
             merchantOrdersService.getDishesInOrder(order);
         }
 
-
         return orders;
+    }
+
+    @Override
+    public List searchMemberOrders(MemberSearchEntity memberSearchEntity) {
+
+        PreparedStatement stmt;
+        String sql;
+        conn = new MySQLConnector().getConnection("Yummy");
+        List<Order> orders = new ArrayList<>();
+        try{
+            if(memberSearchEntity.getRestaurantName().equals("")) {
+                sql = "select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.submitTime,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
+                        "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.address,location.lat,location.lng,location.locationId from order_tb,location where order_tb.userLocation = location.locationId and order_tb.account =?" +
+                        "and order_tb.orderAcceptedTime between ? and ? and order_tb.totalPrice between ? and ?";
+
+                stmt = conn.prepareStatement(sql);
+
+                stmt.setString(1,memberSearchEntity.getAccount());
+                stmt.setObject(2,memberSearchEntity.getStartTime());
+                stmt.setObject(3,memberSearchEntity.getEndTime());
+                stmt.setDouble(4,memberSearchEntity.getLowPrice());
+                stmt.setDouble(5,memberSearchEntity.getHighPrice());
+
+            }
+            else {
+                sql = "select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.submitTime,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
+                        "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.address,location.lat,location.lng,location.locationId,merchantInfo.restaurantName from order_tb,location,merchantInfo where order_tb.userLocation = location.locationId and order_tb.idCode=merchantInfo.idCode and order_tb.account =?" +
+                        "and order_tb.orderAcceptedTime between ? and ? and order_tb.totalPrice between ? and ? and merchantInfo.restaurantName=?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1,memberSearchEntity.getAccount());
+                stmt.setObject(2,memberSearchEntity.getStartTime());
+                stmt.setObject(3,memberSearchEntity.getEndTime());
+                stmt.setDouble(4,memberSearchEntity.getLowPrice());
+                stmt.setDouble(5,memberSearchEntity.getHighPrice());
+                stmt.setString(6,memberSearchEntity.getRestaurantName());
+            }
+
+
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                Order order = new Order();
+                order.setOrderId(rs.getLong("orderId"));
+                order.setAccount(rs.getString("account"));
+                order.setIdCode(rs.getString("idCode"));
+
+                Location location = new Location();
+                location.setLocationId(rs.getLong("locationId"));
+                location.setLat(rs.getDouble("lat"));
+                location.setLng(rs.getDouble("lng"));
+                location.setAccount(rs.getString("account"));
+                location.setAddress(rs.getString("address"));
+                order.setUserLocation(location);
+
+                order.setSubmitTime(rs.getTimestamp("submitTime").toLocalDateTime());
+                order.setExpectedArriveTime(rs.getTimestamp("expectedArriveTime").toLocalDateTime());
+
+
+                order.setTotalPrice(rs.getDouble("totalPrice"));
+
+                OrderState orderState = new OrderState();
+                orderState.setAbolished(rs.getBoolean("isAbolished"));
+                orderState.setPayed(rs.getBoolean("isPayed"));
+
+                if(orderState.isPayed())
+                    order.setOrderAcceptedTime(rs.getTimestamp("orderAcceptedTime").toLocalDateTime());
+
+                orderState.setReceived(rs.getBoolean("isReceived"));
+                order.setOrderState(orderState);
+
+                orders.add(order);
+
+            }
+
+            stmt.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //填充DISH IN ORDERS
+        for(Order order:orders){
+            merchantOrdersService.getDishesInOrder(order);
+        }
+
+        System.out.println(orders.size());
+        return orders;
+    }
+
+    @Override
+    public Order getOrder(long orderId) {
+        PreparedStatement stmt;
+        String sql;
+        conn = new MySQLConnector().getConnection("Yummy");
+        Order order = new Order();
+        try{
+            sql ="select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.submitTime,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
+                    "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.address,location.lat,location.lng,location.locationId from order_tb,location where order_tb.userLocation = location.locationId and order_tb.orderId =?";
+
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setLong(1,orderId);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                order.setOrderId(rs.getLong("orderId"));
+                order.setAccount(rs.getString("account"));
+                order.setIdCode(rs.getString("idCode"));
+
+                Location location = new Location();
+                location.setLocationId(rs.getLong("locationId"));
+                location.setLat(rs.getDouble("lat"));
+                location.setLng(rs.getDouble("lng"));
+                location.setAccount(rs.getString("account"));
+                location.setAddress(rs.getString("address"));
+                order.setUserLocation(location);
+
+                order.setSubmitTime(rs.getTimestamp("submitTime").toLocalDateTime());
+                order.setExpectedArriveTime(rs.getTimestamp("expectedArriveTime").toLocalDateTime());
+
+
+                order.setTotalPrice(rs.getDouble("totalPrice"));
+
+                OrderState orderState = new OrderState();
+                orderState.setAbolished(rs.getBoolean("isAbolished"));
+                orderState.setPayed(rs.getBoolean("isPayed"));
+
+                if(orderState.isPayed())
+                    order.setOrderAcceptedTime(rs.getTimestamp("orderAcceptedTime").toLocalDateTime());
+
+                orderState.setReceived(rs.getBoolean("isReceived"));
+                order.setOrderState(orderState);
+
+            }
+
+            stmt.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        //填充DISH IN ORDER
+        merchantOrdersService.getDishesInOrder(order);
+        return order;
     }
 
     @Override

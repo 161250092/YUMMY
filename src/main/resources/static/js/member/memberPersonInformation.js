@@ -244,7 +244,6 @@ var vm = new Vue({
                 })
         });
 
-            window.location.href="/member"
         }
 
     },

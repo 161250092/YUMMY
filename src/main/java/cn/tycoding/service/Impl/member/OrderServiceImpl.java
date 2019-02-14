@@ -1,6 +1,8 @@
 package cn.tycoding.service.Impl.member;
 
+import cn.tycoding.dao.bankAccountDao.BankAccountDataServiceImpl;
 import cn.tycoding.dao.memberDao.MemberOrderDataService;
+import cn.tycoding.entity.MemberSearchEntity;
 import cn.tycoding.entity.Result;
 import cn.tycoding.entity.order.Order;
 import cn.tycoding.entity.order.OrderState;
@@ -8,6 +10,7 @@ import cn.tycoding.service.memberService.OrderService;
 import cn.tycoding.util.ComputeArrivalTime;
 import cn.tycoding.util.ComputePrice;
 import cn.tycoding.util.OrderDelayedTransaction;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,10 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     private MemberOrderDataService memberOrderDataService;
+
+
+    @Autowired
+    private BankAccountDataServiceImpl bankAccountDataService;
 
     private   ComputePrice computePrice;
 
@@ -45,7 +52,10 @@ public class OrderServiceImpl implements OrderService{
 //        compute time;
         computeArrivalTime = new ComputeArrivalTime();
         order.setSubmitTime(LocalDateTime.now());
-        order.setExpectedArriveTime(computeArrivalTime.computeArrivalTime(order));
+        if(computeArrivalTime.accessible)
+            order.setExpectedArriveTime(computeArrivalTime.computeArrivalTime(order));
+        else
+            return new Result(false,"超出配送范围");
 
 //      提交订单
         memberOrderDataService.submitOrder(order);
@@ -67,6 +77,11 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    public List searchMemberOrders(MemberSearchEntity memberSearchEntity) {
+        return memberOrderDataService.searchMemberOrders(memberSearchEntity);
+    }
+
+    @Override
     public Result confirmOrder(long orderId) {
         if(memberOrderDataService.confirmOrder(orderId))
             return new Result(true,"确认接收");
@@ -76,6 +91,12 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public Result abolishOrder(long orderId) {
+
+        Order order = memberOrderDataService.getOrder(orderId);
+
+        double returnPrice = computePrice.returnMoney(order);
+//      bankAccountDataService.
+
         if(memberOrderDataService.abolishOrder(orderId))
             return new Result(true,"退订成功");
         else

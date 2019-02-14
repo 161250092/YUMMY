@@ -43,7 +43,7 @@ new Vue({
 
             getAllMerchants(){
                 this.$http.post('/member/getAllMerchants',{
-                    account:sessionStorage.getItem("idCode")
+                    account:sessionStorage.getItem("account")
                 }).then(result => {
                     console.log(result);
                     this.merchants = result.body;

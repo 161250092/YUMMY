@@ -48,13 +48,12 @@ var vm = new Vue({
 
             showOrderForm:false,
 
-
             activeIndex: '0', //默认激活
 
+            merchantInfo:{},
 
-
-
-
+            merchantInformation:'',
+            discountsInformation:''
 
         }
 
@@ -137,6 +136,30 @@ var vm = new Vue({
             });
         },
 
+        getMerchantInfo(){
+            this.$http.post('/member/getMerchantInfo',{
+                idCode:sessionStorage.getItem("idCode"),
+            }).then(result => {
+                console.log(result);
+                this.merchantInfo = result.body;
+
+                this.generateMerchantInformation();
+            });
+        },
+
+        generateMerchantInformation(){
+            this.merchantInformation ='';
+            this.merchantInformation +="店名: "+this.merchantInfo.restaurantName+" 类型: "+this.merchantInfo.restaurantType+"\n"
+            this.merchantInformation +="地址: "+this.merchantInfo.location.address+"\n";
+            this.merchantInformation +="配送费:"+ this.merchantInfo.deliveryCost+" 起送价格:"+this.merchantInfo.minDeliveryCost+"\n";
+
+            this.discountsInformation="优惠: ";
+            for(let i=0;i<this.merchantInfo.discounts.length;i++){
+                this.discountsInformation +="满: "+this.merchantInfo.discounts[i].totalPrice+"元 减: "+this.merchantInfo.discounts[i].reducePrice+"元  \n";
+            }
+
+        },
+
         submitOrder() {
             console.log(this.cart);
 
@@ -144,37 +167,33 @@ var vm = new Vue({
             ).then(result => {
                 console.log(result);
 
+                if (result.body.success) {
+                    //提交成功
+                    this.$message({
+                        type: 'success',
+                        message: result.body.message,
+                        duration: 6000
+                    });
+                    this.showOrderForm = false;
+                    this.getMerchantAllDishes();
+                }else {
+                    //提交失败
+                    this.$emit(
+                        this.$message({
+                            type: 'warning',
+                            message: result.body.message,
+                            duration: 6000
+                        }),
 
-                // if (result.body.success) {
-                //     //支付成功
-                //     this.$message({
-                //         type: 'success',
-                //         message: result.body.message,
-                //         duration: 6000
-                //     });
-                //     this.showPayForm = false;
-                //     this.getMemberOrders();
-                // }else {
-                //     //失败
-                //     this.$emit(
-                //         this.$message({
-                //             type: 'warning',
-                //             message: result.body.message,
-                //             duration: 6000
-                //         }),
-                //
-                //     );
-                //     this.showPayForm = false;
-                //     this.getMemberOrders();
-                // }
+                    );
+                    this.showOrderForm = false;
+                    this.getMerchantAllDishes();
+                }
 
 
             });
-
             this.showOrderForm = false;
-
         },
-
 
         toPay(){
 
@@ -190,6 +209,7 @@ var vm = new Vue({
     },
 
     created(){
+        this.getMerchantInfo();
         this.getMerchantAllDishes();
         this.getMemberLocations();
     }

@@ -1,5 +1,6 @@
 package cn.tycoding.service.memberService;
 
+import cn.tycoding.entity.MemberSearchEntity;
 import cn.tycoding.entity.Result;
 import cn.tycoding.entity.order.Order;
 
@@ -10,6 +11,8 @@ public interface OrderService {
     public Result submitOrder(Order order);
 
     public List getMemberOrders(String account);
+
+    public List searchMemberOrders(MemberSearchEntity memberSearchEntity);
 
     public Result confirmOrder(long orderId);
 

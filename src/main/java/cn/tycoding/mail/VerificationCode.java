@@ -49,10 +49,10 @@ public class VerificationCode {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
             // Set Subject: 头部头字段
-            message.setSubject("邮件代码测试");
+            message.setSubject("Yummy 验证码");
 
             // 设置消息体
-            message.setText("have a good day!   "+verificationCode);
+            message.setText("您的验证码是: "+verificationCode);
 
             // 发送消息
             Transport.send(message);

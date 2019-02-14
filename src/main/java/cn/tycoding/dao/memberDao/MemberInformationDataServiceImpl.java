@@ -183,7 +183,7 @@ public class MemberInformationDataServiceImpl implements MemberInformationDataSe
     @Override
     public boolean deleteAccount(String account) {
 
-        Member member  =this.getMemberInformation(account);
+        Member member = this.getMemberInformation(account);
         this.removeAccountIntoDeletedMember(member);
 
         PreparedStatement stmt;
@@ -209,7 +209,7 @@ public class MemberInformationDataServiceImpl implements MemberInformationDataSe
     }
 
 
-    public boolean removeAccountIntoDeletedMember(Member member){
+    private void removeAccountIntoDeletedMember(Member member){
 
         PreparedStatement stmt;
         String sql;
@@ -233,8 +233,6 @@ public class MemberInformationDataServiceImpl implements MemberInformationDataSe
             e.printStackTrace();
         }
 
-
-        return true;
     }
 
 

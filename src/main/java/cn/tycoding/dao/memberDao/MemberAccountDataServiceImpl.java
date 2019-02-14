@@ -45,7 +45,30 @@ public class MemberAccountDataServiceImpl implements MemberAccountDataService {
 
     @Override
     public boolean isAccountExist(String account) {
-        return !this.getPassword(account).equals("");
+        PreparedStatement stmt;
+        String sql;
+        conn = new MySQLConnector().getConnection("Yummy");
+
+        String deleteAccountPassword = "";
+        try{
+            sql = "select password from deletedMember where account=?";
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1,account);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                deleteAccountPassword = rs.getString("password");
+            }
+
+            stmt.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //  getPassword(account)如果是空说明账号不存在，deleteAccountPassword.equals("")为空说明没被注销
+        return !this.getPassword(account).equals("")&&!deleteAccountPassword.equals("");
 
     }
 

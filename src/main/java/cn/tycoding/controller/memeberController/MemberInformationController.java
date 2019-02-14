@@ -32,8 +32,7 @@ public class MemberInformationController {
 
     @RequestMapping("/getMemberInformation")
     public Member getMemberInformation(@RequestParam("account") String account){
-//        System.out.println(account);
-//        return new Member(account);
+
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         account = (String) attributes.getRequest().getSession().getAttribute("account");
         return memberInformationService.getMemberInformation(account);
@@ -41,8 +40,7 @@ public class MemberInformationController {
 
     @RequestMapping("/updateMemberInformation")
     public Result updateMemberInformation(@RequestBody Member member){
-//        System.out.println(member.getNickName());
-//        return new Result(true,"更新成功");
+
         return memberInformationService.updateMemberInformation(member);
     }
 

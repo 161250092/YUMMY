@@ -68,7 +68,13 @@ public class MemberLoginController {
 //        System.out.println(member.getPassword());
 //        System.out.println(member.getPhone());
 //        return new Result(true, "注册成功");
-        return memberAccountService.register(member);
+
+         Result rs = memberAccountService.register(member);
+         if(rs.isSuccess()){
+             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+             attributes.getRequest().getSession().setAttribute("account",member.getAccount());
+         }
+        return rs;
     }
 
     @RequestMapping("/logout")

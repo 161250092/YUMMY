@@ -4,6 +4,7 @@ import cn.tycoding.dao.merchantDao.MerchantDishesDataService;
 import cn.tycoding.dao.merchantDao.MerchantInformationDataService;
 import cn.tycoding.entity.member.DishForMember;
 import cn.tycoding.entity.merchant.Dish;
+import cn.tycoding.entity.merchant.MerchantInfo;
 import cn.tycoding.service.memberService.MerchantVisitService;
 import cn.tycoding.util.DishForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +43,10 @@ public class MerchantVisitServiceImpl implements MerchantVisitService{
         return dishForMembers;
     }
 
-
-
-
-
+    @Override
+    public MerchantInfo getMerchantInfo(String idCode) {
+        return merchantInformationDataService.getMerchantInfo(idCode);
+    }
 
 
 }

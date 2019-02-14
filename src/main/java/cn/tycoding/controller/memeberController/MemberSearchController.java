@@ -19,6 +19,9 @@ public class MemberSearchController {
     @Autowired
     private MerchantVisitService merchantVisitService;
 
+
+
+
     @RequestMapping("/getAllMerchants")
     public List getMerchants(@RequestParam("account")String account){
 
@@ -40,6 +43,12 @@ public class MemberSearchController {
             @RequestParam("idCode") String idCode) {
 
         return merchantVisitService.getMerchantAllDishesInForce(idCode);
+    }
+
+    @RequestMapping("/getMerchantInfo")
+    public MerchantInfo getMerchantInfo(
+            @RequestParam("idCode") String idCode) {
+        return merchantVisitService.getMerchantInfo(idCode);
     }
 
 }
