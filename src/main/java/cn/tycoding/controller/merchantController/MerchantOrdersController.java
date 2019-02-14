@@ -1,18 +1,15 @@
-package cn.tycoding.controller.merchantControoler;
+package cn.tycoding.controller.merchantController;
 
-import cn.tycoding.entity.PageBean;
 import cn.tycoding.entity.SearchEntity;
-import cn.tycoding.entity.merchant.Dish;
-import cn.tycoding.entity.order.Order;
-import cn.tycoding.entity.order.OrderState;
 import cn.tycoding.service.merchantService.MerchantOrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -43,6 +40,13 @@ public class MerchantOrdersController {
 //        }
 //
 //        return rows;
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String idCode = (String)attributes.getRequest().getSession().getAttribute("account");
+        searchEntity.setIdCode(idCode);
+
+        System.out.println(searchEntity.getStartTime());
+        System.out.println(searchEntity.getEndTime());
+
         return merchantOrdersService.checkMerchantOrders(searchEntity);
 
     }

@@ -6,7 +6,9 @@ import cn.tycoding.entity.merchant.Dish;
 import java.util.List;
 
 public interface MerchantDishesDataService {
-    public List getMerchantDish(String idCode);
+    public List<Dish> getMerchantDish(String idCode);
+
+    public List<Dish> getMerchantDishesInForce(String idCode);
 
     public PageBean findDishesByConPage(String idCode, int pageCode,int pageSize);
 

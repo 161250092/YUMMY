@@ -1,9 +1,8 @@
-package cn.tycoding.controller.merchantControoler;
+package cn.tycoding.controller.merchantController;
 
 import cn.tycoding.entity.PageBean;
 import cn.tycoding.entity.Result;
 import cn.tycoding.entity.merchant.Dish;
-import cn.tycoding.entity.merchant.MerchantInfo;
 import cn.tycoding.service.merchantService.DishManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/dishes")
@@ -46,9 +42,6 @@ public class MerchantDishController {
 
     @RequestMapping("create")
     public Result createDish(@RequestBody Dish dish){
-//        System.out.println(dish.getStartTime());
-//
-//        return new Result(true,"创建成功");
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         String idCode =(String)attributes.getRequest().getSession().getAttribute("account");
@@ -62,8 +55,6 @@ public class MerchantDishController {
 
     @RequestMapping("update")
     public Result updateDish(@RequestBody Dish dish){
-//        System.out.println(dish.getStartTime());
-//        return new Result(true,"修改成功");
         if(dishManageService.updateDish(dish))
             return new Result(true,"修改成功");
         else

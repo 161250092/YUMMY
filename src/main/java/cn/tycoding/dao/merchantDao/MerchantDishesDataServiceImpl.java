@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -16,7 +17,7 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
     private Connection conn;
 
     @Override
-    public List getMerchantDish(String idCode) {
+    public List<Dish> getMerchantDish(String idCode) {
 
         List dishes = new ArrayList<Dish>();
         PreparedStatement stmt;
@@ -43,6 +44,43 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
                dish.setQuantity(rs.getInt("quantity"));
                dish.setDescription(rs.getString("description"));
                dishes.add(dish);
+            }
+            stmt.close();
+            conn.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return dishes;
+    }
+
+    @Override
+    public List<Dish> getMerchantDishesInForce(String idCode) {
+        List dishes = new ArrayList<Dish>();
+        PreparedStatement stmt;
+        String sql;
+        conn = new MySQLConnector().getConnection("Yummy");
+
+        try{
+            sql = "select * from dish where idCode=? and ? between startTime and endTime";
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1,idCode);
+            stmt.setObject(2, LocalDate.now());
+
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                Dish dish  = new Dish();
+                dish.setDishId(rs.getLong("dishId"));
+                dish.setIdCode(rs.getString("idCode"));
+                dish.setEndTime(rs.getDate("endTime").toLocalDate());
+                dish.setStartTime(rs.getDate("startTime").toLocalDate());
+                dish.setType(rs.getString("dishType"));
+                dish.setName(rs.getString("dishName"));
+                dish.setPrice(rs.getDouble("price"));
+                dish.setQuantity(rs.getInt("quantity"));
+                dish.setDescription(rs.getString("description"));
+                dishes.add(dish);
             }
             stmt.close();
             conn.close();

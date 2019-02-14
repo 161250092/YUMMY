@@ -38,15 +38,15 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
-                    "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.lat,location.lng,location.locationId from order_tb,location,member where order_tb.userLocation = location.locationId  and order_tb.account =member.account " +
-                    "and order_tb.idCode =? and order_tb.orderAcceptedTime between ? and ? and order_tb.totalPrice between ? and ? and member.memberLevel between ? and ?";
+            sql = "select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.submitTime,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
+                    "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.address,location.lat,location.lng,location.locationId from order_tb,location,member where order_tb.userLocation = location.locationId  and order_tb.account =member.account " +
+                    " and order_tb.idCode =? and order_tb.orderAcceptedTime between ? and ? and order_tb.totalPrice between ? and ? and member.memberLevel between ? and ?";
 
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1,searchEntity.getIdCode());
-            stmt.setDate(2,java.sql.Date.valueOf(searchEntity.getStartTime()));
-            stmt.setDate(3,java.sql.Date.valueOf(searchEntity.getEndTime()));
+            stmt.setObject(2,searchEntity.getStartTime());
+            stmt.setObject(3,searchEntity.getEndTime());
             stmt.setDouble(4,searchEntity.getLowPrice());
             stmt.setDouble(5,searchEntity.getHighPrice());
             stmt.setInt(6,searchEntity.getLowLevel());
@@ -67,6 +67,7 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
                 location.setAddress(rs.getString("address"));
                 order.setUserLocation(location);
 
+                order.setSubmitTime(rs.getTimestamp("submitTime").toLocalDateTime());
                 order.setExpectedArriveTime(rs.getTimestamp("expectedArriveTime").toLocalDateTime());
                 order.setOrderAcceptedTime(rs.getTimestamp("orderAcceptedTime").toLocalDateTime());
 
@@ -89,15 +90,18 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
             e.printStackTrace();
         }
 
+        List<Order> orders;
 
-
-
-        return null;
+        for(Order item:ordersWithoutDishes){
+            this.getDishesInOrder(item);
+        }
+        orders = ordersWithoutDishes;
+        return orders;
     }
 
 
     /**
-     *  获取商家订单信息(无订单信息)
+     *  获取商家订单信息(无信息)
      * @param idCode
      * @return
      */
@@ -109,7 +113,7 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
 
         List<Order> orders = new ArrayList<>();
         try{
-            sql ="select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
+            sql ="select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.submitTime,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
                     "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.lat,location.lng,location.locationId,location.address from order_tb,location where order_tb.userLocation = location.locationId and order_tb.idCode =? ";
 
             stmt = conn.prepareStatement(sql);
@@ -130,6 +134,7 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
                 location.setAddress(rs.getString("address"));
                 order.setUserLocation(location);
 
+                order.setSubmitTime(rs.getTimestamp("submitTime").toLocalDateTime());
                 order.setExpectedArriveTime(rs.getTimestamp("expectedArriveTime").toLocalDateTime());
                 order.setOrderAcceptedTime(rs.getTimestamp("orderAcceptedTime").toLocalDateTime());
 
@@ -154,9 +159,9 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
         }
 
 
-        for(Order order:orders){
-            this.getDishesInOrder(order);
-        }
+//        for(Order order:orders){
+//            this.getDishesInOrder(order);
+//        }
 
         return orders;
     }

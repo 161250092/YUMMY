@@ -21,6 +21,11 @@ public class DishManageServiceImpl implements DishManageService{
     }
 
     @Override
+    public List<Dish> getMerchantDishInForce(String idCode) {
+        return merchantDishesDataService.getMerchantDishesInForce(idCode);
+    }
+
+    @Override
     public PageBean findDishesByConPage(String idCode, int pageCode, int pageSize) {
         return merchantDishesDataService.findDishesByConPage(idCode,pageCode,pageSize);
     }

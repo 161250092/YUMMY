@@ -99,16 +99,21 @@ create table if not exists `application`(
 
 -- Order
 create table if not exists `order_tb`(
-`orderId` bigint auto_increment primary key,
-`account` varchar(20),
-`idCode`  varchar(7),
-`userLocation` bigint,
-`orderAcceptedTime`  datetime,
-`expectedArriveTime`  datetime,
-`totalPrice` double,
-`isPayed`  boolean,
-`isReceived`  boolean,
-`isAbolished` boolean
+  `orderId` bigint auto_increment primary key,
+  `account` varchar(20),
+  `idCode`  varchar(7),
+
+  `userLocation` bigint,
+
+  `submitTime` datetime,
+  `orderAcceptedTime`  datetime,
+  `expectedArriveTime`  datetime,
+
+  `totalPrice` double,
+
+  `isPayed`  boolean,
+  `isReceived`  boolean,
+  `isAbolished` boolean
 )ENGINE = InnoDB DEFAULT CHARSET =utf8;
 
 

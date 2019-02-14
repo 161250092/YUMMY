@@ -1,11 +1,12 @@
 package cn.tycoding.dao.managerDao;
 
 import cn.tycoding.dao.mysql.MySQLConnector;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+@Service
 public class ManagerAccountDataServiceImpl implements  ManagerAccountDataService {
     private Connection conn;
     @Override

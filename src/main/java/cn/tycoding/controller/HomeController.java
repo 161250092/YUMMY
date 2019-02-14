@@ -2,6 +2,8 @@ package cn.tycoding.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * 首页控制器
@@ -63,6 +65,11 @@ public class HomeController {
         return "memberPages/memberStatisticsPage";
     }
 
+    @GetMapping(value = {"/memberLogout"})
+    public String memberLogout() {
+        return "memberPages/memberLogin";
+    }
+
 
 
     @GetMapping(value = {"/enterMerchant"})
@@ -88,6 +95,13 @@ public class HomeController {
         return "merchantPages/merchantEditPage";
     }
 
+
+    @GetMapping(value = {"/merchantLogout"})
+    public String merchantLogout(){
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        attributes.getRequest().getSession().removeAttribute("account");
+        return "merchantPages/merchantLogin";
+    }
 
 
     @GetMapping(value = {"/merchantStatisticsPage"})

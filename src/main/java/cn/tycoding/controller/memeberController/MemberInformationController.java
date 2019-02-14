@@ -4,10 +4,14 @@ import cn.tycoding.entity.PageBean;
 import cn.tycoding.entity.Result;
 import cn.tycoding.entity.member.Member;
 import cn.tycoding.entity.merchant.Location;
+import cn.tycoding.service.memberService.MemberInformationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 import java.util.ArrayList;
@@ -17,52 +21,58 @@ import java.util.List;
 @RequestMapping("/member")
 public class MemberInformationController {
 
+    @Autowired
+    private MemberInformationService memberInformationService;
+
     @RequestMapping("/getMemberLocations")
-    public PageBean findByConPage(
+    public List findByConPage(
             @RequestParam("account") String account) {
-            System.out.println("account: "+account);
-        List rows = new ArrayList();
-        for(int i=0;i<3;i++){
-            rows.add(new Location(i));
-        }
-        PageBean pageBean =new PageBean(3,rows);
-        return pageBean;
+        return memberInformationService.getMemberInformation(account).getLocations();
     }
 
     @RequestMapping("/getMemberInformation")
     public Member getMemberInformation(@RequestParam("account") String account){
-        System.out.println(account);
-        return new Member(account);
+//        System.out.println(account);
+//        return new Member(account);
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        account = (String) attributes.getRequest().getSession().getAttribute("account");
+        return memberInformationService.getMemberInformation(account);
     }
 
     @RequestMapping("/updateMemberInformation")
     public Result updateMemberInformation(@RequestBody Member member){
-        System.out.println(member.getNickName());
-        return new Result(true,"更新成功");
+//        System.out.println(member.getNickName());
+//        return new Result(true,"更新成功");
+        return memberInformationService.updateMemberInformation(member);
     }
 
 
 
     @RequestMapping("/addNewLocation")
     public Result addNewLocation(@RequestBody Location location){
-        System.out.println(location.getAddress());
-        return new Result(true,"添加成功");
+//        System.out.println(location.getAddress());
+//        return new Result(true,"添加成功");
+        return memberInformationService.addNewLocation(location);
     }
 
 
 
     @RequestMapping("/deleteLocation")
     public Result deleteLocation(@RequestParam("locationId")long locationId){
-        System.out.println(locationId);
-        return new Result(true,"删除成功");
+//        System.out.println(locationId);
+//        return new Result(true,"删除成功");
+        return memberInformationService.deleteLocation(locationId);
     }
 
 
 
     @RequestMapping("/deleteAccount")
     public Result deleteAccount(@RequestParam("account")String account){
-        System.out.println(account);
-        return new Result(true,"账号注销成功");
+
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        account = (String) attributes.getRequest().getSession().getAttribute("account");
+//        return new Result(true,"账号注销成功");
+        return memberInformationService.deleteAccount(account);
     }
 
 

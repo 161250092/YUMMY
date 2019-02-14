@@ -4,13 +4,14 @@ import cn.tycoding.dao.mysql.MySQLConnector;
 import cn.tycoding.entity.member.Member;
 import cn.tycoding.entity.member.MemberLevel;
 import cn.tycoding.entity.merchant.Location;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class MemberInformationDataServiceImpl implements MemberInformationDataService {
 
     private Connection conn;
@@ -131,13 +132,13 @@ public class MemberInformationDataServiceImpl implements MemberInformationDataSe
 
     @Override
     public boolean updateMemberInformation(Member member) {
+        long userId = this.getUserId(member.getAccount());
+
         PreparedStatement stmt;
         String sql;
         conn = new MySQLConnector().getConnection("Yummy");
-
-        long userId = this.getUserId(member.getAccount());
         try{
-            sql = "update member set nickName=? and phone=? where userId=?";
+            sql = "update member set nickName=?,phone=? where userId=?";
 
             stmt = conn.prepareStatement(sql);
             stmt.setString(1,member.getNickName());

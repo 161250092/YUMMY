@@ -1,15 +1,45 @@
 package cn.tycoding.dao.bankAccountDao;
 
 import cn.tycoding.dao.mysql.MySQLConnector;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+@Service
 public class BankAccountDataServiceImpl implements  BankAccountDataService {
     private Connection conn;
+
     @Override
-    public void transferAccountIn(String account,double amount) {
+    public boolean login(String account, String password) {
+        PreparedStatement stmt;
+        String sql;
+        String actual ="";
+        conn = new MySQLConnector().getConnection("Bank");
+
+        try{
+            sql = "select password from bankAccount where account=?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1,account);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                actual = rs.getString("password");
+            }
+            stmt.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return actual.equals(password);
+
+
+    }
+
+    @Override
+    public boolean transferAccountIn(String account,double amount) {
         PreparedStatement stmt;
         String sql;
         conn = new MySQLConnector().getConnection("Bank");
@@ -28,16 +58,19 @@ public class BankAccountDataServiceImpl implements  BankAccountDataService {
             e.printStackTrace();
         }
 
-
+        return true;
 
     }
 
 
     @Override
     public boolean transferAccountOut(String account, String password, double amount) {
-        if(!this.isBalanceEnough(account,amount)) {
-            return false;
-        }
+//        if(this.login(account,password))
+//            return false;
+//
+//        if(!this.isBalanceEnough(account,amount)) {
+//            return false;
+//        }
 
         PreparedStatement stmt;
         String sql;
@@ -59,11 +92,10 @@ public class BankAccountDataServiceImpl implements  BankAccountDataService {
             e.printStackTrace();
         }
 
-
-
         return true;
     }
 
+    @Override
     public boolean isBalanceEnough(String account,double amount){
         PreparedStatement stmt;
         String sql;

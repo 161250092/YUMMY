@@ -1,7 +1,6 @@
-package cn.tycoding.controller.merchantControoler;
+package cn.tycoding.controller.merchantController;
 
 import cn.tycoding.entity.Result;
-import cn.tycoding.entity.merchant.Discount;
 import cn.tycoding.entity.merchant.MerchantInfo;
 import cn.tycoding.service.merchantService.MerchantInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,10 @@ public class MerchantInformationController {
     public MerchantInfo getMerchantInfo(@RequestParam("idCode") String idCode){
 //        System.out.println("get merchant information");
 //        return new MerchantInfo();
+
+
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        idCode = (String) attributes.getRequest().getSession().getAttribute("account");
         return merchantInformationService.getMerchantInfo(idCode);
 
     }
@@ -49,7 +52,6 @@ public class MerchantInformationController {
         String idCode =(String)attributes.getRequest().getSession().getAttribute("account");
 //        System.out.println(totalPrice+" "+reducePrice);
 //        return new Result(true,"添加新优惠成功");
-
         if(merchantInformationService.addNewDiscount(idCode,totalPrice,reducePrice))
             return new Result(true,"添加新优惠成功");
         else

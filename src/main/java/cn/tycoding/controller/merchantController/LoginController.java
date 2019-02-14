@@ -1,4 +1,4 @@
-package cn.tycoding.controller.merchantControoler;
+package cn.tycoding.controller.merchantController;
 
 
 import cn.tycoding.entity.Result;
@@ -32,16 +32,17 @@ public class LoginController {
     public Result merchantRegister(@RequestBody MerchantRegisterInf merchantRegisterInf){
 
 //        System.out.println(merchantRegisterInf.getPassword());
-        return this.merchantAccountService.register(merchantRegisterInf);
+        Result rs = this.merchantAccountService.register(merchantRegisterInf);
+        if(rs.isSuccess()) {
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            attributes.getRequest().getSession().setAttribute("account", rs.getMessage());
+            return rs;
+        }
+        else
+            return rs;
     }
 
 
-    @RequestMapping("/merchantLogout")
-    public Result merchantLogout(){
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        attributes.getRequest().getSession().removeAttribute("account");
-        return null;
-    }
 
 
 

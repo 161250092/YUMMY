@@ -46,6 +46,45 @@ public class MerchantInformationDataServiceImpl implements MerchantInformationDa
         }catch (Exception e){
             e.printStackTrace();
         }
+        for(MerchantInfo merchantInfo:merchants){
+            merchantInfo.setLocation(this.getMerchantLocation(merchantInfo.getIdCode()));
+        }
+
+        return merchants;
+    }
+
+    @Override
+    public List<MerchantInfo> searchMerchants(String restaurantName, String restaurantType) {
+        conn = new MySQLConnector().getConnection("Yummy");
+        PreparedStatement stmt;
+        String sql;
+
+        List<MerchantInfo>  merchants = new ArrayList<>();
+        try{
+            sql = "select * from merchantInfo where restaurantName=? or restaurantType=?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1,restaurantName);
+            stmt.setString(2,restaurantType);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                MerchantInfo merchantInfo  = new MerchantInfo();
+                merchantInfo.setIdCode(rs.getString("idCode"));
+                merchantInfo.setBankAccount(rs.getString("bankAccount"));
+                merchantInfo.setRestaurantName(rs.getString("restaurantName"));
+                merchantInfo.setRestaurantType(rs.getString("restaurantType"));
+                merchantInfo.setPhone(rs.getString("phone"));
+                merchantInfo.setMinDeliveryCost(rs.getDouble("minDeliveryCost"));
+                merchantInfo.setDeliveryCost(rs.getDouble("deliveryCost"));
+                merchants.add(merchantInfo);
+            }
+
+            stmt.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return merchants;
     }
 
@@ -117,7 +156,8 @@ public class MerchantInformationDataServiceImpl implements MerchantInformationDa
 
     }
 
-    private List<Discount> getMerchantDiscounts(String idCode){
+    @Override
+    public List<Discount> getMerchantDiscounts(String idCode){
         PreparedStatement stmt;
         String sql;
         conn = new MySQLConnector().getConnection("Yummy");

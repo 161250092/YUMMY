@@ -3,6 +3,7 @@ package cn.tycoding.controller.memeberController;
 import cn.tycoding.entity.Result;
 import cn.tycoding.entity.member.Member;
 import cn.tycoding.mail.VerificationCode;
+import cn.tycoding.service.memberService.MemberAccountService;
 import cn.tycoding.util.GenerateVerification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +16,20 @@ import java.security.GeneralSecurityException;
 @RequestMapping("/member")
 public class MemberLoginController {
 
-
+    @Autowired
+    private MemberAccountService memberAccountService;
 
     @RequestMapping("/login")
     public Result memberLogin(@RequestParam("account") String account, @RequestParam("password") String password) {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        attributes.getRequest().getSession().setAttribute("account", account); //将登陆用户信息存入到session域对象中
-        return new Result(true, "用户"+account+"登录成功");
+        Result rs = memberAccountService.login(account,password);
+
+        if(rs.isSuccess()) {
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            attributes.getRequest().getSession().setAttribute("account", account); //将登陆用户信息存入到session域对象中
+            return new Result(true, "用户" + account + "登录成功");
+        }
+        else
+            return rs;
     }
 
 
@@ -55,11 +63,12 @@ public class MemberLoginController {
 
     @RequestMapping("/register")
     public Result memberRegister(@RequestBody Member member) {
-        System.out.println(member.getAccount());
-        System.out.println(member.getMail());
-        System.out.println(member.getPassword());
-        System.out.println(member.getPhone());
-        return new Result(true, "注册成功");
+//        System.out.println(member.getAccount());
+//        System.out.println(member.getMail());
+//        System.out.println(member.getPassword());
+//        System.out.println(member.getPhone());
+//        return new Result(true, "注册成功");
+        return memberAccountService.register(member);
     }
 
     @RequestMapping("/logout")

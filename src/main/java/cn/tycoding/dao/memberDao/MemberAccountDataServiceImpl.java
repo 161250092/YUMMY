@@ -2,11 +2,13 @@ package cn.tycoding.dao.memberDao;
 
 import cn.tycoding.dao.mysql.MySQLConnector;
 import cn.tycoding.entity.member.Member;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+@Service
 public class MemberAccountDataServiceImpl implements MemberAccountDataService {
 
 

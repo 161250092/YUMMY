@@ -7,8 +7,11 @@ import java.util.List;
 public interface MemberOrderDataService {
     public boolean submitOrder(Order order);
 
-
     public List getMemberOrders(String account);
+
+    public double getOrderPrice(long orderId);
+
+
 
     public boolean confirmOrder(long orderId);
 
@@ -17,6 +20,8 @@ public interface MemberOrderDataService {
     public boolean cancelOrder(long orderId);
 
     public boolean payForOrder(long orderId);
+
+    public boolean isPayed(long orderId);
 
 
 }

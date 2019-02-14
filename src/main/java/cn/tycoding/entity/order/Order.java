@@ -20,6 +20,8 @@ public class Order implements Serializable {
 
     private Location userLocation;
 
+    private LocalDateTime submitTime;
+
     private LocalDateTime orderAcceptedTime;
 
     private LocalDateTime expectedArriveTime;
@@ -128,5 +130,13 @@ public class Order implements Serializable {
 
     public void setDishes(List<DishForMember> dishes) {
         this.dishes = dishes;
+    }
+
+    public LocalDateTime getSubmitTime() {
+        return submitTime;
+    }
+
+    public void setSubmitTime(LocalDateTime submitTime) {
+        this.submitTime = submitTime;
     }
 }

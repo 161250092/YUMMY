@@ -120,6 +120,8 @@ var vm = new Vue({
                     });
                     //刷新信息
                     this.reloadInformation();
+
+                    this.showEditor = false;
                 } else {
                     //更新失败
                     this.$message({
@@ -211,29 +213,38 @@ var vm = new Vue({
         },
 
 
-        deleteAccount(){
-            this.$http.post('/member/deleteAccount', {
-                account:sessionStorage.getItem("account")}
-            ).then(result => {
-                if (result.body.success) {
-                    //更新成功
-                    this.$message({
-                        type: 'success',
-                        message: result.body.message,
-                        duration: 6000
-                    });
-                    window.location.href = "/member";
-                } else {
-                    //更新失败
-                    this.$message({
-                        type: 'warning',
-                        message: result.body.message,
-                        duration: 6000
-                    });
-                    //刷新列表
-                    this.reloadInformation();
-                }
-            })
+        deleteAccount() {
+            this.$confirm('确定撤销', '提示', {
+                confirmButtonText: '确定注销账号吗，该操作不可恢复！',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center: true
+            }).then(() => {
+                this.$http.post('/member/deleteAccount', {
+                    account:sessionStorage.getItem("account")}
+                ).then(result => {
+                    if (result.body.success) {
+                        //更新成功
+                        this.$message({
+                            type: 'success',
+                            message: result.body.message,
+                            duration: 6000
+                        });
+                        window.location.href = "/member";
+                    } else {
+                        //更新失败
+                        this.$message({
+                            type: 'warning',
+                            message: result.body.message,
+                            duration: 6000
+                        });
+                        //刷新列表
+                        this.reloadInformation();
+                    }
+                })
+        });
+
+            window.location.href="/member"
         }
 
     },

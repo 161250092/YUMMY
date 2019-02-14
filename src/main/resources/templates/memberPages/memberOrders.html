@@ -20,10 +20,10 @@
         <el-menu-item id="author" index="4">
             <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
             <el-dropdown>
-                <span class="el-dropdown-link">TyCoding<i class="el-icon-arrow-down el-icon--right"></i></span>
+                <span class="el-dropdown-link">用户<i class="el-icon-arrow-down el-icon--right"></i></span>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item divided><a href="/memberPersonPage">信息中心</a></el-dropdown-item>
-                    <el-dropdown-item divided><a href="/member/logout">退出</a></el-dropdown-item>
+                    <el-dropdown-item divided><a href="/memberLogout">退出</a></el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </el-menu-item>
@@ -88,7 +88,7 @@
                         <template slot-scope="scope">
 
                             <!--付款但没有接收的  可以接收-->
-                            <el-button v-if="!scope.row.orderState.received&&scope.row.orderState.payed"
+                            <el-button v-if="!scope.row.orderState.received&&scope.row.orderState.payed&&!scope.row.orderState.abolished"
                                        size="mini"
                                        type="primary"
                                        @click="confirmOrder(scope.row.orderId)">接收
@@ -102,7 +102,7 @@
                             </el-button>
 
                             <!--已经付款、没有接收可以退订-->
-                            <el-button v-if="!scope.row.orderState.received&&scope.row.orderState.payed"
+                            <el-button v-if="!scope.row.orderState.received&&scope.row.orderState.payed&&!scope.row.orderState.abolished"
                                        size="mini"
                                        type="danger"
                                        @click="abolishOrder(scope.row.orderId)">退订

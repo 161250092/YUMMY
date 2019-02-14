@@ -10,10 +10,14 @@ public interface MerchantVisitService {
 
     public List getAllMerchants();
 
-    public PageBean getMerchantsByPage(int pageCode, int pageSize);
+    public List searchMerchants(String restaurantName,String restaurantType);
 
-    public PageBean getDishesByPage(String idCode,int pageCode,int pageSize);
+    public List getMerchantAllDishesInForce(String idCode);
 
-    public MerchantInfo visitMerchant(String idCode);
+//    public PageBean getMerchantsByPage(int pageCode, int pageSize);
+//
+//    public PageBean getDishesByPage(String idCode,int pageCode,int pageSize);
+//
+//    public MerchantInfo visitMerchant(String idCode);
 
 }

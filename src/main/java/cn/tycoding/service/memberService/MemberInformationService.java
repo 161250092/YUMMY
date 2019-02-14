@@ -1,21 +1,20 @@
 package cn.tycoding.service.memberService;
 
 import cn.tycoding.entity.Result;
+import cn.tycoding.entity.member.Member;
+import cn.tycoding.entity.merchant.Location;
 
-import java.util.List;
 
 public interface MemberInformationService {
 
-    public List<String> getLocations(String account);
+    public Member getMemberInformation(String account);
 
-    public Result modifyPhone(String account, String oldPhone, String newPhone);
+    public Result updateMemberInformation(Member member);
 
-    public Result modifyName(String account, String oldName, String newName);
+    public Result addNewLocation(Location location);
 
-    public Result addLocation(String account,String newLocation);
+    public Result deleteLocation(long locationId);
 
-    public Result deleteLocation(String account,String location);
-
-    public Result changeLocation(String account,String oldLocation,String newLocation);
+    public Result deleteAccount(String account);
 
 }

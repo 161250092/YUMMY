@@ -39,10 +39,11 @@ new Vue({
                             duration: 6000
                         });
                     }
+                    this.getApplications();
                 });
 
             });
-            this.getApplications();
+
         },
 
 
@@ -63,11 +64,12 @@ new Vue({
                             message: result.body.message,
                             duration: 6000
                         });
+                        this.getApplications();
                     }
                 });
 
             });
-            this.getApplications();
+
 
         }
     },
@@ -75,11 +77,6 @@ new Vue({
 
     created(){
         this.getApplications();
-
-
-
-
-
     }
 
 

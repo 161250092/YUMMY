@@ -23,10 +23,10 @@
         <el-menu-item id="author" index="4">
             <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
             <el-dropdown>
-                <span class="el-dropdown-link">TyCoding<i class="el-icon-arrow-down el-icon--right"></i></span>
+                <span class="el-dropdown-link">用户<i class="el-icon-arrow-down el-icon--right"></i></span>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item divided><a href="/memberPersonPage">信息中心</a></el-dropdown-item>
-                    <el-dropdown-item divided><a href="/member/logout">退出</a></el-dropdown-item>
+                    <el-dropdown-item divided><a href="/memberLogout">退出</a></el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </el-menu-item>
@@ -142,7 +142,7 @@
 
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button>取 消</el-button>
+            <el-button @click="showEditor = false">取 消</el-button>
             <el-button type="primary" @click="updateInformation">修改</el-button>
         </div>
     </el-dialog>
@@ -164,7 +164,7 @@
         </el-form>
 
         <div slot="footer" class="dialog-footer">
-            <el-button >取 消</el-button>
+            <el-button @click="showLocationEditor = false">取 消</el-button>
             <el-button type="primary" @click="addNewLocation()">添加</el-button>
         </div>
     </el-dialog>

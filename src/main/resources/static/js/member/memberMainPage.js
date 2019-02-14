@@ -36,7 +36,7 @@ new Vue({
                     restaurantType:this.searchInfo.RestaurantType
                 }).then(result => {
                     console.log(result);
-                    this.merchants = result.body.rows;
+                    this.merchants = result.body;
                 });
 
             },
@@ -46,7 +46,7 @@ new Vue({
                     account:sessionStorage.getItem("idCode")
                 }).then(result => {
                     console.log(result);
-                    this.merchants = result.body.rows;
+                    this.merchants = result.body;
                 });
 
             },
@@ -60,7 +60,6 @@ new Vue({
 
 
     created(){
-        console.log("xnm");
         this.getAllMerchants();
     }
 

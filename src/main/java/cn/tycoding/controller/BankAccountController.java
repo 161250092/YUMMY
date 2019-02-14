@@ -2,6 +2,9 @@ package cn.tycoding.controller;
 
 import cn.tycoding.entity.Result;
 import cn.tycoding.entity.order.Order;
+import cn.tycoding.service.BankAccountService;
+import cn.tycoding.service.memberService.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,17 +21,23 @@ public class BankAccountController {
 //        return new Result(true,"转入成功");
 //    }
 
+    @Autowired
+    private BankAccountService bankAccountService;
+
+    @Autowired
+    private OrderService orderService;
 
     @RequestMapping("/out")
     public Result out(@RequestParam("account")String account,
                       @RequestParam("password")String password,
-                      @RequestParam("orderId")String orderId) {
+                      @RequestParam("idCode")String idCode,
+                      @RequestParam("orderId")long orderId) {
 
-        System.out.println(account);
-        System.out.println(password);
-        System.out.println(orderId);
 
-        return new Result(true,"转出成功,预计20分钟送达");
+        Result rs =  bankAccountService.out(account,password,orderId,idCode);
+        orderService.payForOrder(orderId);
+        System.out.println(rs.getMessage());
+        return rs;
     }
 
 

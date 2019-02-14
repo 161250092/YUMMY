@@ -9,10 +9,13 @@ public interface OrderService {
 
     public Result submitOrder(Order order);
 
+    public List getMemberOrders(String account);
+
+    public Result confirmOrder(long orderId);
+
+    public Result abolishOrder(long orderId);
+
     public Result cancelOrder(long orderId);
 
-    public List<Order> getOrderRecords(String account);
-
-    public Result confirmOrderArrival(Order order);
-
+    public void payForOrder(long orderId);
 }

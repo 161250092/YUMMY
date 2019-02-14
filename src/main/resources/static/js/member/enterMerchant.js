@@ -51,7 +51,7 @@ var vm = new Vue({
 
             activeIndex: '0', //默认激活
 
-            totalPrice:0.0,
+
 
 
 
@@ -64,8 +64,16 @@ var vm = new Vue({
     methods: {
 
         selectNum(dish){
+            if(dish.selectQuantity<=0)
+                dish.canAdd = false;
+
             if(dish.selectQuantity>=1&&dish.canCancel===false)
-            dish.canAdd = true;
+                dish.canAdd = true;
+
+            if(dish.selectQuantity>dish.quantity) {
+                console.log(dish.selectQuantity+" "+dish.quantity)
+                dish.canAdd = false;
+            }
         },
 
         addToCart(dish) {
@@ -101,11 +109,12 @@ var vm = new Vue({
             this.showOrderForm = true;
 
             this.cartDetails = '';
+            var total = 0;
             for(var i=0;i<this.cart.dishes.length;i++){
+                total += this.cart.dishes[i].selectQuantity*this.cart.dishes[i].price;
                 this.cartDetails += this.cart.dishes[i].name+" 数量:"+this.cart.dishes[i].selectQuantity+" 单价"+this.cart.dishes[i].price+"\n";
             }
-
-
+            this.cartDetails +="\n总价:"+total;
         },
 
         //菜品信息
@@ -114,7 +123,7 @@ var vm = new Vue({
                 idCode:sessionStorage.getItem("idCode"),
             }).then(result => {
                 console.log(result);
-                this.dishes = result.body.rows;
+                this.dishes = result.body;
             });
         },
 
@@ -124,7 +133,7 @@ var vm = new Vue({
                 account:sessionStorage.getItem("account"),
             }).then(result => {
                 console.log(result);
-                this.userLocations = result.body.rows;
+                this.userLocations = result.body;
             });
         },
 
@@ -134,7 +143,32 @@ var vm = new Vue({
             this.$http.post('/member/submitOrder', JSON.stringify(this.cart)
             ).then(result => {
                 console.log(result);
-                this.totalPrice = parseFloat(result.body.message);
+
+
+                // if (result.body.success) {
+                //     //支付成功
+                //     this.$message({
+                //         type: 'success',
+                //         message: result.body.message,
+                //         duration: 6000
+                //     });
+                //     this.showPayForm = false;
+                //     this.getMemberOrders();
+                // }else {
+                //     //失败
+                //     this.$emit(
+                //         this.$message({
+                //             type: 'warning',
+                //             message: result.body.message,
+                //             duration: 6000
+                //         }),
+                //
+                //     );
+                //     this.showPayForm = false;
+                //     this.getMemberOrders();
+                // }
+
+
             });
 
             this.showOrderForm = false;
