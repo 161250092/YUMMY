@@ -14,11 +14,12 @@ public interface OrderService {
 
     public List searchMemberOrders(MemberSearchEntity memberSearchEntity);
 
+//  确认接收 ，前提是已经付款
     public Result confirmOrder(long orderId);
 
     public Result abolishOrder(long orderId);
 
     public Result cancelOrder(long orderId);
 
-    public void payForOrder(long orderId);
+    public void turnOrderStateIsPayed(Order order);
 }

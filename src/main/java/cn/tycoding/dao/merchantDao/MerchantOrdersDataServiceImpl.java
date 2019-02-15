@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,36 +122,9 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()){
-                Order order = new Order();
-                order.setOrderId(rs.getLong("orderId"));
-                order.setAccount(rs.getString("account"));
-                order.setIdCode(rs.getString("idCode"));
-
-                Location location = new Location();
-                location.setLocationId(rs.getLong("locationId"));
-                location.setLat(rs.getDouble("lat"));
-                location.setLng(rs.getDouble("lng"));
-                location.setAccount(rs.getString("account"));
-                location.setAddress(rs.getString("address"));
-                order.setUserLocation(location);
-
-                order.setSubmitTime(rs.getTimestamp("submitTime").toLocalDateTime());
-                order.setExpectedArriveTime(rs.getTimestamp("expectedArriveTime").toLocalDateTime());
-                order.setOrderAcceptedTime(rs.getTimestamp("orderAcceptedTime").toLocalDateTime());
-
-                order.setTotalPrice(rs.getDouble("totalPrice"));
-
-                OrderState orderState = new OrderState();
-                orderState.setAbolished(rs.getBoolean("isAbolished"));
-                orderState.setPayed(rs.getBoolean("isPayed"));
-                orderState.setReceived(rs.getBoolean("isReceived"));
-                order.setOrderState(orderState);
-
+                Order order = this.getOrderWithoutDish(rs);
                 orders.add(order);
-
             }
-
-
             stmt.close();
             conn.close();
 
@@ -164,6 +138,40 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
 //        }
 
         return orders;
+    }
+
+    private Order getOrderWithoutDish(ResultSet rs) throws SQLException {
+        Order order = new Order();
+        order.setOrderId(rs.getLong("orderId"));
+        order.setAccount(rs.getString("account"));
+        order.setIdCode(rs.getString("idCode"));
+
+        Location location = new Location();
+        location.setLocationId(rs.getLong("locationId"));
+        location.setLat(rs.getDouble("lat"));
+        location.setLng(rs.getDouble("lng"));
+        location.setAccount(rs.getString("account"));
+        location.setAddress(rs.getString("address"));
+        order.setUserLocation(location);
+
+        order.setTotalPrice(rs.getDouble("totalPrice"));
+
+        OrderState orderState = new OrderState();
+        orderState.setAbolished(rs.getBoolean("isAbolished"));
+        orderState.setPayed(rs.getBoolean("isPayed"));
+        orderState.setReceived(rs.getBoolean("isReceived"));
+
+        if(orderState.isPayed()) {
+            order.setSubmitTime(rs.getTimestamp("submitTime").toLocalDateTime());
+            order.setExpectedArriveTime(rs.getTimestamp("expectedArriveTime").toLocalDateTime());
+        }
+
+        if(orderState.isReceived()){
+            order.setOrderAcceptedTime(rs.getTimestamp("orderAcceptedTime").toLocalDateTime());
+        }
+
+        order.setOrderState(orderState);
+        return order;
     }
 
     public boolean getDishesInOrder(Order order){

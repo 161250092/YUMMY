@@ -96,6 +96,32 @@ public class BankAccountDataServiceImpl implements  BankAccountDataService {
     }
 
     @Override
+    public boolean AuthorizedTransferAccountOut(String account, double amount) {
+        if(!isBalanceEnough(account,amount))
+            return false;
+
+        PreparedStatement stmt;
+        String sql;
+        conn = new MySQLConnector().getConnection("Bank");
+
+        try{
+            sql = "update bankAccount set balance=balance-? where account=?";
+
+            stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
+            stmt.setDouble(1,amount);
+            stmt.setString(2,account);
+            stmt.executeUpdate();
+            stmt.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    @Override
     public boolean isBalanceEnough(String account,double amount){
         PreparedStatement stmt;
         String sql;

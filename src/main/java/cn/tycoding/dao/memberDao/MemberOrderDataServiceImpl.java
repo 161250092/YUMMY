@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,18 +32,16 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
         long orderId = 0;
         try{
             sql = "insert into order_tb(account,idCode,userLocation," +
-                    "submitTime,expectedArriveTime,totalPrice,isPayed,isReceived,isAbolished)values(?,?,?,?,?,?,?,?,?)";
+                    "totalPrice,isPayed,isReceived,isAbolished)values(?,?,?,?,?,?,?)";
 
             stmt = conn.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setString(1,order.getAccount());
             stmt.setString(2,order.getIdCode());
             stmt.setLong(3,order.getUserLocation().getLocationId());
-            stmt.setObject(4,order.getSubmitTime());
-            stmt.setObject(5,order.getExpectedArriveTime());
-            stmt.setDouble(6,order.getTotalPrice());
-            stmt.setBoolean(7,order.getOrderState().isPayed());
-            stmt.setBoolean(8,order.getOrderState().isReceived());
-            stmt.setBoolean(9,order.getOrderState().isAbolished());
+            stmt.setDouble(4,order.getTotalPrice());
+            stmt.setBoolean(5,order.getOrderState().isPayed());
+            stmt.setBoolean(6,order.getOrderState().isReceived());
+            stmt.setBoolean(7,order.getOrderState().isAbolished());
 
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
@@ -120,7 +119,6 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
 
     @Override
     public List getMemberOrders(String account) {
-
         PreparedStatement stmt;
         String sql;
         conn = new MySQLConnector().getConnection("Yummy");
@@ -135,52 +133,55 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()){
-                Order order = new Order();
-                order.setOrderId(rs.getLong("orderId"));
-                order.setAccount(rs.getString("account"));
-                order.setIdCode(rs.getString("idCode"));
-
-                Location location = new Location();
-                location.setLocationId(rs.getLong("locationId"));
-                location.setLat(rs.getDouble("lat"));
-                location.setLng(rs.getDouble("lng"));
-                location.setAccount(rs.getString("account"));
-                location.setAddress(rs.getString("address"));
-                order.setUserLocation(location);
-
-                order.setSubmitTime(rs.getTimestamp("submitTime").toLocalDateTime());
-                order.setExpectedArriveTime(rs.getTimestamp("expectedArriveTime").toLocalDateTime());
-
-
-                order.setTotalPrice(rs.getDouble("totalPrice"));
-
-                OrderState orderState = new OrderState();
-                orderState.setAbolished(rs.getBoolean("isAbolished"));
-                orderState.setPayed(rs.getBoolean("isPayed"));
-
-                if(orderState.isPayed())
-                    order.setOrderAcceptedTime(rs.getTimestamp("orderAcceptedTime").toLocalDateTime());
-
-                orderState.setReceived(rs.getBoolean("isReceived"));
-                order.setOrderState(orderState);
-
+                Order order = this.getOrderWithoutDish(rs);
                 orders.add(order);
-
             }
-
             stmt.close();
             conn.close();
 
         }catch (Exception e){
             e.printStackTrace();
         }
-
         //填充DISH IN ORDERS
         for(Order order:orders){
             merchantOrdersService.getDishesInOrder(order);
         }
 
         return orders;
+    }
+//    这个方法可以分离出来
+    private Order getOrderWithoutDish(ResultSet rs) throws SQLException {
+        Order order = new Order();
+        order.setOrderId(rs.getLong("orderId"));
+        order.setAccount(rs.getString("account"));
+        order.setIdCode(rs.getString("idCode"));
+
+        Location location = new Location();
+        location.setLocationId(rs.getLong("locationId"));
+        location.setLat(rs.getDouble("lat"));
+        location.setLng(rs.getDouble("lng"));
+        location.setAccount(rs.getString("account"));
+        location.setAddress(rs.getString("address"));
+        order.setUserLocation(location);
+
+        order.setTotalPrice(rs.getDouble("totalPrice"));
+
+        OrderState orderState = new OrderState();
+        orderState.setAbolished(rs.getBoolean("isAbolished"));
+        orderState.setPayed(rs.getBoolean("isPayed"));
+        orderState.setReceived(rs.getBoolean("isReceived"));
+
+        if(orderState.isPayed()) {
+            order.setSubmitTime(rs.getTimestamp("submitTime").toLocalDateTime());
+            order.setExpectedArriveTime(rs.getTimestamp("expectedArriveTime").toLocalDateTime());
+        }
+
+        if(orderState.isReceived()){
+            order.setOrderAcceptedTime(rs.getTimestamp("orderAcceptedTime").toLocalDateTime());
+        }
+
+        order.setOrderState(orderState);
+        return order;
     }
 
     @Override
@@ -222,37 +223,8 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()){
-                Order order = new Order();
-                order.setOrderId(rs.getLong("orderId"));
-                order.setAccount(rs.getString("account"));
-                order.setIdCode(rs.getString("idCode"));
-
-                Location location = new Location();
-                location.setLocationId(rs.getLong("locationId"));
-                location.setLat(rs.getDouble("lat"));
-                location.setLng(rs.getDouble("lng"));
-                location.setAccount(rs.getString("account"));
-                location.setAddress(rs.getString("address"));
-                order.setUserLocation(location);
-
-                order.setSubmitTime(rs.getTimestamp("submitTime").toLocalDateTime());
-                order.setExpectedArriveTime(rs.getTimestamp("expectedArriveTime").toLocalDateTime());
-
-
-                order.setTotalPrice(rs.getDouble("totalPrice"));
-
-                OrderState orderState = new OrderState();
-                orderState.setAbolished(rs.getBoolean("isAbolished"));
-                orderState.setPayed(rs.getBoolean("isPayed"));
-
-                if(orderState.isPayed())
-                    order.setOrderAcceptedTime(rs.getTimestamp("orderAcceptedTime").toLocalDateTime());
-
-                orderState.setReceived(rs.getBoolean("isReceived"));
-                order.setOrderState(orderState);
-
+                Order order = this.getOrderWithoutDish(rs);
                 orders.add(order);
-
             }
 
             stmt.close();
@@ -287,34 +259,7 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()){
-                order.setOrderId(rs.getLong("orderId"));
-                order.setAccount(rs.getString("account"));
-                order.setIdCode(rs.getString("idCode"));
-
-                Location location = new Location();
-                location.setLocationId(rs.getLong("locationId"));
-                location.setLat(rs.getDouble("lat"));
-                location.setLng(rs.getDouble("lng"));
-                location.setAccount(rs.getString("account"));
-                location.setAddress(rs.getString("address"));
-                order.setUserLocation(location);
-
-                order.setSubmitTime(rs.getTimestamp("submitTime").toLocalDateTime());
-                order.setExpectedArriveTime(rs.getTimestamp("expectedArriveTime").toLocalDateTime());
-
-
-                order.setTotalPrice(rs.getDouble("totalPrice"));
-
-                OrderState orderState = new OrderState();
-                orderState.setAbolished(rs.getBoolean("isAbolished"));
-                orderState.setPayed(rs.getBoolean("isPayed"));
-
-                if(orderState.isPayed())
-                    order.setOrderAcceptedTime(rs.getTimestamp("orderAcceptedTime").toLocalDateTime());
-
-                orderState.setReceived(rs.getBoolean("isReceived"));
-                order.setOrderState(orderState);
-
+                order = this.getOrderWithoutDish(rs);
             }
 
             stmt.close();
@@ -386,22 +331,21 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
 
 
     @Override
-    public boolean payForOrder(long orderId) {
-        this.changeOrderState(orderId,"isPayed");
+    public void turnOrderStateIsPayed(Order order) {
+        this.changeOrderState(order.getOrderId(),"isPayed");
 
         PreparedStatement stmt;
         String sql;
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "update order_tb set orderAcceptedTime=? where orderId=?";
+            sql = "update order_tb set submitTime=?,expectedArriveTime=? where orderId=?";
 
             stmt = conn.prepareStatement(sql);
-
-            stmt.setObject(1,LocalDateTime.now());
-            stmt.setLong(2,orderId);
+            stmt.setObject(1,order.getSubmitTime());
+            stmt.setObject(2,order.getExpectedArriveTime());
+            stmt.setLong(3,order.getOrderId());
             stmt.executeUpdate();
-
             stmt.close();
             conn.close();
 
@@ -410,8 +354,6 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
         }
 
 
-
-        return true;
     }
 
     @Override
@@ -488,7 +430,7 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
     }
 
 //恢复库存
-    private  void restoreStock(long orderId){
+    private void restoreStock(long orderId){
             Order order = new Order();
             order.setOrderId(orderId);
             merchantOrdersService.getDishesInOrder(order);

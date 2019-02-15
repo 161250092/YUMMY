@@ -1,12 +1,17 @@
 package cn.tycoding.util;
 
 
+import cn.tycoding.dao.memberDao.MemberInformationDataService;
+import cn.tycoding.dao.memberDao.MemberInformationDataServiceImpl;
 import cn.tycoding.dao.merchantDao.MerchantInformationDataService;
 import cn.tycoding.dao.merchantDao.MerchantInformationDataServiceImpl;
 import cn.tycoding.entity.member.DishForMember;
+import cn.tycoding.entity.member.Member;
 import cn.tycoding.entity.member.MemberLevel;
 import cn.tycoding.entity.merchant.Discount;
 import cn.tycoding.entity.order.Order;
+import cn.tycoding.service.Impl.member.MemberInformationServiceImpl;
+import cn.tycoding.service.memberService.MemberInformationService;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -17,6 +22,7 @@ public class ComputePrice {
 
     private MerchantInformationDataService merchantInformationDataService = new MerchantInformationDataServiceImpl();
 
+    private MemberInformationDataService memberInformationDataService = new MemberInformationDataServiceImpl();
 
     public boolean isReachMinDelivery(double price,Order order){
         return price>merchantInformationDataService.getMerchantInfo(order.getIdCode()).getMinDeliveryCost();
@@ -38,8 +44,12 @@ public class ComputePrice {
         List<Discount> discounts = merchantInformationDataService.getMerchantDiscounts(order.getIdCode());
         double reducePrice = this.maxDiscount(discounts,price);
 
+        Member member = memberInformationDataService.getMemberInformation(order.getAccount());
+        double memberDiscount = this.memberLevelDiscount(member.getMemberLevel());
 
-        return price-reducePrice;
+        System.out.println("会员折扣:"+memberDiscount);
+
+        return (price-reducePrice)*memberDiscount;
     }
 
     private double maxDiscount(List<Discount> discounts,double price){
@@ -103,7 +113,7 @@ public class ComputePrice {
 //会员减价 尚未实现
     private double memberLevelDiscount(MemberLevel memberLevel){
         int level = memberLevel.getLevel();
-        return 1-level*0.01;
+        return 1-(level-1)*0.01;
     }
 
 

@@ -27,7 +27,7 @@ public class ComputeArrivalTime {
 
         LocalDateTime submitTime = order.getSubmitTime();
         LocalDateTime expectTime = submitTime.plusMinutes(minutes);
-
+System.out.println(minutes);
         accessible = minutes < 90;
 
         return expectTime;

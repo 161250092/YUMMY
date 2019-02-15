@@ -2,6 +2,7 @@ package cn.tycoding.service.Impl.member;
 
 import cn.tycoding.dao.bankAccountDao.BankAccountDataServiceImpl;
 import cn.tycoding.dao.memberDao.MemberOrderDataService;
+import cn.tycoding.dao.yummyDao.PaymentRecordDataService;
 import cn.tycoding.entity.MemberSearchEntity;
 import cn.tycoding.entity.Result;
 import cn.tycoding.entity.order.Order;
@@ -10,11 +11,10 @@ import cn.tycoding.service.memberService.OrderService;
 import cn.tycoding.util.ComputeArrivalTime;
 import cn.tycoding.util.ComputePrice;
 import cn.tycoding.util.OrderDelayedTransaction;
-import org.aspectj.weaver.ast.Or;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,6 +27,9 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private BankAccountDataServiceImpl bankAccountDataService;
 
+    @Autowired
+    private PaymentRecordDataService paymentRecordDataService;
+
     private   ComputePrice computePrice;
 
     private ComputeArrivalTime computeArrivalTime;
@@ -38,7 +41,6 @@ public class OrderServiceImpl implements OrderService{
 
         order.setOrderState(new OrderState(false,false,false));
 
-
 //      compute price
         computePrice = new ComputePrice();
         double totalPrice = computePrice.computeTotalPrice(order);
@@ -49,14 +51,6 @@ public class OrderServiceImpl implements OrderService{
             return new Result(false,"总价低于起送价");
 
 
-//        compute time;
-        computeArrivalTime = new ComputeArrivalTime();
-        order.setSubmitTime(LocalDateTime.now());
-        if(computeArrivalTime.accessible)
-            order.setExpectedArriveTime(computeArrivalTime.computeArrivalTime(order));
-        else
-            return new Result(false,"超出配送范围");
-
 //      提交订单
         memberOrderDataService.submitOrder(order);
 
@@ -64,12 +58,10 @@ public class OrderServiceImpl implements OrderService{
         orderDelayedTransaction = new OrderDelayedTransaction();
         orderDelayedTransaction.delayedTransaction(order.getOrderId());
 
-        String message = "总价: "+totalPrice+" 折扣:"+(priceWithoutDiscount-totalPrice)+" 预计送达时间:"+order.getExpectedArriveTime();
+        String message = "总价: "+totalPrice+" 折扣:"+(priceWithoutDiscount-totalPrice);
         return new Result(true,message);
 
     }
-
-
 
     @Override
     public List getMemberOrders(String account) {
@@ -91,14 +83,22 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public Result abolishOrder(long orderId) {
-
         Order order = memberOrderDataService.getOrder(orderId);
-
+//计算退款额
         double returnPrice = computePrice.returnMoney(order);
-//      bankAccountDataService.
+
+        String payer = paymentRecordDataService.getPayer(orderId);
+        String receiver = paymentRecordDataService.getReceiver(orderId);
+//平台和商家转出
+        bankAccountDataService.AuthorizedTransferAccountOut(receiver,returnPrice*0.98);
+        bankAccountDataService.AuthorizedTransferAccountOut("yummy",returnPrice*0.02);
+//用户转入
+        bankAccountDataService.transferAccountIn(payer,returnPrice);
+//退款支出记录
+        paymentRecordDataService.insertOutRecord(orderId,returnPrice*0.02,receiver,payer);
 
         if(memberOrderDataService.abolishOrder(orderId))
-            return new Result(true,"退订成功");
+            return new Result(true,"退订成功,返回"+returnPrice+"元");
         else
             return new Result(false,"退订失败");
     }
@@ -111,8 +111,11 @@ public class OrderServiceImpl implements OrderService{
             return new Result(false,"撤下失败");
     }
 
+
     @Override
-    public void payForOrder(long orderId) {
-        memberOrderDataService.payForOrder(orderId);
+    public void turnOrderStateIsPayed(Order order) {
+        memberOrderDataService.turnOrderStateIsPayed(order);
     }
+
+
 }

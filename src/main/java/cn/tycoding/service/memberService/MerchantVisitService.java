@@ -14,13 +14,6 @@ public interface MerchantVisitService {
 
     public List getMerchantAllDishesInForce(String idCode);
 
-
     public MerchantInfo getMerchantInfo(String idCode);
-
-//    public PageBean getMerchantsByPage(int pageCode, int pageSize);
-//
-//    public PageBean getDishesByPage(String idCode,int pageCode,int pageSize);
-//
-//    public MerchantInfo visitMerchant(String idCode);
 
 }

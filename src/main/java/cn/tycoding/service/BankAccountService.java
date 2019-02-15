@@ -8,4 +8,6 @@ public interface BankAccountService {
 
     public Result in(String account,double pay);
 
+    public Result unsubscribeOut(String account,double amount);
+
 }

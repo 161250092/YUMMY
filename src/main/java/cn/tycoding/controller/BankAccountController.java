@@ -24,8 +24,6 @@ public class BankAccountController {
     @Autowired
     private BankAccountService bankAccountService;
 
-    @Autowired
-    private OrderService orderService;
 
     @RequestMapping("/out")
     public Result out(@RequestParam("account")String account,
@@ -35,8 +33,7 @@ public class BankAccountController {
 
 
         Result rs =  bankAccountService.out(account,password,orderId,idCode);
-        orderService.payForOrder(orderId);
-        System.out.println(rs.getMessage());
+System.out.println(rs.getMessage());
         return rs;
     }
 

@@ -12,4 +12,5 @@ public interface MemberStatisticsService {
 
     public List<Order> getOrdersByMerchant(String account,String idCode);
 
+
 }

@@ -135,3 +135,15 @@ create table if not exists `deletedMember`(
 `mail` varchar(50),
 `memberLevel` int
 )ENGINE = InnoDB DEFAULT CHARSET =utf8;
+
+
+# 平台资金流动记录
+create table if not exists `paymentRecord`(
+  `recordId` bigint auto_increment primary key,
+  `orderId` bigint,
+  `bonus` double(16,2),
+  `recordType` varchar(10),
+  `recordTime` datetime,
+  `payer` varchar(20),
+  `receiver` varchar(20)
+)ENGINE = InnoDB DEFAULT CHARSET =utf8;

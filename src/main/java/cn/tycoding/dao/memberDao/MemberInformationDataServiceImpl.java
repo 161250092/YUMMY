@@ -127,6 +127,7 @@ public class MemberInformationDataServiceImpl implements MemberInformationDataSe
             e.printStackTrace();
         }
         member.setLocations(this.getMemberLocation(account));
+
         return member;
     }
 

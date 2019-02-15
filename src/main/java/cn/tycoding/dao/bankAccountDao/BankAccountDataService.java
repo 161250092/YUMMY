@@ -8,6 +8,9 @@ public interface BankAccountDataService {
 
     public boolean transferAccountOut(String account,String password,double amount);
 
+    public boolean AuthorizedTransferAccountOut(String account,double amount);
+
     public boolean isBalanceEnough(String account,double amount);
+
 
 }
