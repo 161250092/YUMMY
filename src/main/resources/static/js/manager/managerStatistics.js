@@ -21,6 +21,10 @@ let vm = new Vue({
                 console.log(result);
                 this.statisticsInformation = result.body;
                 this.dataInY = result.body.eachLevelMemberNum;
+                chart.series[0].update({
+                    data:this.dataInY
+                });
+
             });
         },
 

@@ -38,6 +38,3 @@ let chart = Highcharts.chart('container', {
 console.log("charts"+vm.dataInY);
 console.log(vm.statisticsInformation);
 
-chart.series[0].update({
-    data:[1,0,1,0,0,0,0,0]
-});
