@@ -15,9 +15,20 @@
 <body>
 <div id="app">
 
-    <a href="merchantEditPage"></a>
+    <a href="/reviewApplications">返回</a>
     <br>
+    <p>餐馆数量: {{statisticsInformation.restaurantNum}}</p>
+    <p>会员数量:{{statisticsInformation.memberNum}}</p>
+    <p>月实际收入:{{statisticsInformation.monthlyActualIncome}}</p>
+    <p>月收入:{{statisticsInformation.monthlyIncome}}</p>
+    <p>月退款额:{{statisticsInformation.monthlyExpense}}</p>
+    <p>账户余额:{{statisticsInformation.balance}}</p>
     <div id="container" style="min-width:400px;height:400px"></div>
+
+    <br>
+
+
+
 </div>
 </body>
 <script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
@@ -25,4 +36,5 @@
 <script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
 <script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>
 <script type="text/javascript" th:src="@{../../js/manager/managerStatistics.js}"></script>
+<script type="text/javascript" th:src="@{../../js/manager/chart.js}"></script>
 </html>
