@@ -54,7 +54,7 @@
         function codeAddress() {
             // var address = document.getElementById("address").value;
             //通过getLocation();方法获取位置信息值
-            sessionStorage.setItem("address","宿迁中学");
+            // sessionStorage.setItem("address","宿迁中学");
             let address = sessionStorage.getItem("address");
             geocoder.getLocation(address);
         }
@@ -63,11 +63,11 @@
     </script>
 </head>
 <body onload="init()">
-<div>
- <input id="address" type="textbox" value="中国,北京,海淀区,海淀大街38号">-->
-    <!--<button onclick="codeAddress()">search</button>-->
-</div>
+<!--<div>-->
+ <!--<input id="address" type="textbox" value="中国,北京,海淀区,海淀大街38号">-->
+    <!--&lt;!&ndash;<button onclick="codeAddress()">search</button>&ndash;&gt;-->
+<!--</div>-->
 <div id="container"></div>
-<p>输入地址，点击search进行地址解释。</p>
+
 </body>
 </html>

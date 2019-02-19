@@ -50,6 +50,9 @@ public class MemberInformationController {
     public Result addNewLocation(@RequestBody Location location){
 //        System.out.println(location.getAddress());
 //        return new Result(true,"添加成功");
+//        System.out.println(location.getLat());
+        if(location.getLat()==0)
+            return new Result(false,"添加失败");
         return memberInformationService.addNewLocation(location);
     }
 

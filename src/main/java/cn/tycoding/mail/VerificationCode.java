@@ -1,5 +1,7 @@
 package cn.tycoding.mail;
 
+import cn.tycoding.dao.yummyDao.YummyMailDataService;
+import cn.tycoding.dao.yummyDao.YummyMailDataServiceImpl;
 import com.sun.mail.util.MailSSLSocketFactory;
 
 import javax.mail.*;
@@ -9,6 +11,9 @@ import java.security.GeneralSecurityException;
 import java.util.Properties;
 
 public class VerificationCode {
+
+    private YummyMailDataService yummyMailDataService = new YummyMailDataServiceImpl();
+
     public void sendVerificationCode(String mailAddress,String verificationCode) throws GeneralSecurityException {
         // 收件人电子邮箱
         String to = mailAddress;
@@ -31,10 +36,11 @@ public class VerificationCode {
         properties.put("mail.smtp.ssl.enable", "true");
         properties.put("mail.smtp.ssl.socketFactory", sf);
         // 获取默认session对象
+        String pw = yummyMailDataService.getYummyMailPassword();
         Session session = Session.getDefaultInstance(properties,new Authenticator(){
             public PasswordAuthentication getPasswordAuthentication()
             {
-                return new PasswordAuthentication("1151138974", "vlsaglkrhplciihg"); //发件人邮件用户名、密码
+                return new PasswordAuthentication("1151138974", pw); //发件人邮件用户名、密码
             }
         });
 

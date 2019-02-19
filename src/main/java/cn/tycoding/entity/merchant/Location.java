@@ -18,14 +18,6 @@ public class Location implements Serializable{
         this.address = address;
     }
 
-    public Location(long locationId) {
-        this.locationId = locationId;
-        account = "00000001";
-        lat = 0;
-        lng = 0;
-        address = "起个地名:"+locationId;
-    }
-
 
     public long getLocationId() {
         return locationId;
@@ -68,4 +60,5 @@ public class Location implements Serializable{
     public void setAddress(String address) {
         this.address = address;
     }
+
 }

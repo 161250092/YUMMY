@@ -15,7 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class HomeController {
 
     /**
-     * 系统首页
+     * index
      *
      * @return
      */
@@ -24,15 +24,7 @@ public class HomeController {
         return "home/index";
     }
 
-    /**
-     * 商品列表页
-     *
-     * @return
-     */
-    @GetMapping(value = {"/goods"})
-    public String user() {
-        return "site/goods";
-    }
+
 
 
     @GetMapping(value = {"/member"})
@@ -70,12 +62,20 @@ public class HomeController {
         return "memberPages/memberLogin";
     }
 
-
+    @GetMapping(value = {"/mapLocation"})
+    public String memberMapLocation() {
+        return "memberPages/mapLocation";
+    }
 
     @GetMapping(value = {"/enterMerchant"})
     public String enterMerchant() {
         return "memberPages/enterMerchant";
     }
+
+
+
+
+
 
 
     @GetMapping(value = {"/merchant"})
@@ -110,6 +110,7 @@ public class HomeController {
     }
 
 
+
     @GetMapping(value = {"/merchantPersonPage"})
     public String merchantPersonPage() {
         return "merchantPages/merchantPersonPage";
@@ -120,6 +121,10 @@ public class HomeController {
     public String merchantOrderRecords() {
         return "merchantPages/OrderRecords";
     }
+
+
+
+
 
 
     @GetMapping(value = {"/manager"})

@@ -2,7 +2,6 @@
 Vue.http.options.emulateJSON = true;
 
 
-
 var vm = new Vue({
 
     el:"#app",
@@ -40,7 +39,8 @@ var vm = new Vue({
 
             showEditor:false,
 
-            showLocationEditor:false
+            showLocationEditor:false,
+
         }
 
     },
@@ -61,9 +61,6 @@ var vm = new Vue({
         showPosition(position) {
             this.location.lat = position.lat;
             this.location.lng = position.lng;
-            // console.log(position);
-            // console.log(position.lat);
-            // console.log(position.lng);
         },
 
         showErr(err) {
@@ -73,10 +70,10 @@ var vm = new Vue({
 
 
         address() {
-            var _this = this;
+            let _this = this;
             let geocoder = new qq.maps.Geocoder({
                 complete: function (result) {
-                    alert(result.detail.address)
+                    // alert(result.detail.address)
                     _this.location.address = result.detail.address;
                 }
             });
@@ -84,7 +81,17 @@ var vm = new Vue({
             let coord = new qq.maps.LatLng(this.location.lat, this.location.lng);
             geocoder.getAddress(coord);
 
+        },
 
+        checkAddressInMap(){
+            sessionStorage.setItem("address",this.location.address);
+
+            if(this.location.address!=='') {
+                // geocoder.getLocation(this.location.address);
+                window.open('/mapLocation');
+            }
+            else
+                alert("请输入地址信息");
         },
 
 
@@ -95,17 +102,10 @@ var vm = new Vue({
             this.$http.post('/member/getMemberInformation',{
                 account:this.details.account
             }).then(result => {
-                console.log(result);
+                // console.log(result);
 
                 _this.details = result.body;
-                // _this.details.restaurantName= result.body.restaurantName;
-                // _this.details.phone=result.body.phone;
-                // _this.details.location=result.body.location;
-                // _this.details.restaurantType=result.body.restaurantType;
-                // _this.details.minDeliveryCost=result.body.minDeliveryCost;
-                // _this.details.deliveryCost = result.body.deliveryCost;
-                // _this.discounts = result.body.discounts;
-                console.log(this.details);
+                // console.log(this.details);
             });
         },
 
@@ -157,11 +157,49 @@ var vm = new Vue({
         },
 
 
+        getLocation(){
+            sessionStorage.setItem("address",this.location.address);
+            let _this = this;
+            let geocoder = new qq.maps.Geocoder({
+                complete: function (result) {
+                    _this.location.lat = result.detail.location.lat;
+                    _this.location.lng = result.detail.location.lng;
+                    console.log(result);
+                },
+
+            });
+            geocoder.getLocation(this.location.address);
+        },
+
         //增加新的地址
         addNewLocation(){
+
+
+            let _this = this;
+            if(this.location.addres===''){
+                alert("请输入地址");
+                return;
+            }
+
+
+            this.getLocation();
             this.showLocationEditor = false;
+
+
+            setTimeout(function () {
+                _this.addLocation();
+            }, 2*1000);
+
+
+        },
+
+        addLocation(){
+
+
             this.location.account = sessionStorage.getItem("account");
-            console.log(this.discountEditor);
+
+            console.log(this.location);
+
             this.$http.post('/member/addNewLocation',JSON.stringify(this.location)
             ).then(result => {
                 if (result.body.success) {
@@ -185,6 +223,7 @@ var vm = new Vue({
                 }
             })
         },
+
 
 
         //删除地址
@@ -230,7 +269,7 @@ var vm = new Vue({
                         this.$message({
                             type: 'success',
                             message: result.body.message,
-                            duration: 6000
+                            duration: 4000
                         });
                         window.location.href = "/member";
                     } else {

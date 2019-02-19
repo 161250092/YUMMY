@@ -79,7 +79,7 @@ new Vue({
                 if (this.totalTime < 0) {
                     window.clearInterval(clock);
                     this.content = '重新发送验证码';
-                    this.totalTime = 10;
+                    this.totalTime = 30;
                     this.isAbandon = false  //这里重新开启
                 }
             },1000)
