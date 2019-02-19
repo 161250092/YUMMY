@@ -48,9 +48,11 @@ var vm = new Vue({
 
     methods: {
         qq_position() {
-            var geolocation = new qq.maps.Geolocation("OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77", "myapp");
+            // var geolocation = new qq.maps.Geolocation("OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77", "myapp");
+
+            let geolocation = new qq.maps.Geolocation("RYSBZ-4TDKF-UVYJL-JMNYH-MMMIS-RSB5L", "myapp");
             if (geolocation) {
-                var options = {timeout: 8000};
+                let options = {timeout: 4000};
                 geolocation.getLocation(this.showPosition, this.showErr, options);
             } else {
                 alert("定位尚未加载");}

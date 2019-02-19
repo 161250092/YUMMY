@@ -58,7 +58,7 @@ create table if not exists `discount`(
  -- member
 create table if not exists `member`(
 `userId` bigint auto_increment primary key,
-`account` varchar(20),
+`account` varchar(20) unique,
 `password` varchar(20),
 `nickName` varchar(20),
 `phone`  varchar(20),

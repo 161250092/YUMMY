@@ -18,7 +18,11 @@ public interface MemberInformationDataService {
 
     public Member getMemberInformation(String account);
 
+//  修改昵称和电话，属于用户调用
     public boolean updateMemberInformation(Member member);
+
+//  修改等级，属于系统调用
+    public void updateMemberLevel(String account,int level);
 
     public boolean deleteAccount(String account);
 

@@ -6,10 +6,10 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
- * 首页控制器
+ * 页面跳转
  *
- * @auther TyCoding
- * @date 2018/9/28
+ * @auther MWX
+ * @date 2019/1/28
  */
 @Controller
 public class HomeController {

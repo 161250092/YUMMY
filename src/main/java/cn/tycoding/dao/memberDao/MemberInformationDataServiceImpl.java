@@ -156,6 +156,31 @@ public class MemberInformationDataServiceImpl implements MemberInformationDataSe
         return true;
     }
 
+    @Override
+    public void updateMemberLevel(String account, int level) {
+
+        PreparedStatement stmt;
+        String sql;
+        conn = new MySQLConnector().getConnection("Yummy");
+
+        try{
+            sql = "update member set memberLevel=? where account=?";
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,level);
+            stmt.setString(2,account);
+            stmt.executeUpdate();
+            stmt.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+
+    }
+
 
     private  long getUserId(String account){
         PreparedStatement stmt;

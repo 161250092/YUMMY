@@ -1,7 +1,9 @@
 package cn.tycoding.service.Impl;
 
 import cn.tycoding.dao.bankAccountDao.BankAccountDataService;
+import cn.tycoding.dao.memberDao.MemberInformationDataService;
 import cn.tycoding.dao.memberDao.MemberOrderDataService;
+import cn.tycoding.dao.memberDao.MemberStatisticsDataService;
 import cn.tycoding.dao.merchantDao.MerchantInformationDataService;
 import cn.tycoding.dao.yummyDao.PaymentRecordDataService;
 import cn.tycoding.entity.Result;
@@ -32,6 +34,13 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private MemberStatisticsDataService memberStatisticsDataService;
+
+    @Autowired
+    private MemberInformationDataService memberInformationDataService;
+
 
     private ComputeArrivalTime computeArrivalTime;
 
@@ -68,6 +77,8 @@ public class BankAccountServiceImpl implements BankAccountService {
             paymentRecordDataService.insertInRecord(orderId,bonus,account,bankAccount);
 //订单状态修改为已支付，并修改提交时间与预测时间
             orderService.turnOrderStateIsPayed(order);
+//更新用户等级
+            updateMemberLevelThroughConsumption(account);
 
             return new Result(true, "支付成功,预计"+order.getExpectedArriveTime().toString()+"送达");
         }
@@ -82,6 +93,13 @@ public class BankAccountServiceImpl implements BankAccountService {
             return new Result(false,"余额不足");
 
             return new Result(true,"");
+    }
+
+    private void updateMemberLevelThroughConsumption(String account){
+        double totalConsumption =  memberStatisticsDataService.getMemberConsumption(account);
+        int newLevel = (int)totalConsumption/1000+1;
+        System.out.println(account+"等级: "+newLevel);
+        memberInformationDataService.updateMemberLevel(account,newLevel);
     }
 
 

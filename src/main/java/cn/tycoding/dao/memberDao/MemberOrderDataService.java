@@ -28,4 +28,5 @@ public interface MemberOrderDataService {
     public void turnOrderStateIsPayed(Order order);
 
     public boolean isPayed(long orderId);
+
 }

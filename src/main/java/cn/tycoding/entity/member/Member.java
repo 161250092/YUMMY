@@ -21,24 +21,9 @@ public class Member {
 
     private MemberLevel memberLevel;
 
+
+
     public Member() {
-    }
-
-
-    public Member(String account){
-        this.account = account;
-        this.nickName ="DongDaYo";
-        this.phone = "15834812411";
-        this.mail = "11231231@qq.com";
-        memberLevel = new MemberLevel();
-        memberLevel.setLevel(1);
-        locations = new ArrayList<Location>();
-        Location location1 = new Location(1);
-        Location location2 = new Location(1);
-        Location location3 = new Location(1);
-        locations.add(location1);
-        locations.add(location2);
-        locations.add(location3);
     }
 
 

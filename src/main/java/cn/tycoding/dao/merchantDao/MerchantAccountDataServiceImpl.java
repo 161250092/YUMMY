@@ -41,6 +41,8 @@ public class MerchantAccountDataServiceImpl implements MerchantAccountDataServic
         return merchantNum;
     }
 
+
+
     @Override
     public boolean createMerchantAccount(String idCode, MerchantRegisterInf merchantRegisterInf) {
         createAccount(idCode,merchantRegisterInf.getPassword());
