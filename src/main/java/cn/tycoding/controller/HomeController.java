@@ -15,27 +15,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class HomeController {
 
     /**
-     * index
+     * 以下界面对未登录用户不可见
      *
-     * @return
      */
-    @GetMapping(value = {"/", "/index"})
-    public String index() {
-        return "home/index";
-    }
 
-
-
-
-    @GetMapping(value = {"/member"})
-    public String member() {
-        return "memberPages/memberLogin";
-    }
-
-    @GetMapping(value = {"/memberRegister"})
-    public String memberRegister() {
-        return "memberPages/memberRegister";
-    }
 
     @GetMapping(value = {"/memberMainPage"})
     public String visitMerchants() {
@@ -59,6 +42,8 @@ public class HomeController {
 
     @GetMapping(value = {"/memberLogout"})
     public String memberLogout() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        attributes.getRequest().getSession().removeAttribute("account");
         return "memberPages/memberLogin";
     }
 
@@ -78,16 +63,7 @@ public class HomeController {
 
 
 
-    @GetMapping(value = {"/merchant"})
-    public String merchant() {
-        return "merchantPages/merchantLogin";
-    }
 
-
-    @GetMapping(value = {"/merchantRegister"})
-    public String merchantRegister() {
-        return "merchantPages/merchantRegister";
-    }
 
 
     @GetMapping(value = {"/merchantEditPage"})
@@ -127,10 +103,6 @@ public class HomeController {
 
 
 
-    @GetMapping(value = {"/manager"})
-    public String managerLogin() {
-        return "managerPages/managerLogin";
-    }
 
 
     @GetMapping(value = {"/managerStatistics"})

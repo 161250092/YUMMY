@@ -85,6 +85,11 @@ public class MerchantInformationDataServiceImpl implements MerchantInformationDa
         }catch (Exception e){
             e.printStackTrace();
         }
+        for(MerchantInfo merchantInfo:merchants){
+            String idCode = merchantInfo.getIdCode();
+            merchantInfo.setLocation(this.getMerchantLocation(idCode));
+        }
+
         return merchants;
     }
 

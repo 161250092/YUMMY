@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 @Service
 public class MemberStatisticsDataServiceImpl implements MemberStatisticsDataService {
@@ -39,5 +40,25 @@ public class MemberStatisticsDataServiceImpl implements MemberStatisticsDataServ
         }
 
         return total;
+    }
+
+    @Override
+    public int getAbolishedOrders(String account) {
+        return 0;
+    }
+
+    @Override
+    public int getAcceptedOrders(String account) {
+        return 0;
+    }
+
+    @Override
+    public List<String> getMerchantConsumed(String account) {
+        return null;
+    }
+
+    @Override
+    public List<Double> getMemberConsumptionInEachMerchant(String account) {
+        return null;
     }
 }

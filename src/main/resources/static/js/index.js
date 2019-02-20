@@ -6,15 +6,15 @@ new Vue({
     el: '#app',
     data() {
         return {
-            name: '',
+            account: '',
 
             activeIndex: '1'
         }
     },
     methods: {
-        //从vuex中获取用户登录的用户名
+
         getName(){
-            this.name = sessionStorage.getItem("name");
+            this.account = sessionStorage.getItem("account");
         }
     },
     //声明周期钩子函数-->在data和methods渲染结束后执行

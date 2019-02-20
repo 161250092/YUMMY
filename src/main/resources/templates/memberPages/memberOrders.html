@@ -157,12 +157,21 @@
                                        @click="abolishOrder(scope.row.orderId)">退订
                             </el-button>
 
+                            <el-button v-if="scope.row.orderState.abolished"
+                                       size="mini"
+                                       type="danger"
+                                       >已退订
+                            </el-button>
+
+
                             <!--没有付款、没有接收可以撤销订单-->
                             <el-button v-if="!scope.row.orderState.received&&!scope.row.orderState.payed"
                                        size="mini"
                                        type="danger"
                                        @click="cancelOrder(scope.row.orderId)">撤销
                             </el-button>
+
+
 
 
 

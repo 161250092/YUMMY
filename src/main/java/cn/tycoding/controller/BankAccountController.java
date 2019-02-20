@@ -33,7 +33,7 @@ public class BankAccountController {
 
 
         Result rs =  bankAccountService.out(account,password,orderId,idCode);
-System.out.println(rs.getMessage());
+//System.out.println(rs.getMessage());
         return rs;
     }
 
