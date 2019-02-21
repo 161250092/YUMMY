@@ -78,7 +78,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 //订单状态修改为已支付，并修改提交时间与预测时间
             orderService.turnOrderStateIsPayed(order);
 //更新用户等级
-            updateMemberLevelThroughConsumption(account);
+            updateMemberLevelThroughConsumption(memberOrderDataService.getOrder(orderId).getAccount());
 
             return new Result(true, "支付成功,预计"+order.getExpectedArriveTime().toString()+"送达");
         }
@@ -98,7 +98,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     private void updateMemberLevelThroughConsumption(String account){
         double totalConsumption =  memberStatisticsDataService.getMemberConsumption(account);
         int newLevel = (int)totalConsumption/1000+1;
-        System.out.println(account+"等级: "+newLevel);
+        System.out.println(account+"总消费"+totalConsumption+" 等级: "+newLevel);
         memberInformationDataService.updateMemberLevel(account,newLevel);
     }
 

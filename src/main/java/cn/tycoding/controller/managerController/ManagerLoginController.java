@@ -20,13 +20,4 @@ public class ManagerLoginController {
 
 
 
-    @RequestMapping("/logout")
-    public Result logout(@RequestParam("account") String account) {
-
-        return new Result(true, "经理："+account+"登出");
-    }
-
-
-
-
 }

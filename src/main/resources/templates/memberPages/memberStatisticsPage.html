@@ -15,9 +15,12 @@
 <body>
 <div id="app">
 
-    <a href="merchantEditPage"></a>
+    <a href="/memberMainPage"></a>
+    <p>总消费{{statisticsInformation.totalConsumption}}</p>
     <br>
     <div id="container" style="min-width:400px;height:400px"></div>
+
+    <div id="container1" style="min-width:400px;height:400px"></div>
 </div>
 </body>
 <script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
@@ -25,4 +28,5 @@
 <script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
 <script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>
 <script type="text/javascript" th:src="@{../../js/member/memberStatistics.js}"></script>
+<script type="text/javascript" th:src="@{../../js/member/chart.js}"></script>
 </html>

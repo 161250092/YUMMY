@@ -50,6 +50,8 @@ var vm = new Vue({
 
             showOrderDetails:false,
 
+            showSearchDialog:false,
+
             orderDetails:''
 
 
@@ -69,8 +71,13 @@ var vm = new Vue({
             });
         },
 
+        openSearchDialog(){
+          this.showSearchDialog = true;
+        },
+
 
         check(){
+            this.showSearchDialog = false;
             this.$http.post('/merchantOrders/checkMerchantOrders',JSON.stringify(this.search)).then(result => {
                 console.log(result);
                 this.orders = result.body;

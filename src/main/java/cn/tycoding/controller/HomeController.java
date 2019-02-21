@@ -119,4 +119,10 @@ public class HomeController {
 
 
 
+    @GetMapping(value = {"/managerLogout"})
+    public String managerLogout() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        attributes.getRequest().getSession().removeAttribute("account");
+        return  "managerPages/managerLogin";
+    }
 }

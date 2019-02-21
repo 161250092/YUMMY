@@ -1,62 +1,55 @@
+Vue.http.options.emulateJSON = true;
 
-var vm = new Vue({
+let vm = new Vue({
 
     el:"#app",
-    data() {
-        return {
-            series:[{
-                name: '东京',
-                data: [10, 10, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-            }]
-        }
+    data: {
+
+        statisticsInformation:{},
+
+        consumedMerchants:[],
+
+        consumedAmount:[],
 
     },
 
 
     methods: {
 
+        getStatisticsInformation(){
+            this.$http.post('/member/getMemberStatisticsInformation', {
+                account: sessionStorage.getItem("account"),
+            }).then(result => {
+                console.log(result);
+                this.statisticsInformation = result.body;
+                let map = result.body.consumptionInformation;
+                for(let item in map){
+                    if(map.hasOwnProperty(item)) {
+                        this.consumedMerchants.push(item);
+                        this.consumedAmount.push(map[item]);
+                    }
+                }
+                chart.series[0].update({
+                    data:this.consumedAmount
+                });
+                chart.xAxis.categories = this.consumedMerchants;
+
+
+                let chartData  =[{"name":"订单","y":this.statisticsInformation.acceptedOrdersNum},{"name":"废弃的订单","y":this.statisticsInformation.abolishedOrderNum}];
+                chart1.series[0].setData(chartData);
+
+            });
+        },
+
 
     },
+
 
     created() {
-
-    }
-
-
-})
-
-
-
-
-let chart = Highcharts.chart('container', {
-    chart: {
-        type: 'line'
+       this.getStatisticsInformation();
     },
-    title: {
-        text: '月平均气温'
-    },
-    subtitle: {
-        text: '数据来源: WorldClimate.com'
-    },
-    xAxis: {
-        categories: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
-    },
-    yAxis: {
-        title: {
-            text: '气温 (°C)'
-        }
-    },
-    plotOptions: {
-        line: {
-            dataLabels: {
-                // 开启数据标签
-                enabled: true
-            },
-            // 关闭鼠标跟踪，对应的提示框、点击事件会失效
-            enableMouseTracking: false
-        }
-    },
-    series: vm.series
 
 });
+
+
 

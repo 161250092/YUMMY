@@ -1,17 +1,16 @@
 package cn.tycoding.dao.memberDao;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface MemberStatisticsDataService {
 
     public double getMemberConsumption(String account);
 
-    public int getAbolishedOrders(String account);
+    public int getAbolishedOrdersNum(String account);
 
-    public int getAcceptedOrders(String account);
+    public int getAcceptedOrdersNum(String account);
 
-    public List<String> getMerchantConsumed(String account);
-
-    public List<Double>  getMemberConsumptionInEachMerchant(String account);
+    public HashMap<String,Double> getConsumptionInformation(String account);
 
 }
