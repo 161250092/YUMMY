@@ -98,7 +98,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     private void updateMemberLevelThroughConsumption(String account){
         double totalConsumption =  memberStatisticsDataService.getMemberConsumption(account);
         int newLevel = (int)totalConsumption/1000+1;
-        System.out.println(account+"总消费"+totalConsumption+" 等级: "+newLevel);
+//        System.out.println(account+"总消费"+totalConsumption+" 等级: "+newLevel);
         memberInformationDataService.updateMemberLevel(account,newLevel);
     }
 

@@ -62,7 +62,7 @@ public class VerificationCode {
 
             // 发送消息
             Transport.send(message);
-            System.out.println("Sent message successfully");
+            System.out.println("成功发送验证码");
         }catch (MessagingException mex) {
             mex.printStackTrace();
         }
