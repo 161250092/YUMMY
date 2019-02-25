@@ -3,8 +3,7 @@ package cn.yummy.entity.order;
 
 
 import cn.yummy.entity.member.DishForMember;
-import cn.yummy.entity.merchant.Dish;
-import cn.yummy.entity.merchant.Location;
+import cn.yummy.entity.primitiveType.Location;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

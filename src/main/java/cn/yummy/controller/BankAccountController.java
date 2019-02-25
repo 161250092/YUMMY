@@ -1,11 +1,10 @@
 package cn.yummy.controller;
 
-import cn.yummy.entity.Result;
-import cn.yummy.entity.order.Order;
+
+
+import cn.yummy.entity.primitiveType.Result;
 import cn.yummy.service.BankAccountService;
-import cn.yummy.service.memberService.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,12 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/bankAccount")
 public class BankAccountController {
 
-
-//    @RequestMapping("/in")
-//    public Result in() {
-//
-//        return new Result(true,"转入成功");
-//    }
 
     @Autowired
     private BankAccountService bankAccountService;
@@ -31,10 +24,8 @@ public class BankAccountController {
                       @RequestParam("idCode")String idCode,
                       @RequestParam("orderId")long orderId) {
 
-
-        Result rs =  bankAccountService.out(account,password,orderId,idCode);
-//System.out.println(rs.getMessage());
-        return rs;
+//        Result rs =  bankAccountService.out(account,password,orderId,idCode);
+        return bankAccountService.out(account,password,orderId,idCode);
     }
 
 

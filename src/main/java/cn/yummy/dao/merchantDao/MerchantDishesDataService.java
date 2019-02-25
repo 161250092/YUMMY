@@ -1,6 +1,6 @@
 package cn.yummy.dao.merchantDao;
 
-import cn.yummy.entity.PageBean;
+import cn.yummy.entity.primitiveType.PageBean;
 import cn.yummy.entity.merchant.Dish;
 
 import java.util.List;

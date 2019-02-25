@@ -6,12 +6,11 @@ import cn.yummy.dao.memberDao.MemberOrderDataService;
 import cn.yummy.dao.memberDao.MemberStatisticsDataService;
 import cn.yummy.dao.merchantDao.MerchantInformationDataService;
 import cn.yummy.dao.yummyDao.PaymentRecordDataService;
-import cn.yummy.entity.Result;
+import cn.yummy.entity.primitiveType.Result;
 import cn.yummy.entity.order.Order;
 import cn.yummy.service.BankAccountService;
 import cn.yummy.service.memberService.OrderService;
 import cn.yummy.util.ComputeArrivalTime;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

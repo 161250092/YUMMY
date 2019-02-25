@@ -1,6 +1,6 @@
 package cn.yummy.dao.memberDao;
 
-import cn.yummy.entity.MemberSearchEntity;
+import cn.yummy.entity.order.MemberSearchEntity;
 import cn.yummy.entity.order.Order;
 
 import java.util.List;

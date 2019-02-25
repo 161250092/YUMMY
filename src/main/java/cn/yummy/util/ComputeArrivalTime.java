@@ -2,7 +2,7 @@ package cn.yummy.util;
 
 import cn.yummy.dao.merchantDao.MerchantInformationDataService;
 import cn.yummy.dao.merchantDao.MerchantInformationDataServiceImpl;
-import cn.yummy.entity.merchant.Location;
+import cn.yummy.entity.primitiveType.Location;
 import cn.yummy.entity.order.Order;
 
 
@@ -27,7 +27,7 @@ public class ComputeArrivalTime {
 
         LocalDateTime submitTime = order.getSubmitTime();
         LocalDateTime expectTime = submitTime.plusMinutes(minutes);
-System.out.println(minutes);
+//System.out.println(minutes);
         accessible = minutes < 90;
 
         return expectTime;

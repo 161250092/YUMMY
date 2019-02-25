@@ -51,11 +51,11 @@ public class IndexController {
     }
 
 
-    @GetMapping(value = {"/test"})
-    public String test() {
-        return "home/test";
-    }
-
+//    @GetMapping(value = {"/test"})
+//    public String test() {
+//        return "home/test";
+//    }
+//
 
 
 

@@ -1,6 +1,6 @@
 package cn.yummy.service.managerService;
 
-import cn.yummy.entity.Result;
+import cn.yummy.entity.primitiveType.Result;
 
 import java.util.List;
 

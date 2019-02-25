@@ -1,8 +1,9 @@
 package cn.yummy.controller.memeberController;
 
-import cn.yummy.entity.Result;
+import cn.yummy.entity.primitiveType.Result;
 import cn.yummy.entity.member.Member;
-import cn.yummy.mail.VerificationCode;
+import cn.yummy.mapper.SystemMailMapper;
+import cn.yummy.util.mail.VerificationCode;
 import cn.yummy.service.memberService.MemberAccountService;
 import cn.yummy.util.GenerateVerification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class MemberLoginController {
 
     @Autowired
     private MemberAccountService memberAccountService;
+
 
     @RequestMapping("/login")
     public Result memberLogin(@RequestParam("account") String account, @RequestParam("password") String password) {
@@ -41,11 +43,7 @@ public class MemberLoginController {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         attributes.getRequest().getSession().setAttribute("verificationCode", verificationCode);
 
-        try {
-            new VerificationCode().sendVerificationCode(mail,verificationCode);
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        }
+        memberAccountService.sendVerificationCode(mail,verificationCode);
         return new Result(true, "已发送");
     }
 
@@ -63,12 +61,6 @@ public class MemberLoginController {
 
     @RequestMapping("/register")
     public Result memberRegister(@RequestBody Member member) {
-//        System.out.println(member.getAccount());
-//        System.out.println(member.getMail());
-//        System.out.println(member.getPassword());
-//        System.out.println(member.getPhone());
-//        return new Result(true, "注册成功");
-
          Result rs = memberAccountService.register(member);
          if(rs.isSuccess()){
              ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

@@ -1,6 +1,6 @@
 package cn.yummy.controller.merchantController;
 
-import cn.yummy.entity.Result;
+import cn.yummy.entity.primitiveType.Result;
 import cn.yummy.entity.merchant.MerchantInfo;
 import cn.yummy.service.merchantService.MerchantInformationService;
 import org.springframework.beans.factory.annotation.Autowired;

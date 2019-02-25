@@ -1,7 +1,7 @@
 package cn.yummy.dao.merchantDao;
 
 import cn.yummy.dao.mysql.MySQLConnector;
-import cn.yummy.entity.PageBean;
+import cn.yummy.entity.primitiveType.PageBean;
 import cn.yummy.entity.merchant.Dish;
 import org.springframework.stereotype.Service;
 

@@ -2,10 +2,9 @@ package cn.yummy.dao.memberDao;
 
 import cn.yummy.dao.merchantDao.MerchantOrdersDataServiceImpl;
 import cn.yummy.dao.mysql.MySQLConnector;
-import cn.yummy.entity.MemberSearchEntity;
+import cn.yummy.entity.order.MemberSearchEntity;
 import cn.yummy.entity.member.DishForMember;
-import cn.yummy.entity.merchant.Dish;
-import cn.yummy.entity.merchant.Location;
+import cn.yummy.entity.primitiveType.Location;
 import cn.yummy.entity.order.Order;
 import cn.yummy.entity.order.OrderState;
 import org.springframework.stereotype.Service;

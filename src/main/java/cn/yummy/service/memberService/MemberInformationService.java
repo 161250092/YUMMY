@@ -1,8 +1,8 @@
 package cn.yummy.service.memberService;
 
-import cn.yummy.entity.Result;
+import cn.yummy.entity.primitiveType.Result;
 import cn.yummy.entity.member.Member;
-import cn.yummy.entity.merchant.Location;
+import cn.yummy.entity.primitiveType.Location;
 
 
 public interface MemberInformationService {

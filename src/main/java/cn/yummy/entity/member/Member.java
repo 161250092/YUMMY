@@ -1,9 +1,8 @@
 package cn.yummy.entity.member;
 
 
-import cn.yummy.entity.merchant.Location;
+import cn.yummy.entity.primitiveType.Location;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Member {

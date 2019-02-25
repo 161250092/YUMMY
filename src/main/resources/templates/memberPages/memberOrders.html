@@ -32,54 +32,11 @@
     <div id="main">
         <el-col>
             <el-card shadow="hover">
-
-                <el-form :inline="true" :model="search" class="demo-form-inline">
-
-                    <el-form-item label="起始时间">
-                        <el-date-picker
-                                v-model="search.startTime"
-                                type="date"
-                                placeholder="选择日期"
-                                value-format="yyyy-MM-dd">
-                        </el-date-picker>
-                    </el-form-item>
-
-                    <el-form-item label="截止时间">
-                        <el-date-picker
-                                v-model="search.endTime"
-                                type="date"
-                                placeholder="选择日期"
-                                value-format="yyyy-MM-dd">
-                        </el-date-picker>
-                    </el-form-item>
-
-                    <el-form-item label="最低总价">
-                        <el-input v-model="search.lowPrice" placeholder="最低总价"
-                                  auto-complete="off">
-                        </el-input>
-                    </el-form-item>
-
-                    <el-form-item label="最高总价">
-                        <el-input v-model="search.highPrice" placeholder="最高总价"
-                                  auto-complete="off">
-                        </el-input>
-                    </el-form-item>
-
-                    <el-form-item label="餐厅">
-                        <el-input v-model="search.restaurantName" placeholder="餐厅"
-                                  auto-complete="off">
-                        </el-input>
-                    </el-form-item>
-
-
-                    <el-form-item>
-                        <el-button
-                                type="primary"
-                                icon="el-icon-search"
-                                @click="check">查询
-                        </el-button>
-                    </el-form-item>
-                </el-form>
+                <div>
+                    <el-row>
+                        <el-button @click="openSearchDialog" type="primary" icon="el-icon-search">查询</el-button>
+                    </el-row>
+                </div>
 
                 <!-- 列表 -->
                 <el-table
@@ -111,7 +68,7 @@
                             align="center"
                             prop="userLocation.address"
                             label="送达地址"
-                            width="150">
+                            width="200">
                     </el-table-column>
 
                     <el-table-column
@@ -119,7 +76,7 @@
                             prop="totalPrice"
                             sortable
                             label="总价"
-                            width="100"
+                            width="80"
                             show-overflow-tooltip>
                     </el-table-column>
 
@@ -235,6 +192,58 @@
 
         <div slot="footer" class="dialog-footer">
             <el-button type="primary" @click="pay()">支付</el-button>
+        </div>
+    </el-dialog>
+
+
+    <!-- 搜索 -->
+    <el-dialog title="搜索订单" :visible.sync="showSearchDialog" width="30%" :close-on-click-modal="false"
+               :close-on-press-escape="false">
+
+        <el-form :inline="true" :model="search" class="demo-form-inline">
+
+        <el-form-item label="起始时间">
+        <el-date-picker
+        v-model="search.startTime"
+        type="date"
+        placeholder="选择日期"
+        value-format="yyyy-MM-dd">
+        </el-date-picker>
+        </el-form-item>
+
+        <el-form-item label="截止时间">
+        <el-date-picker
+        v-model="search.endTime"
+        type="date"
+        placeholder="选择日期"
+        value-format="yyyy-MM-dd">
+        </el-date-picker>
+        </el-form-item>
+
+        <el-form-item label="最低总价">
+        <el-input v-model="search.lowPrice" placeholder="最低总价"
+        auto-complete="off">
+        </el-input>
+        </el-form-item>
+
+        <el-form-item label="最高总价">
+        <el-input v-model="search.highPrice" placeholder="最高总价"
+        auto-complete="off">
+        </el-input>
+        </el-form-item>
+
+        <el-form-item label="餐厅">
+        <el-input v-model="search.restaurantName" placeholder="餐 厅 "
+        auto-complete="off">
+        </el-input>
+        </el-form-item>
+
+        </el-form>
+
+
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="showSearchDialog = false"> 取消</el-button>
+            <el-button type="primary" @click="check" icon="el-icon-search">查询</el-button>
         </div>
     </el-dialog>
 

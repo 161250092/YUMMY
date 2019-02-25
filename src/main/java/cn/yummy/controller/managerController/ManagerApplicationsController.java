@@ -1,6 +1,6 @@
 package cn.yummy.controller.managerController;
 
-import cn.yummy.entity.Result;
+import cn.yummy.entity.primitiveType.Result;
 import cn.yummy.service.managerService.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

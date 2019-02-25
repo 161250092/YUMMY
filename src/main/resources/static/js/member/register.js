@@ -13,7 +13,7 @@ new Vue({
             // },
 
             content: '发送验证码',
-            totalTime: 10,
+            totalTime: 30,
             isAbandon: false,
 
             verificationCode:'',
@@ -75,7 +75,7 @@ new Vue({
             this.content = this.totalTime + 's后重新发送';
             let clock = window.setInterval(() => {
                 this.totalTime--;
-                this.content = this.totalTime + 's后重新发送'
+                this.content = this.totalTime + 's后重新发送';
                 if (this.totalTime < 0) {
                     window.clearInterval(clock);
                     this.content = '重新发送验证码';
@@ -153,9 +153,10 @@ new Vue({
                                 type: 'warning',
                                 duration: 6000
                             }),
+                            this.register.account=''
                         );
-                        // 清空表单状态
-                        this.$refs[register].resetFields();
+
+
                     }
                 });
             }

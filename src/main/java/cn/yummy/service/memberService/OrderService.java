@@ -1,7 +1,7 @@
 package cn.yummy.service.memberService;
 
-import cn.yummy.entity.MemberSearchEntity;
-import cn.yummy.entity.Result;
+import cn.yummy.entity.order.MemberSearchEntity;
+import cn.yummy.entity.primitiveType.Result;
 import cn.yummy.entity.order.Order;
 
 import java.util.List;

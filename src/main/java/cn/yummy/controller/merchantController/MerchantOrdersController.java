@@ -1,6 +1,6 @@
 package cn.yummy.controller.merchantController;
 
-import cn.yummy.entity.SearchEntity;
+import cn.yummy.entity.order.SearchEntity;
 import cn.yummy.service.merchantService.MerchantOrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

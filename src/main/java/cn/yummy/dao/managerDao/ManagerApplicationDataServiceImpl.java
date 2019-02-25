@@ -3,8 +3,7 @@ package cn.yummy.dao.managerDao;
 import cn.yummy.dao.merchantDao.MerchantInformationDataServiceImpl;
 import cn.yummy.dao.mysql.MySQLConnector;
 import cn.yummy.entity.manager.ApplicationFromMerchant;
-import cn.yummy.entity.merchant.Location;
-import cn.yummy.entity.merchant.Merchant;
+import cn.yummy.entity.primitiveType.Location;
 import cn.yummy.entity.merchant.MerchantInfo;
 import org.springframework.stereotype.Service;
 

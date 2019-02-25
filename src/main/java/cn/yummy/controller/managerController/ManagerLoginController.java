@@ -1,6 +1,6 @@
 package cn.yummy.controller.managerController;
 
-import cn.yummy.entity.Result;
+import cn.yummy.entity.primitiveType.Result;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,7 +1,6 @@
 package cn.yummy.service.memberService;
 
 
-import cn.yummy.entity.PageBean;
 import cn.yummy.entity.merchant.MerchantInfo;
 
 import java.util.List;

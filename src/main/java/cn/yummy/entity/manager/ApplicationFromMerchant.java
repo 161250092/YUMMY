@@ -1,10 +1,6 @@
 package cn.yummy.entity.manager;
 
-import cn.yummy.entity.merchant.Discount;
-import cn.yummy.entity.merchant.Location;
 import cn.yummy.entity.merchant.MerchantInfo;
-
-import java.util.List;
 
 public class ApplicationFromMerchant {
     private long applicationId;

@@ -1,7 +1,7 @@
 package cn.yummy.service.merchantService;
 
 
-import cn.yummy.entity.Result;
+import cn.yummy.entity.primitiveType.Result;
 import cn.yummy.entity.merchant.MerchantRegisterInf;
 
 public interface MerchantAccountService {

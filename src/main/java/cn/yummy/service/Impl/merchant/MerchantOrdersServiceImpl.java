@@ -1,7 +1,7 @@
 package cn.yummy.service.Impl.merchant;
 
 import cn.yummy.dao.merchantDao.MerchantOrdersDataService;
-import cn.yummy.entity.SearchEntity;
+import cn.yummy.entity.order.SearchEntity;
 import cn.yummy.entity.order.Order;
 import cn.yummy.service.merchantService.MerchantOrdersService;
 import org.springframework.beans.factory.annotation.Autowired;

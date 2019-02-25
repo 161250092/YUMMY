@@ -1,7 +1,6 @@
 package cn.yummy.dao.merchantDao;
 
-import cn.yummy.entity.PageBean;
-import cn.yummy.entity.SearchEntity;
+import cn.yummy.entity.order.SearchEntity;
 import cn.yummy.entity.order.Order;
 
 import java.util.List;

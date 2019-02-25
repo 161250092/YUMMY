@@ -1,6 +1,6 @@
 package cn.yummy.service.memberService;
 
-import cn.yummy.entity.Result;
+import cn.yummy.entity.primitiveType.Result;
 
 public interface PayService {
 

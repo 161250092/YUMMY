@@ -2,7 +2,7 @@ package cn.yummy.dao.memberDao;
 
 
 import cn.yummy.entity.member.Member;
-import cn.yummy.entity.merchant.Location;
+import cn.yummy.entity.primitiveType.Location;
 
 import java.util.List;
 

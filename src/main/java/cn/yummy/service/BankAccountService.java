@@ -1,6 +1,6 @@
 package cn.yummy.service;
 
-import cn.yummy.entity.Result;
+import cn.yummy.entity.primitiveType.Result;
 
 public interface BankAccountService {
 

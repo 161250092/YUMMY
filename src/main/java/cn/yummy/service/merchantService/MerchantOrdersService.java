@@ -1,12 +1,9 @@
 package cn.yummy.service.merchantService;
 
-import cn.yummy.entity.SearchEntity;
-import cn.yummy.entity.merchant.Dish;
-import cn.yummy.entity.member.MemberLevel;
+import cn.yummy.entity.order.SearchEntity;
 import cn.yummy.entity.order.Order;
 
 
-import java.util.Date;
 import java.util.List;
 
 public interface MerchantOrdersService {

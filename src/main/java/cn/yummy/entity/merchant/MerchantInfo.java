@@ -1,12 +1,10 @@
 package cn.yummy.entity.merchant;
 
-import cn.yummy.entity.merchant.Dish;
+import cn.yummy.entity.primitiveType.Location;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class MerchantInfo implements Serializable{
 

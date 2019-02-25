@@ -62,6 +62,8 @@ new Vue({
                 restaurantName:''
             },
 
+            showSearchDialog:false
+
 
 
         };
@@ -79,6 +81,10 @@ new Vue({
                 this.orders = result.body;
                 console.log(this.orders);
             });
+        },
+
+        openSearchDialog(){
+            this.showSearchDialog = true;
         },
 
         check(){

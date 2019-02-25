@@ -67,8 +67,8 @@ public class MemberAccountDataServiceImpl implements MemberAccountDataService {
             e.printStackTrace();
         }
 
-        //  getPassword(account)如果是空说明账号不存在，deleteAccountPassword.equals("")为空说明没被注销
-        return !this.getPassword(account).equals("")&&!deleteAccountPassword.equals("");
+        //  getPassword(account)如果是空说明账号不存在，deleteAccountPassword.equals("")说明注销的账号里没有这号
+        return !this.getPassword(account).equals("")||!deleteAccountPassword.equals("");
 
     }
 

@@ -1,9 +1,9 @@
 package cn.yummy.service.Impl.member;
 
 import cn.yummy.dao.memberDao.MemberInformationDataService;
-import cn.yummy.entity.Result;
+import cn.yummy.entity.primitiveType.Result;
 import cn.yummy.entity.member.Member;
-import cn.yummy.entity.merchant.Location;
+import cn.yummy.entity.primitiveType.Location;
 import cn.yummy.service.memberService.MemberInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

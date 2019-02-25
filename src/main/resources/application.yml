@@ -12,7 +12,7 @@ spring:
       #mysql驱动
       driver-class-name: com.mysql.jdbc.Driver
       #基本属性
-      url: jdbc:mysql://127.0.0.1:3306/seckill?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+      url: jdbc:mysql://127.0.0.1:3306/Yummy?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
       username: root
       password: 123456
       #配置初始化大小/最小/最大
@@ -53,11 +53,11 @@ spring:
     proxy-target-class: true
 
 
-##mybatis配置
-#mybatis:
-#  mapper-locations: classpath:mapper/*.xml
-#  type-aliases-package: cn.yummy.entity
-#
+#mybatis配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cn.yummy.entity
+
 ##mybaatis分页插件pagehelper设置
 #pagehelper:
 #  pagehelperDialect: mysql

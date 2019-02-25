@@ -1,8 +1,7 @@
 package cn.yummy.service.Impl.merchant;
 
 import cn.yummy.dao.merchantDao.MerchantDishesDataService;
-import cn.yummy.entity.PageBean;
-import cn.yummy.entity.Result;
+import cn.yummy.entity.primitiveType.PageBean;
 import cn.yummy.entity.merchant.Dish;
 import cn.yummy.service.merchantService.DishManageService;
 import org.springframework.beans.factory.annotation.Autowired;

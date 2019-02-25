@@ -1,10 +1,9 @@
 package cn.yummy.controller.memeberController;
 
-import cn.yummy.entity.MemberSearchEntity;
-import cn.yummy.entity.Result;
+import cn.yummy.entity.order.MemberSearchEntity;
+import cn.yummy.entity.primitiveType.Result;
 
 import cn.yummy.entity.order.Order;
-import cn.yummy.entity.order.OrderState;
 import cn.yummy.service.memberService.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

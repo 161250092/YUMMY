@@ -1,7 +1,7 @@
 package cn.yummy.service.Impl.manager;
 
 import cn.yummy.dao.managerDao.ManagerAccountDataService;
-import cn.yummy.entity.Result;
+import cn.yummy.entity.primitiveType.Result;
 import cn.yummy.service.managerService.ManagerAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
