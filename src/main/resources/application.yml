@@ -56,7 +56,7 @@ spring:
 ##mybatis配置
 #mybatis:
 #  mapper-locations: classpath:mapper/*.xml
-#  type-aliases-package: cn.tycoding.entity
+#  type-aliases-package: cn.yummy.entity
 #
 ##mybaatis分页插件pagehelper设置
 #pagehelper:

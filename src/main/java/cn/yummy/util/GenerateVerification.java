@@ -1,4 +1,4 @@
-package cn.tycoding.util;
+package cn.yummy.util;
 
 import java.util.Random;
 
