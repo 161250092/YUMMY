@@ -1,6 +1,6 @@
 package cn.yummy.controller.merchantController;
 
-import cn.yummy.entity.order.SearchEntity;
+import cn.yummy.entity.order.MerchantSearchEntity;
 import cn.yummy.service.merchantService.MerchantOrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,31 +21,16 @@ public class MerchantOrdersController {
 
     @RequestMapping("/getOrders")
     public List getAllOrders(@RequestParam("idCode") String idCode){
-//        List rows = new ArrayList();
-//        for(int i=0;i<10;i++){
-//            rows.add(new Order(i+1,"0000001",new OrderState(true,true,true)));
-//        }
-//
-//        return rows;
         return merchantOrdersService.getMerchantAllOrders(idCode);
 
     }
 
     @RequestMapping("/checkMerchantOrders")
-    public List checkOrders(@RequestBody SearchEntity searchEntity){
-//        System.out.println(searchEntity.getHighPrice());
-//        List rows = new ArrayList();
-//        for(int i=0;i<10;i++){
-//            rows.add(new Order(i+1,"0000001",new OrderState(true,true,true)));
-//        }
-//
-//        return rows;
+    public List checkOrders(@RequestBody MerchantSearchEntity searchEntity){
+
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         String idCode = (String)attributes.getRequest().getSession().getAttribute("account");
         searchEntity.setIdCode(idCode);
-
-        System.out.println(searchEntity.getStartTime());
-        System.out.println(searchEntity.getEndTime());
 
         return merchantOrdersService.checkMerchantOrders(searchEntity);
 

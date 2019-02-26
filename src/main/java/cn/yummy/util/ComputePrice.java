@@ -47,7 +47,7 @@ public class ComputePrice {
         Member member = memberInformationDataService.getMemberInformation(order.getAccount());
         double memberDiscount = this.memberLevelDiscount(member.getMemberLevel());
 
-        System.out.println("会员折扣:"+memberDiscount);
+//        System.out.println("会员折扣:"+memberDiscount);
 
         return (price-reducePrice)*memberDiscount;
     }

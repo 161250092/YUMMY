@@ -41,10 +41,6 @@ public class MemberOrdersController {
     public List searchMemberOrders(@RequestBody MemberSearchEntity memberSearchEntity){
 //商店名可能为空
 
-        System.out.println(memberSearchEntity.getRestaurantName());
-        System.out.println(memberSearchEntity.getLowPrice());
-        System.out.println(memberSearchEntity.getEndTime());
-
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         String account = (String)attributes.getRequest().getSession().getAttribute("account");
         memberSearchEntity.setAccount(account);

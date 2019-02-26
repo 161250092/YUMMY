@@ -1,7 +1,7 @@
 package cn.yummy.service.Impl.merchant;
 
 import cn.yummy.dao.merchantDao.MerchantOrdersDataService;
-import cn.yummy.entity.order.SearchEntity;
+import cn.yummy.entity.order.MerchantSearchEntity;
 import cn.yummy.entity.order.Order;
 import cn.yummy.service.merchantService.MerchantOrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class MerchantOrdersServiceImpl implements MerchantOrdersService {
     }
 
     @Override
-    public List<Order> checkMerchantOrders(SearchEntity searchEntity) {
+    public List<Order> checkMerchantOrders(MerchantSearchEntity searchEntity) {
         return merchantOrdersDataService.checkMerchantOrders(searchEntity);
     }
 }

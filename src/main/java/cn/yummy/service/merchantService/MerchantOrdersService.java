@@ -1,6 +1,6 @@
 package cn.yummy.service.merchantService;
 
-import cn.yummy.entity.order.SearchEntity;
+import cn.yummy.entity.order.MerchantSearchEntity;
 import cn.yummy.entity.order.Order;
 
 
@@ -10,7 +10,7 @@ public interface MerchantOrdersService {
 
     public List<Order> getMerchantAllOrders(String idCode);
 
-    public List<Order> checkMerchantOrders(SearchEntity searchEntity);
+    public List<Order> checkMerchantOrders(MerchantSearchEntity searchEntity);
 
 
 

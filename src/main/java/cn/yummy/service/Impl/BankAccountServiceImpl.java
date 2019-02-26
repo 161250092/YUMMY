@@ -53,7 +53,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         if(!rs.isSuccess())
             return rs;
 
-//        转入的账号
+//      转入的账号
         String bankAccount = merchantInformationDataService.getMerchantInfo(idCode).getBankAccount();
 //      商家收到部分
         double merchantBonus = totalPrice*0.98;

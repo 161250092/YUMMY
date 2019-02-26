@@ -13,9 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 自定义拦截器，实现简单的登录拦截
- *
- * @auther MWX
- * @date 2018/9/29
  */
 @Component
 @Aspect

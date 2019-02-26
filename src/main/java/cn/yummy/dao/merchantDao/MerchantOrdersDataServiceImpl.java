@@ -1,7 +1,7 @@
 package cn.yummy.dao.merchantDao;
 
 import cn.yummy.dao.mysql.MySQLConnector;
-import cn.yummy.entity.order.SearchEntity;
+import cn.yummy.entity.order.MerchantSearchEntity;
 import cn.yummy.entity.member.DishForMember;
 import cn.yummy.entity.primitiveType.Location;
 import cn.yummy.entity.order.Order;
@@ -32,7 +32,7 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
     }
 
     @Override
-    public List<Order> checkMerchantOrders(SearchEntity searchEntity) {
+    public List<Order> checkMerchantOrders(MerchantSearchEntity searchEntity) {
         List<Order> ordersWithoutDishes = new ArrayList<>();
         PreparedStatement stmt;
         String sql;

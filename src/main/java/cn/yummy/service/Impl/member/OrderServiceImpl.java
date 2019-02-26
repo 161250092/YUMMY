@@ -50,11 +50,13 @@ public class OrderServiceImpl implements OrderService{
         if(!computePrice.isReachMinDelivery(priceWithoutDiscount,order))
             return new Result(false,"总价低于起送价");
 
-
 //      提交订单
-        memberOrderDataService.submitOrder(order);
+        synchronized(this) {
 
-//        延时处理
+            memberOrderDataService.submitOrder(order);
+        }
+
+//       延时处理
         orderDelayedTransaction = new OrderDelayedTransaction();
         orderDelayedTransaction.delayedTransaction(order.getOrderId());
 
