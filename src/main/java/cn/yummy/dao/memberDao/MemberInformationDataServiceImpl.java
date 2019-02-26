@@ -25,10 +25,11 @@ public class MemberInformationDataServiceImpl implements MemberInformationDataSe
         List<Location> locations = new ArrayList<>();
 
         try{
-            sql = "select * from Location where account=?";
+            sql = "select * from Location where account=? and isAbolished=?";
 
             stmt = conn.prepareStatement(sql);
             stmt.setString(1,account);
+            stmt.setBoolean(2,false);
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()){
@@ -57,12 +58,13 @@ public class MemberInformationDataServiceImpl implements MemberInformationDataSe
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "insert into location(account,lat,lng,address)VALUES(?,?,?,?)";
+            sql = "insert into location(account,lat,lng,address,isAbolished)VALUES(?,?,?,?,?)";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1,location.getAccount());
             stmt.setDouble(2,location.getLat());
             stmt.setDouble(3,location.getLng());
             stmt.setString(4,location.getAddress());
+            stmt.setBoolean(5,false);
             stmt.executeUpdate();
             stmt.close();
             conn.close();
@@ -81,10 +83,11 @@ public class MemberInformationDataServiceImpl implements MemberInformationDataSe
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "delete from location where locationId=?";
+            sql = "update location set isAbolished=? where locationId=?";
 
             stmt = conn.prepareStatement(sql);
-            stmt.setLong(1,locationId);
+            stmt.setBoolean(1,true);
+            stmt.setLong(2,locationId);
             stmt.executeUpdate();
 
             stmt.close();

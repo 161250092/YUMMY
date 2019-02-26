@@ -27,7 +27,8 @@ create table if not exists `location`(
 `account` varchar(20),
 `lat` double,
 `lng` double,
-`address` varchar(100)
+`address` varchar(100),
+`isAbolished` boolean
 )ENGINE = InnoDB DEFAULT CHARSET =utf8;
 
 

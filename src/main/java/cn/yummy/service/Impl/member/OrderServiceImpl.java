@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService{
             return new Result(false,"总价低于起送价");
 
 //      提交订单
-        synchronized(this) {
+        synchronized(OrderServiceImpl.class) {
 
             memberOrderDataService.submitOrder(order);
         }
