@@ -204,8 +204,6 @@ var vm = new Vue({
         },
 
 
-
-
     },
 
     created(){
