@@ -21,6 +21,8 @@ public class Order implements Serializable {
 
     private LocalDateTime submitTime;
 
+    private LocalDateTime deliveryTime;
+
     private LocalDateTime orderAcceptedTime;
 
     private LocalDateTime expectedArriveTime;
@@ -113,7 +115,13 @@ public class Order implements Serializable {
         this.expectedArriveTime = expectedArriveTime;
     }
 
+    public LocalDateTime getDeliveryTime() {
+        return deliveryTime;
+    }
 
+    public void setDeliveryTime(LocalDateTime deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;

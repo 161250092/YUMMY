@@ -25,8 +25,8 @@ public class ComputeArrivalTime {
         double distance = this.getDistance(source,destination);
         long minutes = (long)(distance/0.2 + 20);
 
-        LocalDateTime submitTime = order.getSubmitTime();
-        LocalDateTime expectTime = submitTime.plusMinutes(minutes);
+        LocalDateTime deliveryTime = order.getDeliveryTime();
+        LocalDateTime expectTime = deliveryTime.plusMinutes(minutes);
 //System.out.println(minutes);
         accessible = minutes < 90;
 

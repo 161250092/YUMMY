@@ -70,7 +70,7 @@ var vm = new Vue({
                 dish.canAdd = true;
 
             if(dish.selectQuantity>dish.quantity) {
-                console.log(dish.selectQuantity+" "+dish.quantity)
+                console.log(dish.selectQuantity+" "+dish.quantity);
                 dish.canAdd = false;
             }
         },

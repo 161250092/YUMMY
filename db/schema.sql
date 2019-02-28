@@ -107,6 +107,7 @@ create table if not exists `order_tb`(
   `userLocation` bigint,
 
   `submitTime` datetime,
+  `deliveryTime` datetime,
   `orderAcceptedTime`  datetime,
   `expectedArriveTime`  datetime,
 

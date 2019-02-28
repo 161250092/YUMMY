@@ -71,18 +71,18 @@ public class ComputePrice {
 
 
     public double returnMoney(Order order){
-        LocalDateTime submitTime = order.getSubmitTime();
+        LocalDateTime deliveryTime = order.getDeliveryTime();
         LocalDateTime expectTime = order.getExpectedArriveTime();
 
-        Duration expectedDuration = Duration.between(submitTime,expectTime);
+        Duration expectedDuration = Duration.between(deliveryTime,expectTime);
         long expectedWaitingTime = expectedDuration.toHours()*60+expectedDuration.toMinutes();
 
-        Duration actualDuration = Duration.between(submitTime,LocalDateTime.now());
+        Duration actualDuration = Duration.between(deliveryTime,LocalDateTime.now());
         long actualWaitingTime =actualDuration.toHours()*60+actualDuration.toMinutes();
 
 
         double returnPercent = this.returnPercent(expectedWaitingTime,actualWaitingTime);
-        System.out.println("退回比率 "+returnPercent);
+       System.out.println("退回比率 "+returnPercent);
 
         return  order.getTotalPrice()*returnPercent;
     }
@@ -110,7 +110,7 @@ public class ComputePrice {
     }
 
 
-//会员减价 尚未实现
+    //会员减价
     private double memberLevelDiscount(MemberLevel memberLevel){
         int level = memberLevel.getLevel();
         return 1-(level-1)*0.01;

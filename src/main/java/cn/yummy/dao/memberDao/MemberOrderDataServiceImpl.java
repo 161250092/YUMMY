@@ -123,8 +123,7 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
         conn = new MySQLConnector().getConnection("Yummy");
         List<Order> orders = new ArrayList<>();
         try{
-            sql ="select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.submitTime,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
-                    "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.address,location.lat,location.lng,location.locationId from order_tb,location where order_tb.userLocation = location.locationId and order_tb.account =? order by order_tb.submitTime desc";
+            sql ="select order_tb.*,location.address,location.lat,location.lng,location.locationId from order_tb,location where order_tb.userLocation = location.locationId and order_tb.account =? order by order_tb.submitTime desc";
 
             stmt = conn.prepareStatement(sql);
 
@@ -172,6 +171,7 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
 
         if(orderState.isPayed()) {
             order.setSubmitTime(rs.getTimestamp("submitTime").toLocalDateTime());
+            order.setDeliveryTime(rs.getTimestamp("deliveryTime").toLocalDateTime());
             order.setExpectedArriveTime(rs.getTimestamp("expectedArriveTime").toLocalDateTime());
         }
 
@@ -192,8 +192,7 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
         List<Order> orders = new ArrayList<>();
         try{
             if(memberSearchEntity.getRestaurantName().equals("")) {
-                sql = "select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.submitTime,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
-                        "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.address,location.lat,location.lng,location.locationId from order_tb,location where order_tb.userLocation = location.locationId and order_tb.account =?" +
+                sql = "select order_tb.*,location.address,location.lat,location.lng,location.locationId from order_tb,location where order_tb.userLocation = location.locationId and order_tb.account =?" +
                         "and order_tb.orderAcceptedTime between ? and ? and order_tb.totalPrice between ? and ?";
 
                 stmt = conn.prepareStatement(sql);
@@ -206,8 +205,7 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
 
             }
             else {
-                sql = "select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.submitTime,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
-                        "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.address,location.lat,location.lng,location.locationId,merchantInfo.restaurantName from order_tb,location,merchantInfo where order_tb.userLocation = location.locationId and order_tb.idCode=merchantInfo.idCode and order_tb.account =?" +
+                sql = "select order_tb.*,location.address,location.lat,location.lng,location.locationId,merchantInfo.restaurantName from order_tb,location,merchantInfo where order_tb.userLocation = location.locationId and order_tb.idCode=merchantInfo.idCode and order_tb.account =?" +
                         "and order_tb.orderAcceptedTime between ? and ? and order_tb.totalPrice between ? and ? and merchantInfo.restaurantName=?";
                 stmt = conn.prepareStatement(sql);
                 stmt.setString(1,memberSearchEntity.getAccount());
@@ -249,8 +247,7 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
         conn = new MySQLConnector().getConnection("Yummy");
         Order order = new Order();
         try{
-            sql ="select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.submitTime,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
-                    "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.address,location.lat,location.lng,location.locationId from order_tb,location where order_tb.userLocation = location.locationId and order_tb.orderId =?";
+            sql ="select order_tb.*,location.address,location.lat,location.lng,location.locationId from order_tb,location where order_tb.userLocation = location.locationId and order_tb.orderId =?";
 
             stmt = conn.prepareStatement(sql);
 
@@ -338,12 +335,13 @@ public class MemberOrderDataServiceImpl implements MemberOrderDataService {
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "update order_tb set submitTime=?,expectedArriveTime=? where orderId=?";
+            sql = "update order_tb set submitTime=?,expectedArriveTime=?,deliveryTime=? where orderId=?";
 
             stmt = conn.prepareStatement(sql);
             stmt.setObject(1,order.getSubmitTime());
             stmt.setObject(2,order.getExpectedArriveTime());
-            stmt.setLong(3,order.getOrderId());
+            stmt.setObject(3,order.getDeliveryTime());
+            stmt.setLong(4,order.getOrderId());
             stmt.executeUpdate();
             stmt.close();
             conn.close();

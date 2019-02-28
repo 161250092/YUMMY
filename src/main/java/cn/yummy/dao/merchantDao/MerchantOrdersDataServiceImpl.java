@@ -39,8 +39,7 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.submitTime,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
-                    "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.address,location.lat,location.lng,location.locationId from order_tb,location,member where order_tb.userLocation = location.locationId  and order_tb.account =member.account " +
+            sql = "select order_tb.*,location.address,location.lat,location.lng,location.locationId from order_tb,location,member where order_tb.userLocation = location.locationId  and order_tb.account =member.account " +
                     " and order_tb.idCode =? and order_tb.orderAcceptedTime between ? and ? and order_tb.totalPrice between ? and ? and member.memberLevel between ? and ?";
 
             stmt = conn.prepareStatement(sql);
@@ -56,37 +55,11 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
                 Order order = new Order();
-                order.setOrderId(rs.getLong("orderId"));
-                order.setAccount(rs.getString("account"));
-                order.setIdCode(rs.getString("idCode"));
-
-                Location location = new Location();
-                location.setLocationId(rs.getLong("locationId"));
-                location.setLat(rs.getDouble("lat"));
-                location.setLng(rs.getDouble("lng"));
-                location.setAccount(rs.getString("account"));
-                location.setAddress(rs.getString("address"));
-                order.setUserLocation(location);
-
-                order.setSubmitTime(rs.getTimestamp("submitTime").toLocalDateTime());
-                order.setExpectedArriveTime(rs.getTimestamp("expectedArriveTime").toLocalDateTime());
-                order.setOrderAcceptedTime(rs.getTimestamp("orderAcceptedTime").toLocalDateTime());
-
-                order.setTotalPrice(rs.getDouble("totalPrice"));
-
-                OrderState orderState = new OrderState();
-                orderState.setAbolished(rs.getBoolean("isAbolished"));
-                orderState.setPayed(rs.getBoolean("isPayed"));
-                orderState.setReceived(rs.getBoolean("isReceived"));
-                order.setOrderState(orderState);
-
+                order = this.getOrderWithoutDish(rs);
                 ordersWithoutDishes.add(order);
-
             }
-
             stmt.close();
             conn.close();
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -132,11 +105,6 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
             e.printStackTrace();
         }
 
-
-//        for(Order order:orders){
-//            this.getDishesInOrder(order);
-//        }
-
         return orders;
     }
 
@@ -163,6 +131,7 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
 
         if(orderState.isPayed()) {
             order.setSubmitTime(rs.getTimestamp("submitTime").toLocalDateTime());
+            order.setDeliveryTime(rs.getTimestamp("deliveryTime").toLocalDateTime());
             order.setExpectedArriveTime(rs.getTimestamp("expectedArriveTime").toLocalDateTime());
         }
 
@@ -174,7 +143,7 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
         return order;
     }
 
-    public boolean getDishesInOrder(Order order){
+    public void getDishesInOrder(Order order){
         PreparedStatement stmt;
         String sql;
         conn = new MySQLConnector().getConnection("Yummy");
@@ -209,7 +178,6 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
             e.printStackTrace();
         }
 
-        return true;
     }
 
 

@@ -8,6 +8,7 @@ import cn.yummy.dao.merchantDao.MerchantInformationDataService;
 import cn.yummy.dao.yummyDao.PaymentRecordDataService;
 import cn.yummy.entity.primitiveType.Result;
 import cn.yummy.entity.order.Order;
+import cn.yummy.entity.yummy.PayForm;
 import cn.yummy.service.BankAccountService;
 import cn.yummy.service.memberService.OrderService;
 import cn.yummy.util.ComputeArrivalTime;
@@ -45,9 +46,18 @@ public class BankAccountServiceImpl implements BankAccountService {
 
 
     @Override
-    public Result out(String account, String password, long orderId,String idCode) {
-        double totalPrice = memberOrderDataService.getOrderPrice(orderId);
+    public Result payForOrder(PayForm payForm) {
+        if(payForm.isDeliveryRightNow())
+            payForm.setDeliveryTime(LocalDateTime.now());
+        else
+            payForm.formatTransfer();
 
+        return out(payForm.getAccount(),payForm.getPassword(),payForm.getOrderId(),payForm.getIdCode(),payForm.getDeliveryTime());
+    }
+
+    @Override
+    public Result out(String account, String password, long orderId,String idCode,LocalDateTime deliveryTime) {
+        double totalPrice = memberOrderDataService.getOrderPrice(orderId);
 //      验证账户、余额
         Result rs = this.validate(account,password,totalPrice);
         if(!rs.isSuccess())
@@ -55,16 +65,18 @@ public class BankAccountServiceImpl implements BankAccountService {
 
 //      转入的账号
         String bankAccount = merchantInformationDataService.getMerchantInfo(idCode).getBankAccount();
-//      商家收到部分
+//      商家收入
         double merchantBonus = totalPrice*0.98;
-//      yummy收到部分
+//      yummy收入
         double bonus = totalPrice*0.02;
 
-//      提交日期与预计时间
+//      提交日期,送餐时间与预计时间
         Order order = memberOrderDataService.getOrder(orderId);
         computeArrivalTime = new ComputeArrivalTime();
         order.setSubmitTime(LocalDateTime.now());
+        order.setDeliveryTime(deliveryTime);
         order.setExpectedArriveTime(computeArrivalTime.computeArrivalTime(order));
+
         if(!computeArrivalTime.accessible)
             return new Result(false,"超出配送范围");
 

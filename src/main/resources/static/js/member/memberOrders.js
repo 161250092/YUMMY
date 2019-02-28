@@ -2,7 +2,7 @@
 Vue.http.options.emulateJSON = true;
 
 // Vue实例
-new Vue({
+let vm = new Vue({
     el: '#app',
     data() {
         return {
@@ -62,9 +62,19 @@ new Vue({
                 restaurantName:''
             },
 
-            showSearchDialog:false
+            showSearchDialog:false,
+
+            deliveryRightNow:true,
 
 
+            form:{
+                account:'',
+                password:'',
+                idCode:'',
+                orderId:0,
+                deliveryRightNow:false,
+                dateTime:''
+            }
 
         };
     },
@@ -95,22 +105,19 @@ new Vue({
         },
 
 
-        payForm(order){
-            this.selectMerchant = order.idCode;
-            this.selectOrderId = order.orderId;
+        openPayForm(order){
             this.totalPriceInBill = order.totalPrice;
             this.showPayForm = true;
+
+            this.form.idCode = order.idCode;
+            this.form.orderId = order.orderId;
+
         },
 
-
         pay(){
-            console.log(this.bankAccount);
-            this.$http.post('/bankAccount/out',{
-                orderId:this.selectOrderId,
-                idCode:this.selectMerchant,
-                account:this.bankAccount.account,
-                password:this.bankAccount.password
-            }
+
+            console.log(this.form);
+            this.$http.post('/bankAccount/payOut',JSON.stringify(this.form)
             ).then(result => {
                 if (result.body.success) {
                     //支付成功
@@ -149,6 +156,9 @@ new Vue({
                 this.orderDetails += order.dishes[i].name+" 数量:"+order.dishes[i].selectQuantity+" 单价:"+order.dishes[i].price+"\n";
             }
             this.orderDetails +="\n总价: "+order.totalPrice+" 元";
+
+            if(order.orderState.payed)
+                this.orderDetails +=" \n预计送达时间:"+order.expectedArriveTime;
 
             if(order.orderState.received)
                 this.orderDetails +=" \n送达时间:"+order.orderAcceptedTime;
