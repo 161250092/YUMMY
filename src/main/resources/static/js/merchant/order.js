@@ -90,7 +90,7 @@ var vm = new Vue({
             this.showOrderDetails = true;
             this.orderDetails += "菜品:\n";
             for(var i=0;i<order.dishes.length;i++){
-                this.orderDetails += order.dishes[i].name+" "+order.dishes[i].quantity+" "+order.dishes[i].price+"\n";
+                this.orderDetails += order.dishes[i].name+" "+order.dishes[i].selectQuantity+"份   单价:"+order.dishes[i].price+"\n";
             }
 
             if(order.orderState.received)

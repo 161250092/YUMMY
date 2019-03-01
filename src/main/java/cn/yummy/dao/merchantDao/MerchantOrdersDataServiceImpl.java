@@ -87,8 +87,7 @@ public class MerchantOrdersDataServiceImpl implements MerchantOrdersDataService 
 
         List<Order> orders = new ArrayList<>();
         try{
-            sql ="select order_tb.orderId,order_tb.account,order_tb.idCode,order_tb.submitTime,order_tb.expectedArriveTime,order_tb.orderAcceptedTime,\n" +
-                    "order_tb.totalPrice,order_tb.isPayed,order_tb.isReceived,order_tb.isAbolished,location.lat,location.lng,location.locationId,location.address from order_tb,location where order_tb.userLocation = location.locationId and order_tb.idCode =? ";
+            sql ="select order_tb.*,location.lat,location.lng,location.locationId,location.address from order_tb,location where order_tb.userLocation = location.locationId and order_tb.idCode =? ";
 
             stmt = conn.prepareStatement(sql);
             stmt.setString(1,idCode);
