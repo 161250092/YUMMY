@@ -7,6 +7,15 @@
     <link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
     <link rel="stylesheet" th:href="@{../../css/goods.css}"/>
     <link rel="stylesheet" th:href="@{../../css/public.css}"/>
+    <style>
+        .headImg{
+            display: flex;
+            flex-direction: column;
+            flex:0 1 auto;
+            justify-content: center;
+            align-items:center;
+        }
+    </style>
 </head>
 <body>
 <div id="app">
@@ -28,6 +37,14 @@
             </el-dropdown>
         </el-menu-item>
     </el-menu>
+
+
+    <div align="center">
+            <el-card :body-style="{ padding: '0px' }">
+                <img src="http://thyrsi.com/t6/675/1551424860x2890202402.png" class="image">
+            </el-card>
+    </div>
+
 
     <div id="main">
         <el-col>

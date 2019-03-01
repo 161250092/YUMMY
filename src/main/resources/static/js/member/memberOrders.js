@@ -98,6 +98,7 @@ let vm = new Vue({
         },
 
         check(){
+            this.showSearchDialog = false;
             this.$http.post('/member/searchMemberOrders',JSON.stringify(this.search)).then(result => {
                 console.log(result);
                 this.orders = result.body;
