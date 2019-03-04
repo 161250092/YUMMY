@@ -2,6 +2,8 @@ package cn.yummy.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Controller
 public class IndexController {
@@ -19,6 +21,9 @@ public class IndexController {
 
     @GetMapping(value = {"/member"})
     public String member() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        attributes.getRequest().getSession().removeAttribute("account");
+        attributes.getRequest().getSession().removeAttribute("idCode");
         return "memberPages/memberLogin";
     }
 
@@ -32,6 +37,9 @@ public class IndexController {
 
     @GetMapping(value = {"/merchant"})
     public String merchant() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        attributes.getRequest().getSession().removeAttribute("account");
+        attributes.getRequest().getSession().removeAttribute("idCode");
         return "merchantPages/merchantLogin";
     }
 

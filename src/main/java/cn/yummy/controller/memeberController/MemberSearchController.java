@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.List;
 
@@ -39,6 +41,11 @@ public class MemberSearchController {
     public List getMerchantAllDishes(
             @RequestParam("idCode") String idCode) {
 
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        attributes.getRequest().getSession().setAttribute("idCode",idCode);
+
+
+
         return merchantVisitService.getMerchantAllDishesInForce(idCode);
     }
 
@@ -47,5 +54,6 @@ public class MemberSearchController {
             @RequestParam("idCode") String idCode) {
         return merchantVisitService.getMerchantInfo(idCode);
     }
+
 
 }

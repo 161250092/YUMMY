@@ -44,6 +44,7 @@ public class HomeController {
     public String memberLogout() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         attributes.getRequest().getSession().removeAttribute("account");
+        attributes.getRequest().getSession().removeAttribute("idCode");
         return "memberPages/memberLogin";
     }
 
@@ -76,6 +77,7 @@ public class HomeController {
     public String merchantLogout(){
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         attributes.getRequest().getSession().removeAttribute("account");
+        attributes.getRequest().getSession().removeAttribute("idCode");
         return "merchantPages/merchantLogin";
     }
 

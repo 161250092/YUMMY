@@ -75,13 +75,19 @@ public class UploadController {
 
     @RequestMapping("/image/dish/{pictureName}")
     public void getImage(@PathVariable(name="pictureName") String pictureName, HttpServletResponse response) throws IOException {
-        System.out.println(pictureName);
+//        System.out.println(pictureName);
         response.getOutputStream().write(getDishImageData(pictureName));
     }
 
     private static byte[]  getDishImageData(String pictureName){
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         String idCode =(String)attributes.getRequest().getSession().getAttribute("account");
+
+        String visitMerchantIdCode = (String)attributes.getRequest().getSession().getAttribute("idCode");
+        if (visitMerchantIdCode!=null) {
+            idCode = visitMerchantIdCode;
+        }
+
         File file =  new File(Paths.get("Image/"+idCode+"/"+pictureName).toString());
         return getImageData(file);
     }

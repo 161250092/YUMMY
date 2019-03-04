@@ -49,6 +49,49 @@
                     </el-row>
                 </div>
                 <br>
+
+                <div>
+                    <el-form class="editor-form" :model="details" status-icon ref="details"
+                             label-width="100px">
+
+                        <el-form-item prop="idCode" label="商店号">
+                            <span>{{details.idCode}} </span>
+                        </el-form-item>
+
+
+                        <el-form-item prop="bankAccount" label="银行账号">
+                            <span>{{details.bankAccount}} </span>
+                        </el-form-item>
+
+                        <el-form-item prop="restaurantName" label="店铺名">
+                            <span>{{details.restaurantName}} </span>
+                        </el-form-item>
+
+
+                        <el-form-item prop="phone" label="电话">
+                            <span>{{details.phone}} </span>
+                        </el-form-item>
+
+
+                        <el-form-item prop="location" label="地址">
+                            <span>{{details.location.address}} </span>
+                        </el-form-item>
+
+
+                        <el-form-item prop="restaurantType" label="类型">
+                            <span>{{details.restaurantType}} </span>
+                        </el-form-item>
+
+                        <el-form-item prop="minDeliveryCost" label="起送价">
+                            <span>{{details.minDeliveryCost}} </span>
+                        </el-form-item>
+
+                        <el-form-item prop="deliveryCost" label="配送费">
+                            <span>{{details.deliveryCost}} </span>
+                        </el-form-item>
+                    </el-form>
+                </div>
+
                 <div align="center" id="logo">减免优惠</div>
                 <!-- 列表 -->
                 <el-table :data="discounts" style="width: 100%">

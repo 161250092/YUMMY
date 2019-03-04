@@ -35,7 +35,7 @@ public class MerchantInformationController {
 //
 //        System.out.println(merchantInfo.getBankAccount());
 //        return new Result(true,"提交更新申请成功");
-        System.out.println(merchantInfo.getLocation().getAddress());
+//        System.out.println(merchantInfo.getLocation().getAddress());
 
         if(merchantInformationService.updateMerchantInfo(merchantInfo))
             return new Result(true,"提交更新申请成功");
@@ -67,8 +67,6 @@ public class MerchantInformationController {
         else
             return new Result(true,"删除失败");
     }
-
-
 
 
 
