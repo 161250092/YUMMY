@@ -40,7 +40,7 @@
             <el-card shadow="hover">
                 <div>
                     <el-row>
-                        <el-button @click="Information()" type="primary" icon="el-icon-plus">查看信息</el-button>
+                        <el-button @click="Information()" type="primary" icon="el-icon-info">查看信息</el-button>
 
                         <el-button icon="el-icon-edit"
                                    @click="Editor()">修改个人信息
@@ -56,6 +56,35 @@
                     </el-row>
                 </div>
                 <br>
+
+                <div>
+                    <el-form class="editor-form" :model="details" status-icon ref="details"
+                             label-width="100px">
+
+                        <el-form-item prop="account" label="账号: ">
+                            <span>{{details.account}} </span>
+                        </el-form-item>
+
+
+                        <el-form-item prop="nickName" label="昵称:">
+                            <span>{{details.nickName}} </span>
+                        </el-form-item>
+
+
+                        <el-form-item prop="phone" label="电话">
+                            <span>{{details.phone}} </span>
+                        </el-form-item>
+
+                        <el-form-item prop="mail" label="邮箱">
+                            <span>{{details.mail}} </span>
+                        </el-form-item>
+
+                        <el-form-item prop="memberLevel.level" label="等级">
+                            <span>{{details.memberLevel.level}} </span>
+                        </el-form-item>
+                    </el-form>
+                </div>
+
                 <div align="center" id="logo">地址</div>
                 <!-- 列表 -->
                 <el-table :data="details.locations" style="width: 100%">

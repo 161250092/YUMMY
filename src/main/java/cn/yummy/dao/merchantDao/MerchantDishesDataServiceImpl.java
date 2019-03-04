@@ -43,6 +43,7 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
                dish.setPrice(rs.getDouble("price"));
                dish.setQuantity(rs.getInt("quantity"));
                dish.setDescription(rs.getString("description"));
+               dish.setImage(rs.getString("img"));
                dishes.add(dish);
             }
             stmt.close();
@@ -80,6 +81,7 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
                 dish.setPrice(rs.getDouble("price"));
                 dish.setQuantity(rs.getInt("quantity"));
                 dish.setDescription(rs.getString("description"));
+                dish.setImage(rs.getString("img"));
                 dishes.add(dish);
             }
             stmt.close();
@@ -144,7 +146,7 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "insert into dish(idCode,startTime,endTime,dishType,dishName,price,quantity,description)VALUES(?,?,?,?,?,?,?,?) ";
+            sql = "insert into dish(idCode,startTime,endTime,dishType,dishName,price,quantity,description,img)VALUES(?,?,?,?,?,?,?,?,?) ";
 
             stmt = conn.prepareStatement(sql);
 
@@ -156,6 +158,7 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
             stmt.setDouble(6,dish.getPrice());
             stmt.setInt(7,dish.getQuantity());
             stmt.setString(8,dish.getDescription());
+            stmt.setString(9,dish.getImage());
             stmt.executeUpdate();
 
             stmt.close();

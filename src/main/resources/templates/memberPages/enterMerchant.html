@@ -74,19 +74,28 @@
                     </el-table-column>
 
 
-                    <el-table-column label="菜名" prop="name">
+                    <el-table-column label="菜名" prop="name" width="120">
                     </el-table-column>
 
-                    <el-table-column label="类型" prop="type">
+                    <el-table-column label="类型" prop="type" width="80">
                     </el-table-column>
 
-                    <el-table-column label="剩余数量" prop="quantity">
+                    <el-table-column label="剩余数量" prop="quantity" width="80">
                     </el-table-column>
 
-                    <el-table-column label="单价" prop="price">
+
+
+                    <el-table-column label="单价" prop="price" width="80">
                     </el-table-column>
 
-                    <el-table-column label="选择数量" prop="selectQuantity">
+                    <el-table-column align="center" label="商品图片" width="240">
+                        <template scope="scope">
+                            <img :src="scope.row.image" class="image" width="180" height="160"/>
+                        </template>
+                    </el-table-column>
+                    <!--http://thyrsi.com/t6/676/1551621646x2890202785.jpg-->
+
+                    <el-table-column label="选择数量" prop="selectQuantity" width="250">
                         <template slot-scope="scope">
                             <el-input-number @change="selectNum(scope.row)" v-model="scope.row.selectQuantity" :min="0"  label=""></el-input-number>
                         </template>

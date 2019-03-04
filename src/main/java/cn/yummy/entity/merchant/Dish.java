@@ -22,7 +22,7 @@ public class Dish implements Serializable{
 
     private double price;
 
-    //商家使用时是作为出售上限，会员使用时是作为选择数量
+    //出售上限
     private int quantity;
 
     private String description;

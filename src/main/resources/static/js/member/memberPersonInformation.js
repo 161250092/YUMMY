@@ -171,9 +171,22 @@ var vm = new Vue({
             geocoder.getLocation(this.location.address);
         },
 
+
+        loadings() {
+            this.loading = this.$loading({
+                lock: true,
+                text: '拼命加载中',
+                spinner: 'el-icon-loading',
+            });
+            setTimeout(() => {
+                this.loading.close();
+            }, 1000);
+        },
+
         //增加新的地址
         addNewLocation(){
 
+            this.loadings();
 
             let _this = this;
             if(this.location.addres===''){
@@ -184,6 +197,7 @@ var vm = new Vue({
 
             this.getLocation();
             this.showLocationEditor = false;
+
 
 
             setTimeout(function () {

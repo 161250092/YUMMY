@@ -20,6 +20,8 @@ public class DishForMember implements Serializable{
 
     private int quantity;
 
+    private String image;
+
     private String description;
 
     private int selectQuantity=0;
@@ -140,5 +142,13 @@ public class DishForMember implements Serializable{
 
     public void setCanCancel(boolean canCancel) {
         this.canCancel = canCancel;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

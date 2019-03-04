@@ -17,7 +17,7 @@ public class DishForm {
             dishForMember.setDescription(dish.getDescription());
             dishForMember.setIdCode(dish.getIdCode());
             dishForMember.setDishId(dish.getDishId());
-
+            dishForMember.setImage(dish.getImage());
             return dishForMember;
 
 
