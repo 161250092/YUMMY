@@ -5,6 +5,7 @@ let vm = new Vue({
     el:"#app",
     data: {
         statisticsInformation:{},
+        activeIndex:"2"
     },
 
     methods: {

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>个人信息</title>
     <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
     <link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
     <link rel="stylesheet" th:href="@{../../css/goods.css}"/>
@@ -58,6 +58,8 @@
                 <br>
 
                 <div>
+                    <el-row>
+                        <el-col :span="12">
                     <el-form class="editor-form" :model="details" status-icon ref="details"
                              label-width="100px">
 
@@ -82,7 +84,13 @@
                         <el-form-item prop="memberLevel.level" label="等级">
                             <span>{{details.memberLevel.level}} </span>
                         </el-form-item>
-                    </el-form>
+                        </el-form>
+                        </el-col>
+
+                        <el-col :span="6">
+                            <img src="http://thyrsi.com/t6/677/1551962668x2890202815.jpg" width="150" height="120">
+                        </el-col>
+                </el-row>
                 </div>
 
                 <div align="center" id="logo">地址</div>

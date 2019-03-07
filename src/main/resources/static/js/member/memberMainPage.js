@@ -27,6 +27,7 @@ new Vue({
 
             activeIndex:'0',
 
+            card:[],
         };
     },
     methods: {
@@ -61,6 +62,11 @@ new Vue({
 
     created(){
         this.getAllMerchants();
+        this.card = [
+            {url:"http://thyrsi.com/t6/677/1551960876x2890202977.jpg",id:1},
+            {url:"http://thyrsi.com/t6/675/1551424860x2890202402.png",id:2},
+            {url:"http://thyrsi.com/t6/676/1551625184x2728309394.jpg",id:3}];
+
     }
 
 

@@ -3,9 +3,12 @@
 <head>
     <meta charset="utf-8"><link rel="icon" href="https://static.jianshukeji.com/highcharts/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        /* css 代码  */
-    </style>
+
+    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/goods.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/public.css}"/>
+
     <script src="https://img.highcharts.com.cn/highcharts/highcharts.js"></script>
     <script src="https://img.highcharts.com.cn/highcharts/modules/exporting.js"></script>
     <script src="https://img.highcharts.com.cn/highcharts/modules/oldie.js"></script>
@@ -15,12 +18,33 @@
 <body>
 <div id="app">
 
-    <a href="/memberMainPage"></a>
-    <p>总消费{{statisticsInformation.totalConsumption}}</p>
+    <el-menu mode="horizontal" :default-active="activeIndex">
+        <el-menu-item index="0" id="logo">美 滋 滋</el-menu-item>
+        <el-menu-item index="1"><a href="/memberMainPage">主页</a></el-menu-item>
+        <el-menu-item index="2"><a href="/memberOrders">订单</a></el-menu-item>
+        <el-menu-item index="3"><a href="/memberStatisticsPage">统计信息</a></el-menu-item>
+
+        <el-menu-item id="author" index="4">
+            <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
+            <el-dropdown>
+                <span class="el-dropdown-link">用户<i class="el-icon-arrow-down el-icon--right"></i></span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item divided><a href="/memberPersonPage">信息中心</a></el-dropdown-item>
+                    <el-dropdown-item divided><a href="/memberLogout">退出</a></el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </el-menu-item>
+    </el-menu>
+
+    <!--<a href="/memberMainPage"></a>-->
+    <div id="main">
+
+    <p align="center">总消费{{statisticsInformation.totalConsumption}}</p>
     <br>
     <div id="container" style="min-width:400px;height:400px"></div>
 
     <div id="container1" style="min-width:400px;height:400px"></div>
+    </div>
 </div>
 </body>
 <script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>

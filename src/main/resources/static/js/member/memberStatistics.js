@@ -11,6 +11,8 @@ let vm = new Vue({
 
         consumedAmount:[],
 
+        activeIndex:'3'
+
     },
 
 
