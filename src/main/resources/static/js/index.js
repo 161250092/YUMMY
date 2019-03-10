@@ -8,7 +8,10 @@ new Vue({
         return {
             account: '',
 
-            activeIndex: '1'
+            activeIndex: '1',
+
+            url:"/image/public/merchant.jpg",
+            card:[]
         }
     },
     methods: {
@@ -19,6 +22,11 @@ new Vue({
     },
     //声明周期钩子函数-->在data和methods渲染结束后执行
     created() {
-        this.getName(); //获取用户登录名
+        this.url="/image/public/merchant.jpg";
+        this.card = [
+            {url:"/image/public/noddle.jpg",id:1},
+            {url:"/image/public/merchant.jpg",id:2},
+            {url:"/image/public/sweet.png",id:3}];
     }
+
 });

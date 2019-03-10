@@ -18,6 +18,8 @@ public class MerchantInfo implements Serializable{
     //电话
     private String phone;
 
+    private String image="/image/public/merchant.jpg";
+
     private Location location;
 
     //餐馆类型
@@ -155,5 +157,13 @@ public class MerchantInfo implements Serializable{
         infoDetails +="餐馆类型: "+this.getRestaurantType()  +"  \n";
         infoDetails +="配送费: "+this.getDeliveryCost()  +"  \n";
         infoDetails +="起送价: "+this.getMinDeliveryCost()  +"  \n";
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

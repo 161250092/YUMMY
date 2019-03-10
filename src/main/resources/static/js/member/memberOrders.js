@@ -49,6 +49,7 @@ let vm = new Vue({
             showOrderDetails:false,
 
             orderDetails:'',
+            selectOrder:{},
 
             totalPriceInBill:0,
             selectOrderId:'',
@@ -150,20 +151,16 @@ let vm = new Vue({
 
         checkOrderDetails(order){
             this.orderDetails='';
+            this.selectOrder = order.dishes;
             console.log(order);
             this.showOrderDetails = true;
-            this.orderDetails += "菜品:\n";
-            for(var i=0;i<order.dishes.length;i++){
-                this.orderDetails += order.dishes[i].name+" 数量:"+order.dishes[i].selectQuantity+" 单价:"+order.dishes[i].price+"\n";
-            }
-            this.orderDetails +="\n总价: "+order.totalPrice+" 元";
+
+            this.orderDetails +="总价: "+order.totalPrice+" 元";
 
             if(order.orderState.payed)
-                this.orderDetails +=" \n预计送达时间:"+order.expectedArriveTime;
-
+                this.orderDetails +=" 预计送达时间:"+order.expectedArriveTime.split("T")[0]+" "+order.expectedArriveTime.split("T")[1];
             if(order.orderState.received)
-                this.orderDetails +=" \n送达时间:"+order.orderAcceptedTime;
-
+                this.orderDetails +="   送达时间:"+order.orderAcceptedTime.split("T")[0]+" "+order.orderAcceptedTime.split("T")[1];
         },
 
         // 撤销订单

@@ -111,7 +111,7 @@ var vm = new Vue({
             var total = 0;
             for(var i=0;i<this.cart.dishes.length;i++){
                 total += this.cart.dishes[i].selectQuantity*this.cart.dishes[i].price;
-                this.cartDetails += this.cart.dishes[i].name+" 数量:"+this.cart.dishes[i].selectQuantity+" 单价"+this.cart.dishes[i].price+"\n";
+                // this.cartDetails += this.cart.dishes[i].name+" 数量:"+this.cart.dishes[i].selectQuantity+" 单价"+this.cart.dishes[i].price+"\n";
             }
             this.cartDetails +="\n总价:"+total;
         },

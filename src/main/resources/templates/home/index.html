@@ -19,9 +19,13 @@
     </el-menu>
 
     <div align="center">
-        <el-card :body-style="{ padding: '0px' }">
-            <img src="http://thyrsi.com/t6/676/1551625184x2728309394.jpg" class="image">
-        </el-card>
+        <el-carousel :interval="4000" type="card" height="600px">
+            <el-carousel-item v-for="item in card" :key="item.id">
+                <!--<img src=item class="image">-->
+                <!--<h>{{item}}</h>-->
+                <img :src=item.url class="image">
+            </el-carousel-item>
+        </el-carousel>
     </div>
 
 </div>
@@ -31,6 +35,5 @@
 <script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
 <script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
 <script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>
-<script type="text/javascript" th:src="@{../../store/store.js}"></script>
 <script type="text/javascript" th:src="@{../../js/index.js}"></script>
 </html>

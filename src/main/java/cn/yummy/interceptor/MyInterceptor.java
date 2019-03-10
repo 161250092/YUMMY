@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 public class MyInterceptor {
 
-    @Pointcut("within (cn.yummy.controller..*) && !within(cn.yummy.controller.memeberController.MemberLoginController)&& !within(cn.yummy.controller.merchantController.LoginController)&& !within(cn.yummy.controller.managerController.ManagerLoginController) &&! within(cn.yummy.controller.IndexController)")
+    @Pointcut("within (cn.yummy.controller..*) && !within(cn.yummy.controller.memeberController.MemberLoginController)&& !within(cn.yummy.controller.merchantController.LoginController)&& !within(cn.yummy.controller.managerController.ManagerLoginController) &&! within(cn.yummy.controller.IndexController)&&! within(cn.yummy.controller.merchantController.UploadController)")
     public void pointCut() {
 
     }

@@ -109,4 +109,17 @@ public class UploadController {
 
         return new byte[0];
     }
+
+    @RequestMapping("/image/public/{pictureName}")
+    public void getPublicImage(@PathVariable(name="pictureName") String pictureName, HttpServletResponse response) throws IOException {
+//        System.out.println(pictureName);
+        response.getOutputStream().write(getPublicImageData(pictureName));
+    }
+
+    private static byte[]  getPublicImageData(String pictureName){
+
+        File file =  new File(Paths.get("Image/public/"+pictureName).toString());
+        return getImageData(file);
+    }
+
 }
