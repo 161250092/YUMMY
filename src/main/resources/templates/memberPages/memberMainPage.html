@@ -15,7 +15,41 @@
             justify-content: center;
             align-items:center;
         }
+
+
+        .time {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .bottom {
+            margin-top: 13px;
+            line-height: 12px;
+        }
+
+        .button {
+            padding: 0;
+            float: right;
+        }
+
+        .image {
+            width: 100%;
+            display: block;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            display: table;
+            content: "";
+        }
+
+        .clearfix:after {
+            clear: both
+        }
+
     </style>
+
+
 </head>
 <body>
 <div id="app">
@@ -40,13 +74,9 @@
 
 
     <div align="center">
-            <!--<el-card :body-style="{ padding: '0px' }">-->
-                <!--<img src="http://thyrsi.com/t6/675/1551424860x2890202402.png" class="image">-->
-            <!--</el-card>-->
         <el-carousel :interval="4000" type="card" height="200px">
             <el-carousel-item v-for="item in card" :key="item.id">
-                <!--<img src=item class="image">-->
-                <!--<h>{{item}}</h>-->
+
                 <img :src=item.url class="image">
             </el-carousel-item>
         </el-carousel>
@@ -145,7 +175,6 @@
                         </template>
                     </el-table-column>
 
-
                 </el-table>
 
                 <br/>
@@ -153,6 +182,21 @@
             </el-card>
         </el-col>
     </div>
+
+    <BR>
+    <el-row>
+        <el-col :span="8" v-for="(o, index) in 4" :key="o" >
+            <el-card :body-style="{ padding: '0px' }">
+                <img src="http://img11.360buyimg.com/n1/s450x450_jfs/t3160/284/298314156/78089/fd106c0c/57b00f93Nc77f215f.jpg" class="image"  width="160" height="140">
+                <div style="padding: 14px;">
+                    <span>好吃的汉堡</span>
+                    <div class="bottom clearfix">
+                        <el-button type="text" class="button">操作按钮</el-button>
+                    </div>
+                </div>
+            </el-card>
+        </el-col>
+    </el-row>
 
 
 </div>
