@@ -1,5 +1,6 @@
 package cn.yummy.dao.managerDao;
 
+import cn.yummy.dao.merchantDao.MerchantInformationDataService;
 import cn.yummy.dao.merchantDao.MerchantInformationDataServiceImpl;
 import cn.yummy.dao.mysql.MySQLConnector;
 import cn.yummy.entity.manager.ApplicationFromMerchant;
@@ -15,6 +16,7 @@ import java.util.List;
 @Service
 public class ManagerApplicationDataServiceImpl implements ManagerApplicationDataService{
     private Connection conn;
+    private MerchantInformationDataService merchantInformationDataService;
 
     //all the application have no oldInformation
     @Override
@@ -257,7 +259,12 @@ public class ManagerApplicationDataServiceImpl implements ManagerApplicationData
             e.printStackTrace();
         }
         MerchantInfo merchantInfo = this.getNewMerchantInfo(applicationId);
-        setMerchantAccessible(merchantInfo.getIdCode());
+        merchantInformationDataService = new MerchantInformationDataServiceImpl();
+        String idCode = merchantInfo.getIdCode();
+
+        String address = merchantInformationDataService.getMerchantInfo(idCode).getLocation().getAddress();
+        if(!address.equals(""))
+        setMerchantAccessible(idCode);
 
         return true;
     }
