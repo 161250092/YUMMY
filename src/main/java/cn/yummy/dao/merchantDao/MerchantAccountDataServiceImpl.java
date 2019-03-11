@@ -109,8 +109,8 @@ public class MerchantAccountDataServiceImpl implements MerchantAccountDataServic
         String sql;
         conn = new MySQLConnector().getConnection("Yummy");
         try{
-            sql = "insert into merchantInfo(idCode,bankAccount,restaurantName,phone,restaurantType,minDeliveryCost,deliveryCost)" +
-                    "VALUES(?,?,?,?,'空',0,0) ";
+            sql = "insert into merchantInfo(idCode,bankAccount,restaurantName,phone,restaurantType,minDeliveryCost,deliveryCost,m_accessible)" +
+                    "VALUES(?,?,?,?,'空',0,0,?) ";
 
             stmt = conn.prepareStatement(sql);
 
@@ -118,6 +118,7 @@ public class MerchantAccountDataServiceImpl implements MerchantAccountDataServic
             stmt.setString(2,merchantRegisterInf.getBankAccount());
             stmt.setString(3,merchantRegisterInf.getRestaurantName());
             stmt.setString(4,merchantRegisterInf.getPhone());
+            stmt.setBoolean(5,false);
 
             stmt.executeUpdate();
             stmt.close();

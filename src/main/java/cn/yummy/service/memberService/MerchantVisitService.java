@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface MerchantVisitService {
 
+    public List getAllAccessibleMerchants();
+
     public List getAllMerchants();
 
     public List searchMerchants(String restaurantName,String restaurantType);

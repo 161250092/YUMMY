@@ -105,7 +105,9 @@ public class ManagerApplicationDataServiceImpl implements ManagerApplicationData
         }
 
         MerchantInfo merchantInfo = this.getNewMerchantInfo(applicationId);
+        //更新用户信息
         updateMerchantInfo(merchantInfo);
+        setMerchantAccessible(merchantInfo.getIdCode());
 
 
         return true;
@@ -254,7 +256,30 @@ public class ManagerApplicationDataServiceImpl implements ManagerApplicationData
         }catch (Exception e){
             e.printStackTrace();
         }
+        MerchantInfo merchantInfo = this.getNewMerchantInfo(applicationId);
+        setMerchantAccessible(merchantInfo.getIdCode());
 
         return true;
+    }
+
+
+    private void setMerchantAccessible(String idCode){
+        PreparedStatement stmt;
+        String sql;
+        conn = new MySQLConnector().getConnection("Yummy");
+
+        try{
+            sql = "update merchantInfo set  m_accessible = true where idCode =? and not exists (select applicationId from application where idCode=? and isRead= false)\n";
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1,idCode);
+            stmt.setString(2,idCode);
+            stmt.executeUpdate();
+            stmt.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

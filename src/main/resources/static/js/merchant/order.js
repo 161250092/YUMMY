@@ -52,7 +52,11 @@ var vm = new Vue({
 
             showSearchDialog:false,
 
-            orderDetails:''
+            orderDetails:'',
+
+            selectOrderDishes:{}
+
+
 
 
         }
@@ -86,15 +90,16 @@ var vm = new Vue({
 
         checkOrderDetails(order){
             this.orderDetails = '';
+            this.selectOrderDishes = order.dishes;
             console.log(order);
             this.showOrderDetails = true;
-            this.orderDetails += "菜品:\n";
-            for(var i=0;i<order.dishes.length;i++){
-                this.orderDetails += order.dishes[i].name+" "+order.dishes[i].selectQuantity+"份   单价:"+order.dishes[i].price+"\n";
-            }
 
+            this.orderDetails +="总价: "+order.totalPrice+" 元";
+
+            if(order.orderState.payed)
+                this.orderDetails +=" 预计送达时间:"+order.expectedArriveTime.split("T")[0]+" "+order.expectedArriveTime.split("T")[1];
             if(order.orderState.received)
-            this.orderDetails +="送达时间:"+order.orderAcceptedTime;
+                this.orderDetails +="   送达时间:"+order.orderAcceptedTime.split("T")[0]+" "+order.orderAcceptedTime.split("T")[1];
 
         }
 

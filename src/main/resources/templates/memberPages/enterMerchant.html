@@ -32,16 +32,16 @@
     <div id="main">
         <el-col>
             <el-card shadow="hover">
-                <div>
-                    <el-row>
-                        <el-button @click="showOrder" type="primary" icon="el-icon-plus">提交订单</el-button>
-                    </el-row>
-                </div>
+
                 <!-- 列表 -->
-                <div>
+                <div style="background:url(http://img95.699pic.com/photo/50049/1753.jpg_wh300.jpg)">
                     <span>{{merchantInformation}}</span>
                     <br>
+                    <br>
                     <span>{{discountsInformation}}</span>
+                    <br>
+                    <br>
+                    <br>
                 </div>
 
 
@@ -126,6 +126,13 @@
                 </el-table>
                 <br/>
                 <br/>
+
+                <div>
+                    <el-row>
+                        <el-button @click="showOrder" type="primary" icon="el-icon-plus">提交订单</el-button>
+                    </el-row>
+                </div>
+
             </el-card>
         </el-col>
     </div>

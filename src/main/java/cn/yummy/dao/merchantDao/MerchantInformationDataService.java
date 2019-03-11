@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface MerchantInformationDataService {
 
+    public List getAllAccessibleMerchants();
 
     public List<MerchantInfo>  getAllMerchant();
 

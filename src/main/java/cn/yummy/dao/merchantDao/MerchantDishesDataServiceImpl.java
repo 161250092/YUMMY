@@ -25,7 +25,7 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "select * from dish where idCode=?";
+            sql = "select * from dish where idCode=? and isAbolished=false";
 
             stmt = conn.prepareStatement(sql);
             stmt.setString(1,idCode);
@@ -62,7 +62,7 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "select * from dish where idCode=? and ? between startTime and endTime";
+            sql = "select * from dish where idCode=? and ? between startTime and endTime and isAbolished=false";
 
             stmt = conn.prepareStatement(sql);
             stmt.setString(1,idCode);
@@ -120,7 +120,7 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "delete from dish where dishId=?";
+            sql = "update dish set isAbolished=true where dishId=?";
 
             stmt = conn.prepareStatement(sql);
             stmt.setLong(1,dishId);
@@ -133,9 +133,6 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
             e.printStackTrace();
         }
 
-
-
-
         return true;
     }
 
@@ -146,7 +143,7 @@ public class MerchantDishesDataServiceImpl implements MerchantDishesDataService 
         conn = new MySQLConnector().getConnection("Yummy");
 
         try{
-            sql = "insert into dish(idCode,startTime,endTime,dishType,dishName,price,quantity,description,img)VALUES(?,?,?,?,?,?,?,?,?) ";
+            sql = "insert into dish(idCode,startTime,endTime,dishType,dishName,price,quantity,description,img,isAbolished)VALUES(?,?,?,?,?,?,?,?,?,false) ";
 
             stmt = conn.prepareStatement(sql);
 

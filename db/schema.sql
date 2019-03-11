@@ -10,8 +10,8 @@ create table if not exists `merchantInfo`(
 `restaurantType` varchar(20),
 `phone` varchar(20),
 `minDeliveryCost` double(16,2),
-`deliveryCost` double(16,2)
-
+`deliveryCost` double(16,2),
+`m_accessible` boolean not null
 )ENGINE = InnoDB DEFAULT CHARSET =utf8;
 
 -- 商家账号
@@ -43,7 +43,9 @@ create table if not exists `dish`(
 `dishName` varchar(50),
 `price` double(16,2),
 `quantity` int,
-`description` varchar(100)
+`description` varchar(100),
+`img` varchar(100),
+`isAbolished` boolean not null default false
 )ENGINE = InnoDB DEFAULT CHARSET =utf8;
 
 

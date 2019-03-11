@@ -86,7 +86,7 @@ public class MerchantStatisticsDataServiceImpl implements  MerchantStatisticsDat
         conn = new MySQLConnector().getConnection("Yummy");
         int num = 0;
         try{
-            sql = "select count(*) as num from order_tb where idCode=? and isAbolished=? and orderAcceptedTime BETWEEN ? and ?";
+            sql = "select count(*) as num from order_tb where idCode=? and isAbolished=? and submitTime BETWEEN ? and ?";
 
             stmt = conn.prepareStatement(sql);
             stmt.setString(1,account);

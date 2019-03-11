@@ -42,6 +42,7 @@ new Vue({
                     if (result.body.success) {
                         this.idCode=result.body.message;
                         sessionStorage.setItem("idCode",result.body.message);
+                        sessionStorage.setItem("account",result.body.message);
                         this.showIdCode=true;
                     } else {
                         // 弹出错误信息框

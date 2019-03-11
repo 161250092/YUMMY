@@ -121,17 +121,31 @@
     <!-- 订单详情的dialog -->
     <el-dialog title="订单详情" :visible.sync="showOrderDetails" width="30%" :close-on-click-modal="false"
                :close-on-press-escape="false">
-        <el-form class="editor-form" :model="orderDetails" status-icon ref="orderDetails"
-                 label-width="100px">
+        <!--<el-form class="editor-form" :model="orderDetails" status-icon ref="orderDetails"-->
+                 <!--label-width="100px">-->
 
-            <el-form-item >
-                <el-input
-                        type="textarea"
-                        :autosize="{ minRows: 5, maxRows: 10}"
-                        v-model="orderDetails"
-                        >
-                </el-input>
-            </el-form-item>
+            <!--<el-form-item >-->
+                <!--<el-input-->
+                        <!--type="textarea"-->
+                        <!--:autosize="{ minRows: 5, maxRows: 10}"-->
+                        <!--v-model="orderDetails"-->
+                        <!--&gt;-->
+                <!--</el-input>-->
+            <!--</el-form-item>-->
+
+
+            <el-table :data="selectOrderDishes" style="width: 100%">
+                <el-table-column label="菜名" prop="name" width="120">
+                </el-table-column>
+                <el-table-column label="单价" prop="price" width="120">
+                </el-table-column>
+                <el-table-column label="数量" prop="selectQuantity" width="120">
+                </el-table-column>
+            </el-table>
+
+            <br>
+             <span>{{orderDetails}}</span>
+
 
         </el-form>
 

@@ -162,6 +162,11 @@ var vm = new Vue({
 
         submitOrder() {
             console.log(this.cart);
+            if(this.cart.userLocation.address==='')
+            {
+                alert("请选择地址");
+                return;
+            }
 
             this.$http.post('/member/submitOrder', JSON.stringify(this.cart)
             ).then(result => {

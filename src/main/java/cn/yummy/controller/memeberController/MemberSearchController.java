@@ -23,8 +23,8 @@ public class MemberSearchController {
 
     @RequestMapping("/getAllMerchants")
     public List getMerchants(@RequestParam("account")String account){
-
-        return merchantVisitService.getAllMerchants();
+//可访问商家
+        return merchantVisitService.getAllAccessibleMerchants();
 
     }
 

@@ -17,6 +17,44 @@ public class MerchantInformationDataServiceImpl implements MerchantInformationDa
     private Connection conn;
 
     @Override
+    public List getAllAccessibleMerchants() {
+        conn = new MySQLConnector().getConnection("Yummy");
+        PreparedStatement stmt;
+        String sql;
+
+        List<MerchantInfo>  merchants = new ArrayList<>();
+        try{
+            sql = "select * from merchantInfo where m_accessible=true";
+            stmt = conn.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                MerchantInfo merchantInfo  = new MerchantInfo();
+                merchantInfo.setIdCode(rs.getString("idCode"));
+                merchantInfo.setBankAccount(rs.getString("bankAccount"));
+                merchantInfo.setRestaurantName(rs.getString("restaurantName"));
+                merchantInfo.setRestaurantType(rs.getString("restaurantType"));
+                merchantInfo.setPhone(rs.getString("phone"));
+                merchantInfo.setMinDeliveryCost(rs.getDouble("minDeliveryCost"));
+                merchantInfo.setDeliveryCost(rs.getDouble("deliveryCost"));
+                merchants.add(merchantInfo);
+            }
+
+            stmt.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        for(MerchantInfo merchantInfo:merchants){
+            merchantInfo.setLocation(this.getMerchantLocation(merchantInfo.getIdCode()));
+        }
+
+        return merchants;
+    }
+
+    @Override
     public List<MerchantInfo> getAllMerchant() {
         conn = new MySQLConnector().getConnection("Yummy");
         PreparedStatement stmt;
@@ -226,10 +264,31 @@ public class MerchantInformationDataServiceImpl implements MerchantInformationDa
         }catch (Exception e){
             e.printStackTrace();
         }
+        setMerchantUnaccessible(merchantInfo.getIdCode());
 
         return true;
     }
 
+    public void  setMerchantUnaccessible(String idCode){
+        PreparedStatement stmt;
+        String sql;
+        conn = new MySQLConnector().getConnection("Yummy");
+
+        try{
+            sql = "update merchantInfo set m_accessible=? where idCode=?";
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setBoolean(1,false);
+            stmt.setString(2,idCode);
+            stmt.executeUpdate();
+            stmt.close();
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
     @Override
     public boolean addNewDiscount(String idCode,double totalPrice, double reducePrice) {
 

@@ -23,6 +23,11 @@ public class MerchantVisitServiceImpl implements MerchantVisitService{
     private MerchantDishesDataService merchantDishesDataService;
 
     @Override
+    public List getAllAccessibleMerchants() {
+        return merchantInformationDataService.getAllAccessibleMerchants();
+    }
+
+    @Override
     public List getAllMerchants() {
         return merchantInformationDataService.getAllMerchant();
     }
