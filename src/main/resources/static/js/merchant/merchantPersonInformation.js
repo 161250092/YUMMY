@@ -88,6 +88,30 @@ var vm = new Vue({
              geocoder.getAddress(coord);
         },
 
+        getLocation(){
+            sessionStorage.setItem("address",this.details.location.address);
+            let _this = this;
+            let geocoder = new qq.maps.Geocoder({
+                complete: function (result) {
+                    _this.details.location.lat = result.detail.location.lat;
+                    _this.details.location.lng = result.detail.location.lng;
+                    console.log(result);
+                },
+
+            });
+            geocoder.getLocation(this.details.location.address);
+        },
+
+        checkAddressInMap(){
+            sessionStorage.setItem("address",this.details.location.address);
+
+            if(this.details.location.address!=='') {
+                // geocoder.getLocation(this.location.address);
+                window.open('/mapLocation');
+            }
+            else
+                alert("请输入地址信息");
+        },
 
         loadings() {
             this.loading = this.$loading({
@@ -98,6 +122,26 @@ var vm = new Vue({
             setTimeout(() => {
                 this.loading.close();
             }, 2000);
+        },
+
+        //更新
+        update(){
+
+            this.loadings();
+
+            let _this = this;
+            if(this.details.location.address===''){
+                alert("请输入地址");
+                return;
+            }
+
+            this.getLocation();
+
+            setTimeout(function () {
+                _this.updateInformation();
+            }, 2*1000);
+
+
         },
 
         getPersonInformation(){
@@ -134,8 +178,8 @@ var vm = new Vue({
                     });
                     //刷新信息
                     this.reloadInformation();
-
                     this.showEditor = false;
+                    // alert("success");
                 } else {
                     //更新失败
                     this.$message({

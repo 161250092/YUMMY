@@ -15,6 +15,7 @@ import cn.yummy.util.OrderDelayedTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Service
@@ -60,7 +61,7 @@ public class OrderServiceImpl implements OrderService{
         orderDelayedTransaction = new OrderDelayedTransaction();
         orderDelayedTransaction.delayedTransaction(order.getOrderId());
 
-        String message = "总价: "+totalPrice+" 折扣:"+(priceWithoutDiscount-totalPrice);
+        String message = "总价: "+valueFormat(totalPrice)+" 折扣:"+valueFormat(priceWithoutDiscount-totalPrice);
         return new Result(true,message);
 
     }
@@ -100,7 +101,7 @@ public class OrderServiceImpl implements OrderService{
         paymentRecordDataService.insertOutRecord(orderId,returnPrice*0.02,receiver,payer);
 
         if(memberOrderDataService.abolishOrder(orderId))
-            return new Result(true,"退订成功,返回"+returnPrice+"元");
+            return new Result(true,"退订成功,返回"+valueFormat(returnPrice)+"元");
         else
             return new Result(false,"退订失败");
     }
@@ -119,5 +120,10 @@ public class OrderServiceImpl implements OrderService{
         memberOrderDataService.turnOrderStateIsPayed(order);
     }
 
+
+    public String valueFormat(double a){
+        DecimalFormat df = new DecimalFormat(".00");
+        return df.format(a);
+    }
 
 }

@@ -189,7 +189,7 @@ var vm = new Vue({
             this.loadings();
 
             let _this = this;
-            if(this.location.addres===''){
+            if(this.location.address===''){
                 alert("请输入地址");
                 return;
             }
@@ -197,7 +197,6 @@ var vm = new Vue({
 
             this.getLocation();
             this.showLocationEditor = false;
-
 
 
             setTimeout(function () {

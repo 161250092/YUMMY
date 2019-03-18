@@ -200,7 +200,7 @@
                 <el-form-item prop="location" label=" 地址" class="is-required">
                     <el-input v-model="details.location.address" placeholder=""
                               auto-complete="off"></el-input>
-                    <el-button type="primary" @click="address()" icon="el-icon-location">重新获取地址</el-button>
+                    <el-button type="primary" @click="checkAddressInMap" icon="el-icon-location">查看具体位置</el-button>
                 </el-form-item>
 
 
@@ -227,7 +227,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="showEditor = false">取 消</el-button>
-            <el-button type="primary" @click="updateInformation">提交修改申请</el-button>
+            <el-button type="primary" @click="update">提交修改申请</el-button>
         </div>
     </el-dialog>
 
