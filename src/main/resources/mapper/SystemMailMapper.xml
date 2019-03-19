@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.yummy.mapper.SystemMailMapper">
+
+    <resultMap id="baseMap" type="cn.yummy.entity.yummy.SystemMail">
+        <id property="mailId" column="mailId" jdbcType="INTEGER"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="getSystemMail" resultType="cn.yummy.entity.yummy.SystemMail">
+      SELECT * FROM yummy_mail
+    </select>
+
+
+</mapper>
