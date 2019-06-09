@@ -127,4 +127,17 @@ public class HomeController {
         attributes.getRequest().getSession().removeAttribute("account");
         return  "managerPages/managerLogin";
     }
+
+
+    @GetMapping(value = {"/consumptionStatistics"})
+    public String consumptionStatistics() {
+        return  "memberStatistics/consumptionStatistics";
+    }
+
+    @GetMapping(value = {"/orderStatistics"})
+    public String orderStatistics() {
+        return  "memberStatistics/orderStatistics";
+    }
+
+
 }

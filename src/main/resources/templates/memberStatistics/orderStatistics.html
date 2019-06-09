@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" style="height: 100%">
+<head>
+    <meta charset="utf-8"><link rel="icon" href="https://static.jianshukeji.com/highcharts/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/goods.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/public.css}"/>
+
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+
+</head>
+
+<body style="height: 100%; margin: 0" >
+
+<div id="app">
+
+    <div id="container" style="min-width:500px;height:500px"></div>
+<!--<el-form :inline="true"  class="demo-form-inline">-->
+
+    <!--<el-form-item label="起始时间">-->
+        <!--<el-date-picker-->
+                <!--v-model="startTime"-->
+                <!--type="date"-->
+                <!--placeholder="选择日期"-->
+                <!--value-format="yyyy-MM-dd">-->
+        <!--</el-date-picker>-->
+    <!--</el-form-item>-->
+
+
+    <!--<el-form-item label="截止时间">-->
+        <!--<el-date-picker-->
+                <!--v-model="endTime"-->
+                <!--type="date"-->
+                <!--placeholder="选择日期"-->
+                <!--value-format="yyyy-MM-dd">-->
+        <!--</el-date-picker>-->
+    <!--</el-form-item>-->
+
+<!--</el-form>-->
+    <!--<el-button @click="getConsumptionCharacteristics">消费特征</el-button>-->
+    <!--<el-button type="primary" @click="getOrderCharacteristics" icon="el-icon-search">订单变动</el-button>-->
+</div>
+
+</body>
+<script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/memberStatistics/orderStatistics.js}"></script>
+</html>
