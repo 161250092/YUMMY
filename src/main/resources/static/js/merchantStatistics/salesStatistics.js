@@ -6,7 +6,10 @@ let vm = new Vue({
         startTime:'2016-06-01',
         endTime:'2016-06-30',
         interval:"",
-        activeIndex:'1'
+        activeIndex:'2',
+        income:0,
+        orderNums:0,
+        averagePriceOfOrders:0.0
     },
 
     methods: {
@@ -149,88 +152,79 @@ let vm = new Vue({
 
 
 
-        getConsumptionCharacteristics(){
-            this.$http.post('/member/getConsumptionCharacteristics', {
+        getSalesStatistics(){
+            this.$http.post('/merchant/getSalesStatistics', {
                 startTime:this.startTime,
                 endTime:this.endTime,
                 interval:"day"
             }).then(result => {
-                console.log(result.body);
-                let data = [];
-                let legend = [];
-                let map = result.body.merchantsFavor;
-                for(let item in map){
-                    if(map.hasOwnProperty(item)) {
-                        let temp = {};
-                        temp.value = map[item];
-                        temp.name = item;
-                        legend.push(item);
-                        data.push(temp)
-                    }
-                }
-                this.pieCharts(legend,data,"merchantsFavor");
+                console.log(result);
+                this.income=result.body.income;
+                this.orderNums = result.body.orderNums;
+                this.averagePriceOfOrders = result.body.averagePriceOfOrders;
 
-
-                map =  result.body.dishesFavor;
-                data = [];
-                legend = [];
-                for(let item in map){
-                    if(map.hasOwnProperty(item)) {
-                        let temp = {};
-                        temp.value = map[item];
-                        temp.name = item;
-                        legend.push(item);
-                        data.push(temp)
-                    }
-                }
-
-                this.pieCharts(legend,data,"dishesFavor");
-
-
-                map =  result.body.consumptionTimeIntervals;
-                data = [];
-                legend = [];
-                for(let item in map){
-                    if(map.hasOwnProperty(item)) {
-                        let temp = {};
-                        temp.value = map[item];
-                        temp.name = item;
-                        legend.push(item);
-                        data.push(temp)
-                    }
-                }
-                this.pieCharts(legend,data,"consumptionTimeIntervals");
-
-
-
-                map =  result.body.consumptionIntervals;
+                //菜品销售数   histogram
                 let x = [];
                 let y =[];
+                let map = result.body.dishesProportion;
+                for(let item in map){
+                    if(map.hasOwnProperty(item)) {
+                        x.push(item);
+                        y.push(map[item]);
+                    }
+                };
+                this.histogram(x,y,"dishesProportion")
+
+
+
+                //订单价格分布 histogram
+                x = [];
+                y =[];
+                map = result.body.orderPricesInterval;
+                for(let item in map){
+                    if(map.hasOwnProperty(item)) {
+                        x.push(item);
+                        y.push(map[item]);
+                    }
+                };
+                this.histogram(x,y,"orderPricesInterval")
+
+
+
+                //订单时间分布  pie
+                map =  result.body.orderTimeInterval;
+                let data = [];
+                let legend = [];
+                for(let item in map){
+                    if(map.hasOwnProperty(item)) {
+                        let temp = {};
+                        temp.value = map[item];
+                        temp.name = item;
+                        legend.push(item);
+                        data.push(temp)
+                    }
+                }
+                this.pieCharts(legend,data,"orderTimeInterval");
+
+
+
+                //销售额涨跌   线
+                x = [];
+                y =[];
+                map = result.body.salesAmountCondition;
                 for(let item in map){
                     if(map.hasOwnProperty(item)) {
                         x.push(item);
                         y.push(map[item]);
                     }
                 }
-                this.histogram(x,y,"consumptionIntervals");
-
-
-                map =  result.body.consumptionDistance;
-                data = [];
-
-                for(let item in map){
-                    if(map.hasOwnProperty(item)) {
-                        let temp = [];
-                        temp.push(item);
-                        temp.push(map[item]);
-                        data.push(temp);
-                    }
+                let a = [];
+                let b = [];
+                for(let i=0;i<x.length;i++){
+                    a[x.length-1-i] = x[i];
+                    b[x.length-1-i] = y[i];
                 }
-                this.pointCharts(data,"consumptionDistance")
-
-
-
-
+                this.lineCharts(a,b,"salesAmountCondition");
 
 
             });
@@ -239,10 +233,8 @@ let vm = new Vue({
     },
 
     created() {
-        this.getConsumptionCharacteristics();
+        this.getSalesStatistics();
     },
 
 });
-
-
 

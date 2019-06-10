@@ -140,4 +140,21 @@ public class HomeController {
     }
 
 
+    @GetMapping(value = {"/consumersCharacteristics"})
+    public String consumersCharacteristics(){
+        return "merchantStatistics/consumersCharacteristics";
+    }
+
+    @GetMapping(value = {"/salesStatistics"})
+    public String salesStatistics(){
+        return "merchantStatistics/salesStatistics";
+    }
+
+
+    @GetMapping(value = {"/platformStatistics"})
+    public String platformStatistics(){
+        return "managerStatistics/platformStatistics";
+    }
+
+
 }

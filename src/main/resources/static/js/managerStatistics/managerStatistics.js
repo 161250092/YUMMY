@@ -1,4 +1,3 @@
-
 Vue.http.options.emulateJSON = true;
 let vm = new Vue({
     el:"#app",
@@ -116,7 +115,7 @@ let vm = new Vue({
                 ],
                 series : [
                     {
-                        name:'次数',
+                        name:'数量',
                         type:'bar',
                         barWidth: '60%',
                         data:y
@@ -148,101 +147,133 @@ let vm = new Vue({
         },
 
 
-
-        getConsumptionCharacteristics(){
-            this.$http.post('/member/getConsumptionCharacteristics', {
+        getPlatformStatistics(){
+            this.$http.post('/manager/getPlatformStatistics', {
                 startTime:this.startTime,
                 endTime:this.endTime,
                 interval:"day"
             }).then(result => {
-                console.log(result.body);
-                let data = [];
-                let legend = [];
-                let map = result.body.merchantsFavor;
-                for(let item in map){
-                    if(map.hasOwnProperty(item)) {
-                        let temp = {};
-                        temp.value = map[item];
-                        temp.name = item;
-                        legend.push(item);
-                        data.push(temp)
-                    }
-                }
-                this.pieCharts(legend,data,"merchantsFavor");
-
-
-                map =  result.body.dishesFavor;
-                data = [];
-                legend = [];
-                for(let item in map){
-                    if(map.hasOwnProperty(item)) {
-                        let temp = {};
-                        temp.value = map[item];
-                        temp.name = item;
-                        legend.push(item);
-                        data.push(temp)
-                    }
-                }
-
-                this.pieCharts(legend,data,"dishesFavor");
-
-
-                map =  result.body.consumptionTimeIntervals;
-                data = [];
-                legend = [];
-                for(let item in map){
-                    if(map.hasOwnProperty(item)) {
-                        let temp = {};
-                        temp.value = map[item];
-                        temp.name = item;
-                        legend.push(item);
-                        data.push(temp)
-                    }
-                }
-                this.pieCharts(legend,data,"consumptionTimeIntervals");
-
-
-
-                map =  result.body.consumptionIntervals;
+                console.log(result);
+                //平台收入
                 let x = [];
                 let y =[];
+                let map = result.body.incomeCondition;
                 for(let item in map){
                     if(map.hasOwnProperty(item)) {
                         x.push(item);
                         y.push(map[item]);
                     }
                 }
-                this.histogram(x,y,"consumptionIntervals");
+                let a = [];
+                let b = [];
+                for(let i=0;i<x.length;i++){
+                    a[x.length-1-i] = x[i];
+                    b[x.length-1-i] = y[i];
+                }
+                this.lineCharts(a,b,"incomeCondition");
 
-
-                map =  result.body.consumptionDistance;
-                data = [];
-
+                //商家数
+                x = [];
+                y =[];
+                map = result.body.merchantsNum;
                 for(let item in map){
                     if(map.hasOwnProperty(item)) {
-                        let temp = [];
-                        temp.push(item);
-                        temp.push(map[item]);
-                        data.push(temp);
+                        x.push(item);
+                        y.push(map[item]);
+                    }
+                };
+                a = [];
+                b = [];
+                for(let i=0;i<x.length;i++){
+                    a[x.length-1-i] = x[i];
+                    b[x.length-1-i] = y[i];
+                }
+                this.histogram(a,b,"merchantsNum")
+
+
+                //销售额
+                x = [];
+                y =[];
+                map = result.body.salesAmountCondition;
+                for(let item in map){
+                    if(map.hasOwnProperty(item)) {
+                        x.push(item);
+                        y.push(map[item]);
+                    }
+                };
+                this.histogram(x,y,"salesAmountCondition")
+
+
+                //消费区间
+                map =  result.body.consumptionInterval;
+                let data = [];
+                let legend = [];
+                for(let item in map){
+                    if(map.hasOwnProperty(item)) {
+                        let temp = {};
+                        temp.value = map[item];
+                        temp.name = item;
+                        legend.push(item);
+                        data.push(temp)
                     }
                 }
-                this.pointCharts(data,"consumptionDistance")
+                this.pieCharts(legend,data,"consumptionInterval");
+
+
+                //消费次数
+                map =  result.body.consumptionTimesInterval;
+                data = [];
+                legend = [];
+                for(let item in map){
+                    if(map.hasOwnProperty(item)) {
+                        let temp = {};
+                        temp.value = map[item];
+                        temp.name = item;
+                        legend.push(item);
+                        data.push(temp)
+                    }
+                }
+                this.pieCharts(legend,data,"consumptionTimesInterval");
+
+                //菜品偏好
+                x = [];
+                y =[];
+                map = result.body.dishesFavorInterval;
+                for(let item in map){
+                    if(map.hasOwnProperty(item)) {
+                        x.push(item);
+                        y.push(map[item]);
+                    }
+                };
+                this.histogram(x,y,"dishesFavorInterval");
 
 
 
-
-
-
+                //餐厅偏好
+                map =  result.body.merchantsFavorInterval;
+                data = [];
+                legend = [];
+                for(let item in map){
+                    if(map.hasOwnProperty(item)) {
+                        let temp = {};
+                        temp.value = map[item];
+                        temp.name = item;
+                        legend.push(item);
+                        data.push(temp)
+                    }
+                }
+                this.pieCharts(legend,data,"merchantsFavorInterval");
             });
         },
+
+
 
     },
 
     created() {
-        this.getConsumptionCharacteristics();
+        this.getPlatformStatistics();
+
     },
 
 });
-
-
 

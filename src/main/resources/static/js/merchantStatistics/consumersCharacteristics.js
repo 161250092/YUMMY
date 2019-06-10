@@ -1,4 +1,3 @@
-
 Vue.http.options.emulateJSON = true;
 let vm = new Vue({
     el:"#app",
@@ -149,100 +148,113 @@ let vm = new Vue({
 
 
 
-        getConsumptionCharacteristics(){
-            this.$http.post('/member/getConsumptionCharacteristics', {
+        getConsumersCharacteristics(){
+            this.$http.post('/merchant/getConsumersCharacteristics', {
                 startTime:this.startTime,
                 endTime:this.endTime,
                 interval:"day"
             }).then(result => {
-                console.log(result.body);
-                let data = [];
-                let legend = [];
-                let map = result.body.merchantsFavor;
-                for(let item in map){
-                    if(map.hasOwnProperty(item)) {
-                        let temp = {};
-                        temp.value = map[item];
-                        temp.name = item;
-                        legend.push(item);
-                        data.push(temp)
-                    }
-                }
-                this.pieCharts(legend,data,"merchantsFavor");
-
-
-                map =  result.body.dishesFavor;
-                data = [];
-                legend = [];
-                for(let item in map){
-                    if(map.hasOwnProperty(item)) {
-                        let temp = {};
-                        temp.value = map[item];
-                        temp.name = item;
-                        legend.push(item);
-                        data.push(temp)
-                    }
-                }
-
-                this.pieCharts(legend,data,"dishesFavor");
-
-
-                map =  result.body.consumptionTimeIntervals;
-                data = [];
-                legend = [];
-                for(let item in map){
-                    if(map.hasOwnProperty(item)) {
-                        let temp = {};
-                        temp.value = map[item];
-                        temp.name = item;
-                        legend.push(item);
-                        data.push(temp)
-                    }
-                }
-                this.pieCharts(legend,data,"consumptionTimeIntervals");
-
-
-
-                map =  result.body.consumptionIntervals;
+               console.log(result);
+               //新课率
                 let x = [];
                 let y =[];
+                let map = result.body.newConsumersProportion;
                 for(let item in map){
                     if(map.hasOwnProperty(item)) {
                         x.push(item);
                         y.push(map[item]);
                     }
                 }
-                this.histogram(x,y,"consumptionIntervals");
+                let a = [];
+                let b = [];
+                for(let i=0;i<x.length;i++){
+                    a[x.length-1-i] = x[i];
+                    b[x.length-1-i] = y[i];
+                }
+                this.lineCharts(a,b,"newConsumersProportion");
 
-
-                map =  result.body.consumptionDistance;
-                data = [];
-
+                //消费次数
+                x = [];
+                y =[];
+                map = result.body.consumptionTimes;
                 for(let item in map){
                     if(map.hasOwnProperty(item)) {
-                        let temp = [];
-                        temp.push(item);
-                        temp.push(map[item]);
-                        data.push(temp);
+                        x.push(item);
+                        y.push(map[item]);
+                    }
+                };
+                this.histogram(x,y,"consumptionTimes")
+
+
+
+                //消费者金额分布
+                map =  result.body.consumptionAmountInterval;
+                let data = [];
+                let legend = [];
+                for(let item in map){
+                    if(map.hasOwnProperty(item)) {
+                        let temp = {};
+                        temp.value = map[item];
+                        temp.name = item;
+                        legend.push(item);
+                        data.push(temp)
                     }
                 }
-                this.pointCharts(data,"consumptionDistance")
+                this.pieCharts(legend,data,"consumptionAmountInterval");
 
 
-
+                //地域分布
+                x = [];
+                y =[];
+                map = result.body.locationInterval;
+                for(let item in map){
+                    if(map.hasOwnProperty(item)) {
+                        x.push(item);
+                        y.push(map[item]);
+                    }
+                };
+                this.histogram(x,y,"locationInterval")
 
 
 
             });
         },
 
+
+
+
+
+
+
+
+        getSalesStatistics(){
+            this.$http.post('/merchant/getSalesStatistics', {
+                startTime:this.startTime,
+                endTime:this.endTime,
+                interval:"day"
+            }).then(result => {
+                    console.log(result)
+
+            });
+        },
+
+        getMarketStatistics(){
+            this.$http.post('/merchant/getMarketStatistics', {
+                startTime:this.startTime,
+                endTime:this.endTime,
+                interval:"day"
+            }).then(result => {
+                    console.log(result);
+
+            });
+        }
     },
 
     created() {
-        this.getConsumptionCharacteristics();
+        this.getConsumersCharacteristics();
+        // this.getSalesStatistics();
+        // this.getMarketStatistics();
     },
 
 });
-
-
 

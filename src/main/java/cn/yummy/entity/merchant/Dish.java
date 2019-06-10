@@ -37,7 +37,7 @@ public class Dish implements Serializable{
         startTime = LocalDate.now();
         endTime = LocalDate.now();
         type="type";
-        name="name";
+        name="菜品"+dishId;
         price=10;
         quantity=100;
         description="nothing";

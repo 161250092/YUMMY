@@ -1,0 +1,15 @@
+<el-menu mode="horizontal" :default-active="activeIndex">
+    <el-menu-item index="0" id="logo">美 滋 滋</el-menu-item>
+    <el-menu-item index="1"><a href="/consumersCharacteristics">消费者纬度</a></el-menu-item>
+    <el-menu-item index="2"><a href="/salesStatistics">销售纬度</a></el-menu-item>
+    <el-menu-item id="author" index="3">
+        <img class="el-tooltip" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3512142610,2378185322&fm=27&gp=0.jpg"/>
+        <el-dropdown>
+            <span class="el-dropdown-link">用户<i class="el-icon-arrow-down el-icon--right"></i></span>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item divided><a href="/merchantPersonPage">信息中心</a></el-dropdown-item>
+                <el-dropdown-item divided><a href="/merchantLogout">退出</a></el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+    </el-menu-item>
+</el-menu>
