@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 
 @Service
@@ -44,15 +45,15 @@ public class ConsumerStatisticsServiceImpl implements ConsumerStatisticsService{
 //消费区间
         HashMap<Integer,Integer > consumptionIntervals = new HashMap<>();
 //点餐地点
-        HashMap<Location,Integer>  consumptionAreas = new HashMap<>();
+        HashMap<Integer,Integer>  consumptionDistance = new HashMap<>();
 //点餐时间
-        HashMap<LocalDateTime,Integer> consumptionTimeIntervals = new HashMap<>();
+        HashMap<LocalTime,Integer> consumptionTimeIntervals = new HashMap<>();
 
         for(int i=1;i<10;i++){
             int temp =(int)(Math.random()*10);
             merchantsFavor.put("餐厅"+i,temp*10);
-            dishesFavor.put("菜品"+i,temp*10);
-            consumptionTimeIntervals.put(LocalDateTime.of(2019,6,i,(int)(temp*2.4),0),1);
+            dishesFavor.put("菜品"+i,temp*4);
+            consumptionTimeIntervals.put(LocalTime.of((int)(temp*2.4),0),temp*3);
         }
         consumptionIntervals.put(10,5);
         consumptionIntervals.put(30,15);
@@ -60,8 +61,13 @@ public class ConsumerStatisticsServiceImpl implements ConsumerStatisticsService{
         consumptionIntervals.put(100,1);
         consumptionIntervals.put(1000,0);
 
-        consumptionAreas.put(new Location(1,1,"南京"),10);
+        consumptionDistance.put(1,6);
+        consumptionDistance.put(2,4);
+        consumptionDistance.put(3,3);
+        consumptionDistance.put(5,1);
+        consumptionDistance.put(7,0);
 
-        return new ConsumptionCharacteristics(merchantsFavor,dishesFavor,consumptionIntervals,consumptionAreas,consumptionTimeIntervals);
+
+        return new ConsumptionCharacteristics(merchantsFavor,dishesFavor,consumptionIntervals,consumptionDistance,consumptionTimeIntervals);
     }
 }

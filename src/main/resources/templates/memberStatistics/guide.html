@@ -1,0 +1,15 @@
+<el-menu mode="horizontal" :default-active="activeIndex">
+    <el-menu-item index="0" id="logo">美 滋 滋</el-menu-item>
+    <el-menu-item index="1"><a href="/consumptionStatistics">消费特征</a></el-menu-item>
+    <el-menu-item index="2"><a href="/orderStatistics">订单统计</a></el-menu-item>
+    <el-menu-item id="author" index="3">
+        <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
+        <el-dropdown>
+            <span class="el-dropdown-link">用户<i class="el-icon-arrow-down el-icon--right"></i></span>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item divided><a href="/merchantPersonPage">信息中心</a></el-dropdown-item>
+                <el-dropdown-item divided><a href="/merchantLogout">退出</a></el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+    </el-menu-item>
+</el-menu>

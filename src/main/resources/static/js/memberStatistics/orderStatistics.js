@@ -6,9 +6,7 @@ let vm = new Vue({
             startTime:'2016-06-01',
             endTime:'2016-06-30',
             interval:"",
-            dom:null,
-            myChart:null,
-            app:{}
+            activeIndex:'2'
     },
 
     methods: {
@@ -24,18 +22,51 @@ let vm = new Vue({
 
                 let x = [];
                 let y =[];
-                let map = result.body.consumptionCount;
+                let map = result.body.ordersCount;
                 for(let item in map){
                     if(map.hasOwnProperty(item)) {
                         x.push(item);
                         y.push(map[item]);
                     }
                 }
-                this.consumptionCountLineCharts(x,y,"container")
+                let a = [];
+                let b = [];
+                for(let i=0;i<x.length;i++){
+                    a[x.length-1-i] = x[i];
+                    b[x.length-1-i] = y[i];
+                }
+
+
+                this.lineCharts(a,b,"ordersCount");
+
+
+                x = [];
+                y =[];
+                map = result.body.consumptionCount;
+                for(let item in map){
+                    if(map.hasOwnProperty(item)) {
+                        x.push(item);
+                        y.push(map[item]);
+                    }
+                }
+                a = [];
+                b = [];
+                for(let i=0;i<x.length;i++){
+                    a[x.length-1-i] = x[i];
+                    b[x.length-1-i] = y[i];
+                }
+
+
+                this.lineCharts(a,b,"consumptionCount");
+
+
+
             });
         },
 
-        consumptionCountLineCharts(x,y,container){
+
+
+        lineCharts(x,y,container){
             console.log(x);
             console.log(y);
             let dom = document.getElementById(container);

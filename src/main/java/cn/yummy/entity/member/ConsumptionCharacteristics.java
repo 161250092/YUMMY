@@ -3,6 +3,7 @@ package cn.yummy.entity.member;
 import cn.yummy.entity.primitiveType.Location;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 
 public class ConsumptionCharacteristics {
@@ -14,18 +15,18 @@ public class ConsumptionCharacteristics {
 //消费区间
     private HashMap<Integer,Integer > consumptionIntervals;
 //点餐地点
-    private HashMap<Location,Integer>  consumptionAreas;
+    private HashMap<Integer,Integer>  consumptionDistance;
 //点餐时间
-    private HashMap<LocalDateTime,Integer> consumptionTimeIntervals;
+    private HashMap<LocalTime,Integer> consumptionTimeIntervals;
 
     public ConsumptionCharacteristics() {
     }
 
-    public ConsumptionCharacteristics(HashMap<String, Integer> merchantsFavor, HashMap<String, Integer> dishesFavor, HashMap<Integer, Integer> consumptionIntervals, HashMap<Location, Integer> consumptionAreas, HashMap<LocalDateTime, Integer> consumptionTimeIntervals) {
+    public ConsumptionCharacteristics(HashMap<String, Integer> merchantsFavor, HashMap<String, Integer> dishesFavor, HashMap<Integer, Integer> consumptionIntervals, HashMap<Integer, Integer> consumptionDistance, HashMap<LocalTime, Integer> consumptionTimeIntervals) {
         this.merchantsFavor = merchantsFavor;
         this.dishesFavor = dishesFavor;
         this.consumptionIntervals = consumptionIntervals;
-        this.consumptionAreas = consumptionAreas;
+        this.consumptionDistance = consumptionDistance;
         this.consumptionTimeIntervals = consumptionTimeIntervals;
     }
 
@@ -53,19 +54,20 @@ public class ConsumptionCharacteristics {
         this.consumptionIntervals = consumptionIntervals;
     }
 
-    public HashMap<Location, Integer> getConsumptionAreas() {
-        return consumptionAreas;
+
+    public HashMap<Integer, Integer> getConsumptionDistance() {
+        return consumptionDistance;
     }
 
-    public void setConsumptionAreas(HashMap<Location, Integer> consumptionAreas) {
-        this.consumptionAreas = consumptionAreas;
+    public void setConsumptionDistance(HashMap<Integer, Integer> consumptionDistance) {
+        this.consumptionDistance = consumptionDistance;
     }
 
-    public HashMap<LocalDateTime, Integer> getConsumptionTimeIntervals() {
+    public HashMap<LocalTime, Integer> getConsumptionTimeIntervals() {
         return consumptionTimeIntervals;
     }
 
-    public void setConsumptionTimeIntervals(HashMap<LocalDateTime, Integer> consumptionTimeIntervals) {
+    public void setConsumptionTimeIntervals(HashMap<LocalTime, Integer> consumptionTimeIntervals) {
         this.consumptionTimeIntervals = consumptionTimeIntervals;
     }
 }

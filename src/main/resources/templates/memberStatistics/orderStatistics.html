@@ -23,32 +23,43 @@
 <body style="height: 100%; margin: 0" >
 
 <div id="app">
+    <div th:replace="memberStatistics/guide"></div>
+    <el-form :inline="true"  class="demo-form-inline">
 
-    <div id="container" style="min-width:500px;height:500px"></div>
-<!--<el-form :inline="true"  class="demo-form-inline">-->
-
-    <!--<el-form-item label="起始时间">-->
-        <!--<el-date-picker-->
-                <!--v-model="startTime"-->
-                <!--type="date"-->
-                <!--placeholder="选择日期"-->
-                <!--value-format="yyyy-MM-dd">-->
-        <!--</el-date-picker>-->
-    <!--</el-form-item>-->
+        <el-form-item label="起始时间">
+            <el-date-picker
+                    v-model="startTime"
+                    type="date"
+                    placeholder="选择日期"
+                    value-format="yyyy-MM-dd">
+            </el-date-picker>
+        </el-form-item>
 
 
-    <!--<el-form-item label="截止时间">-->
-        <!--<el-date-picker-->
-                <!--v-model="endTime"-->
-                <!--type="date"-->
-                <!--placeholder="选择日期"-->
-                <!--value-format="yyyy-MM-dd">-->
-        <!--</el-date-picker>-->
-    <!--</el-form-item>-->
+        <el-form-item label="截止时间">
+            <el-date-picker
+                    v-model="endTime"
+                    type="date"
+                    placeholder="选择日期"
+                    value-format="yyyy-MM-dd">
+            </el-date-picker>
+        </el-form-item>
 
-<!--</el-form>-->
-    <!--<el-button @click="getConsumptionCharacteristics">消费特征</el-button>-->
-    <!--<el-button type="primary" @click="getOrderCharacteristics" icon="el-icon-search">订单变动</el-button>-->
+    </el-form>
+    <el-button @click="getConsumptionCharacteristics">消费特征</el-button>
+    <el-button type="primary" @click="getOrderCharacteristics" icon="el-icon-search">订单变动</el-button>
+
+    <br>
+    <div>
+
+    <div id="logo" align="center">订单数变动</div>
+    <div id="ordersCount" style="min-width:400px;height:400px"></div>
+
+    <div class="title" align="center">消费额</div>
+    <div id="consumptionCount" style="min-width:400px;height:400px"></div>
+    </div>
+
+
 </div>
 
 </body>
