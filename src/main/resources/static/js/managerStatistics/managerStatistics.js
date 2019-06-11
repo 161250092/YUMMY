@@ -188,7 +188,25 @@ let vm = new Vue({
                     a[x.length-1-i] = x[i];
                     b[x.length-1-i] = y[i];
                 }
-                this.histogram(a,b,"merchantsNum")
+                this.histogram(a,b,"merchantsNum");
+
+
+                x = [];
+                y =[];
+                map = result.body.memberNums;
+                for(let item in map){
+                    if(map.hasOwnProperty(item)) {
+                        x.push(item);
+                        y.push(map[item]);
+                    }
+                };
+                a = [];
+                b = [];
+                for(let i=0;i<x.length;i++){
+                    a[x.length-1-i] = x[i];
+                    b[x.length-1-i] = y[i];
+                }
+                this.histogram(a,b,"memberNums");
 
 
                 //销售额

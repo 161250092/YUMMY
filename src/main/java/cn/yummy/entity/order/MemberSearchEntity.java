@@ -17,6 +17,14 @@ public class MemberSearchEntity {
     public MemberSearchEntity() {
     }
 
+    public MemberSearchEntity(String account, LocalDate startTime, LocalDate endTime, double lowPrice, double highPrice) {
+        this.account = account;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.lowPrice = lowPrice;
+        this.highPrice = highPrice;
+    }
+
     public String getAccount() {
         return account;
     }

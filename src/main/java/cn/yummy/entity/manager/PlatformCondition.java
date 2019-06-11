@@ -13,8 +13,8 @@ public class PlatformCondition {
    //销售额变化
     private HashMap<LocalDate,Double> salesAmountCondition;
 
-    //用户数
-    private int memberNums;
+    //用户变化数据
+    private HashMap<LocalDate,Integer> memberNums;
     //消费区间分布
     private HashMap<String,Integer> consumptionInterval;
     //消费频次分布
@@ -24,7 +24,7 @@ public class PlatformCondition {
     //偏好餐厅分布
     private HashMap<String,Integer> merchantsFavorInterval;
 
-    public PlatformCondition(double marketShare, HashMap<LocalDate, Double> incomeCondition, HashMap<LocalDate, Integer> merchantsNum, HashMap<LocalDate, Double> salesAmountCondition, int memberNums, HashMap<String, Integer> consumptionInterval, HashMap<String, Integer> consumptionTimesInterval, HashMap<String, Integer> dishesFavorInterval, HashMap<String, Integer> merchantsFavorInterval) {
+    public PlatformCondition(double marketShare, HashMap<LocalDate, Double> incomeCondition, HashMap<LocalDate, Integer> merchantsNum, HashMap<LocalDate, Double> salesAmountCondition, HashMap<LocalDate, Integer> memberNums, HashMap<String, Integer> consumptionInterval, HashMap<String, Integer> consumptionTimesInterval, HashMap<String, Integer> dishesFavorInterval, HashMap<String, Integer> merchantsFavorInterval) {
         this.marketShare = marketShare;
         this.incomeCondition = incomeCondition;
         this.merchantsNum = merchantsNum;
@@ -34,6 +34,15 @@ public class PlatformCondition {
         this.consumptionTimesInterval = consumptionTimesInterval;
         this.dishesFavorInterval = dishesFavorInterval;
         this.merchantsFavorInterval = merchantsFavorInterval;
+    }
+
+
+    public HashMap<LocalDate, Integer> getMemberNums() {
+        return memberNums;
+    }
+
+    public void setMemberNums(HashMap<LocalDate, Integer> memberNums) {
+        this.memberNums = memberNums;
     }
 
     public double getMarketShare() {
@@ -68,13 +77,6 @@ public class PlatformCondition {
         this.salesAmountCondition = salesAmountCondition;
     }
 
-    public int getMemberNums() {
-        return memberNums;
-    }
-
-    public void setMemberNums(int memberNums) {
-        this.memberNums = memberNums;
-    }
 
     public HashMap<String, Integer> getConsumptionInterval() {
         return consumptionInterval;

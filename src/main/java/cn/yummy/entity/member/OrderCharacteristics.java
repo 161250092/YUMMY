@@ -12,7 +12,7 @@ public class OrderCharacteristics {
     //订单数增长统计
     private HashMap<LocalDate,Integer> ordersCount;
 
-    //消费数增长统计
+    //消费额增长统计
     private HashMap<LocalDate,Double> consumptionCount;
 
     public OrderCharacteristics() {

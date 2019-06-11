@@ -27,7 +27,7 @@ public class StatisticsImpl  implements Statistics{
         HashMap<LocalDate,Integer> merchantsNum = new HashMap<>();
         int initNums = 500;
         for(int i=1;i<30;i++){
-            int temp = (int)(Math.random()*100);
+            int temp = (int)(Math.random()*30);
             initNums +=temp;
             merchantsNum.put(LocalDate.of(2019,6,i),initNums);
         }
@@ -40,7 +40,15 @@ public class StatisticsImpl  implements Statistics{
         }
 
         //用户数
-        int memberNums = 10452;
+        HashMap<LocalDate,Integer> memberNums = new HashMap<>();
+        initNums = 4310;
+        for(int i=1;i<30;i++){
+            int temp = (int)(Math.random()*100);
+            initNums +=temp;
+            memberNums.put(LocalDate.of(2019,6,i),initNums);
+        }
+
+
         //消费区间分布
         HashMap<String,Integer> consumptionInterval = new HashMap<>();
         for(int i=1;i<=10;i++){
@@ -70,9 +78,11 @@ public class StatisticsImpl  implements Statistics{
 
         //偏好菜品分布
         HashMap<String,Integer> dishesFavorInterval = new HashMap<>();
+        initNums = 500;
         for(int i=1;i<15;i++){
             int temp = (int)(Math.random()*1000);
-            dishesFavorInterval.put("菜品"+i,500+temp);
+            initNums += temp;
+            dishesFavorInterval.put("菜品"+i,initNums);
         }
 
 
@@ -80,7 +90,7 @@ public class StatisticsImpl  implements Statistics{
         HashMap<String,Integer> merchantsFavorInterval = new HashMap<>();
         for(int i=1;i<15;i++){
             int temp = (int)(Math.random()*1000);
-            merchantsFavorInterval.put("餐厅"+i,500+temp);
+            merchantsFavorInterval.put("餐厅"+i,100+temp);
         }
 
 
