@@ -3,9 +3,9 @@ Vue.http.options.emulateJSON = true;
 let vm = new Vue({
     el:"#app",
     data: {
-            startTime:'2016-06-01',
-            endTime:'2016-06-30',
-            interval:"",
+            startTime:'2019-02-15',
+            endTime:'2019-04-12',
+            type:"mock",
             activeIndex:'2'
     },
 
@@ -16,7 +16,7 @@ let vm = new Vue({
             this.$http.post('/member/getOrderCharacteristics', {
                 startTime:this.startTime,
                 endTime:this.endTime,
-                interval:"day"
+                type:this.type
             }).then(result => {
                 console.log(result.body);
 
@@ -99,11 +99,17 @@ let vm = new Vue({
             this.$http.post('/member/getConsumptionCharacteristics', {
                 startTime:this.startTime,
                 endTime:this.endTime,
-                interval:"day"
+                type:this.type
             }).then(result => {
                 console.log(result.body);
             });
         },
+
+
+        updateInfo(){
+            this.type = "realData";
+            this.getOrderCharacteristics();
+        }
 
     },
 

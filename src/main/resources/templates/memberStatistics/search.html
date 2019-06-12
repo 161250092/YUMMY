@@ -1,0 +1,27 @@
+<el-form :inline="true"  class="demo-form-inline">
+
+    <el-form-item label="起始时间">
+        <el-date-picker
+                v-model="startTime"
+                type="date"
+                placeholder="选择日期"
+                value-format="yyyy-MM-dd">
+        </el-date-picker>
+    </el-form-item>
+
+
+    <el-form-item label="截止时间">
+        <el-date-picker
+                v-model="endTime"
+                type="date"
+                placeholder="选择日期"
+                value-format="yyyy-MM-dd">
+        </el-date-picker>
+    </el-form-item>
+
+
+    <el-form-item label="">
+            <el-button @click="updateInfo">查询统计信息</el-button>
+    </el-form-item>
+
+</el-form>

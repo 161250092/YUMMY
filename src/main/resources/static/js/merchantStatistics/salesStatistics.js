@@ -3,9 +3,9 @@ Vue.http.options.emulateJSON = true;
 let vm = new Vue({
     el:"#app",
     data: {
-        startTime:'2016-06-01',
-        endTime:'2016-06-30',
-        interval:"",
+        startTime:'2019-02-12',
+        endTime:'2019-04-12',
+        type:"mock",
         activeIndex:'2',
         income:0,
         orderNums:0,
@@ -150,13 +150,16 @@ let vm = new Vue({
             }
         },
 
-
+        updateInfo(){
+            this.type = "realData";
+            this.getSalesStatistics();
+        },
 
         getSalesStatistics(){
             this.$http.post('/merchant/getSalesStatistics', {
                 startTime:this.startTime,
                 endTime:this.endTime,
-                interval:"day"
+                type:this.type
             }).then(result => {
                 console.log(result);
                 this.income=result.body.income;

@@ -24,31 +24,8 @@
 
 <div id="app">
     <div th:replace="memberStatistics/guide"></div>
-    <el-form :inline="true"  class="demo-form-inline">
 
-        <el-form-item label="起始时间">
-            <el-date-picker
-                    v-model="startTime"
-                    type="date"
-                    placeholder="选择日期"
-                    value-format="yyyy-MM-dd">
-            </el-date-picker>
-        </el-form-item>
-
-
-        <el-form-item label="截止时间">
-            <el-date-picker
-                    v-model="endTime"
-                    type="date"
-                    placeholder="选择日期"
-                    value-format="yyyy-MM-dd">
-            </el-date-picker>
-        </el-form-item>
-
-    </el-form>
-    <el-button @click="getConsumptionCharacteristics">消费特征</el-button>
-    <el-button type="primary" @click="getOrderCharacteristics" icon="el-icon-search">订单变动</el-button>
-
+    <div th:replace="memberStatistics/search"></div>
     <br>
     <div>
 

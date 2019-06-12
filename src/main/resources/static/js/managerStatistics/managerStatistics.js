@@ -2,9 +2,9 @@ Vue.http.options.emulateJSON = true;
 let vm = new Vue({
     el:"#app",
     data: {
-        startTime:'2016-06-01',
-        endTime:'2016-06-30',
-        interval:"",
+        startTime:'2019-02-11',
+        endTime:'2019-04-12',
+        type:"mock",
         activeIndex:'1'
     },
 
@@ -146,12 +146,16 @@ let vm = new Vue({
             }
         },
 
+        updateInfo(){
+            this.type = "realData";
+            this.getPlatformStatistics();
+        },
 
         getPlatformStatistics(){
             this.$http.post('/manager/getPlatformStatistics', {
                 startTime:this.startTime,
                 endTime:this.endTime,
-                interval:"day"
+                type:this.type
             }).then(result => {
                 console.log(result);
                 //平台收入
