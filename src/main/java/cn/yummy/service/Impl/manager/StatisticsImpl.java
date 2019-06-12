@@ -1,8 +1,10 @@
 package cn.yummy.service.Impl.manager;
 
 
+import cn.yummy.dao.statistics.StatisticsDataService;
 import cn.yummy.entity.manager.PlatformCondition;
 import cn.yummy.service.managerService.Statistics;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,9 +13,22 @@ import java.util.HashMap;
 @Service
 public class StatisticsImpl  implements Statistics{
 
+    @Autowired
+    private StatisticsDataService statisticsDataService;
+
+
 
     @Override
-    public PlatformCondition getPlatformCondition(LocalDate startTime, LocalDate endTime, String interval) {
+    public PlatformCondition getPlatformCondition(LocalDate startTime, LocalDate endTime, String type) {
+        if(type.equals("mock"))
+            return getPlatformConditionMock(startTime,endTime);
+        else
+            return statisticsDataService.getPlatformCondition(startTime,endTime);
+    }
+
+
+
+    private  PlatformCondition getPlatformConditionMock(LocalDate startTime, LocalDate endTime){
         //市场份额
         double marketShare = 0.35;
         //收入状态
@@ -60,7 +75,7 @@ public class StatisticsImpl  implements Statistics{
                 consumptionInterval.put(i*10.0+"",temp+70000);
 
         }
-       // consumptionInterval.put(100.0+"+",9875);
+        // consumptionInterval.put(100.0+"+",9875);
 
 
         //消费频次分布
@@ -75,7 +90,6 @@ public class StatisticsImpl  implements Statistics{
         consumptionTimesInterval.put("30",4300);
         consumptionTimesInterval.put("50",331);
 
-
         //偏好菜品分布
         HashMap<String,Integer> dishesFavorInterval = new HashMap<>();
         initNums = 500;
@@ -85,7 +99,6 @@ public class StatisticsImpl  implements Statistics{
             dishesFavorInterval.put("菜品"+i,initNums);
         }
 
-
         //偏好餐厅分布
         HashMap<String,Integer> merchantsFavorInterval = new HashMap<>();
         for(int i=1;i<15;i++){
@@ -94,10 +107,7 @@ public class StatisticsImpl  implements Statistics{
         }
 
 
-
         return new PlatformCondition(marketShare,incomeCondition,merchantsNum,salesAmountCondition,memberNums,consumptionInterval,consumptionTimesInterval,dishesFavorInterval,merchantsFavorInterval);
     }
-
-
 
 }

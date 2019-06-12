@@ -36,27 +36,38 @@ public class MerchantStatisticsController {
 
 
     @RequestMapping("/getConsumersCharacteristics")
-    public ConsumersCharacteristics getConsumersCharacteristics(@RequestParam("startTime")String startTime,@RequestParam("endTime")String endTime,@RequestParam("interval")String interval)
+    public ConsumersCharacteristics getConsumersCharacteristics(@RequestParam("startTime")String startTime,@RequestParam("endTime")String endTime,@RequestParam("type")String type)
     {
         LocalDate start = LocalDate.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate end = LocalDate.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        return comprehensiveStatistics.getConsumersCharacteristics(start,end,interval);
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String account = (String)attributes.getRequest().getSession().getAttribute("account");
+
+        return comprehensiveStatistics.getConsumersCharacteristics(start,end,type,account);
     }
 
     @RequestMapping("/getSalesStatistics")
-    public SalesStatistics getSalesStatistics(@RequestParam("startTime")String startTime, @RequestParam("endTime")String endTime, @RequestParam("interval")String interval)
+    public SalesStatistics getSalesStatistics(@RequestParam("startTime")String startTime, @RequestParam("endTime")String endTime, @RequestParam("type")String type)
     {
         LocalDate start = LocalDate.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate end = LocalDate.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        return comprehensiveStatistics.getSalesStatistics(start,end,interval);
+
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String account = (String)attributes.getRequest().getSession().getAttribute("account");
+
+        return comprehensiveStatistics.getSalesStatistics(start,end,type,account);
     }
 
     @RequestMapping("/getMarketStatistics")
-    public MarketStatistics getMarketStatistics(@RequestParam("startTime")String startTime, @RequestParam("endTime")String endTime, @RequestParam("interval")String interval)
+    public MarketStatistics getMarketStatistics(@RequestParam("startTime")String startTime, @RequestParam("endTime")String endTime, @RequestParam("type")String type)
     {
         LocalDate start = LocalDate.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate end = LocalDate.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        return comprehensiveStatistics.getMarkerStatistics(start,end,interval);
+
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String account = (String)attributes.getRequest().getSession().getAttribute("account");
+
+        return comprehensiveStatistics.getMarkerStatistics(start,end,type,account);
     }
 
 

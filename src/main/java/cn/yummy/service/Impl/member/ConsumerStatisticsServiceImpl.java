@@ -1,9 +1,11 @@
 package cn.yummy.service.Impl.member;
 
+import cn.yummy.dao.statistics.ConsumerStatisticsDataService;
 import cn.yummy.entity.member.ConsumptionCharacteristics;
 import cn.yummy.entity.member.OrderCharacteristics;
 import cn.yummy.entity.primitiveType.Location;
 import cn.yummy.service.memberService.ConsumerStatisticsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,8 +15,21 @@ import java.util.HashMap;
 
 @Service
 public class ConsumerStatisticsServiceImpl implements ConsumerStatisticsService{
+
+    @Autowired
+    private ConsumerStatisticsDataService consumerStatisticsDataService;
+
     @Override
-    public OrderCharacteristics getOrderCharacteristics(LocalDate startTime, LocalDate endTime, String interval) {
+    public OrderCharacteristics getOrderCharacteristics(LocalDate startTime, LocalDate endTime, String type,String account) {
+        if(type.equals("mock"))
+            return getOrderCharacteristicsMock(startTime,endTime);
+
+        else
+            return consumerStatisticsDataService.getOrderCharacteristics(startTime,endTime,account);
+    }
+
+
+    private OrderCharacteristics getOrderCharacteristicsMock(LocalDate startTime, LocalDate endTime){
         HashMap<LocalDate,Integer> ordersCount  = new HashMap<>();
         HashMap<LocalDate,Double> consumptionCount = new HashMap<>();
         int acceptedOrdersNum = 0;
@@ -37,7 +52,15 @@ public class ConsumerStatisticsServiceImpl implements ConsumerStatisticsService{
     }
 
     @Override
-    public ConsumptionCharacteristics getConsumptionCharacteristics(LocalDate startTime, LocalDate endTime, String interval) {
+    public ConsumptionCharacteristics getConsumptionCharacteristics(LocalDate startTime, LocalDate endTime, String type,String account) {
+        if(type.equals("mock"))
+            return getConsumptionCharacteristicsMock(startTime,endTime);
+        else
+            return consumerStatisticsDataService.getConsumptionCharacteristics(startTime,endTime,account);
+    }
+
+    private ConsumptionCharacteristics getConsumptionCharacteristicsMock(LocalDate startTime, LocalDate endTime)
+    {
 //餐厅偏好
         HashMap<String, Integer > merchantsFavor = new HashMap<>();
 //菜品偏好
@@ -70,4 +93,5 @@ public class ConsumerStatisticsServiceImpl implements ConsumerStatisticsService{
 
         return new ConsumptionCharacteristics(merchantsFavor,dishesFavor,consumptionIntervals,consumptionDistance,consumptionTimeIntervals);
     }
+
 }

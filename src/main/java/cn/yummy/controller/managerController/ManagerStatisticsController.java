@@ -32,12 +32,12 @@ public class ManagerStatisticsController {
 
 
     @RequestMapping("/getPlatformStatistics")
-    public PlatformCondition getPlatformStatistics(@RequestParam("startTime")String startTime,@RequestParam("endTime")String endTime,@RequestParam("interval")String interval
+    public PlatformCondition getPlatformStatistics(@RequestParam("startTime")String startTime,@RequestParam("endTime")String endTime,@RequestParam("type")String type
     ){
         LocalDate start = LocalDate.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate end = LocalDate.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        System.out.println(start.toString()+"   "+end.toString()+"  "+interval);
-        return  statistics.getPlatformCondition(start,end,interval);
+        System.out.println(start.toString()+"   "+end.toString()+"  "+type);
+        return  statistics.getPlatformCondition(start,end,type);
     }
 
 

@@ -8,8 +8,8 @@ import java.time.LocalDate;
 
 public interface ConsumerStatisticsService {
 
-    public OrderCharacteristics getOrderCharacteristics(LocalDate startTime,LocalDate endTime,String interval);
+    public OrderCharacteristics getOrderCharacteristics(LocalDate startTime,LocalDate endTime,String type,String account);
 
-    public ConsumptionCharacteristics getConsumptionCharacteristics(LocalDate startTime,LocalDate endTime,String interval);
+    public ConsumptionCharacteristics getConsumptionCharacteristics(LocalDate startTime,LocalDate endTime,String type,String account);
 
 }

@@ -68,23 +68,27 @@ public class MemberStatisticsController {
 
     @RequestMapping("/getOrderCharacteristics")
     public OrderCharacteristics MemberOrderCharacteristics(
-            @RequestParam("startTime")String startTime,@RequestParam("endTime")String endTime,@RequestParam("interval")String interval){
+            @RequestParam("startTime")String startTime,@RequestParam("endTime")String endTime,@RequestParam("type")String type){
 
         LocalDate start = LocalDate.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate end = LocalDate.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        System.out.println(start.toString()+"   "+end.toString()+"  "+interval);
-        return consumerStatisticsService.getOrderCharacteristics(start,end,interval);
+        System.out.println(start.toString()+"   "+end.toString()+"  "+type);
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String account = (String)attributes.getRequest().getSession().getAttribute("account");
+        return consumerStatisticsService.getOrderCharacteristics(start,end,type,account);
     }
 
     @RequestMapping("/getConsumptionCharacteristics")
     public ConsumptionCharacteristics getConsumptionCharacteristics(
-            @RequestParam("startTime")String startTime,@RequestParam("endTime")String endTime,@RequestParam("interval")String interval
+            @RequestParam("startTime")String startTime,@RequestParam("endTime")String endTime,@RequestParam("type")String type
     ){
 
         LocalDate start = LocalDate.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate end = LocalDate.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        System.out.println(start.toString()+"   "+end.toString()+"  "+interval);
-        return consumerStatisticsService.getConsumptionCharacteristics(start,end,interval);
+        System.out.println(start.toString()+"   "+end.toString()+"  "+type);
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String account = (String)attributes.getRequest().getSession().getAttribute("account");
+        return consumerStatisticsService.getConsumptionCharacteristics(start,end,type,account);
 
     }
 

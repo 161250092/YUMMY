@@ -1,10 +1,12 @@
 package cn.yummy.service.Impl.merchant;
 
+import cn.yummy.dao.statistics.ComprehensiveStatisticsDataService;
 import cn.yummy.entity.merchant.ConsumersCharacteristics;
 import cn.yummy.entity.merchant.Dish;
 import cn.yummy.entity.merchant.MarketStatistics;
 import cn.yummy.entity.merchant.SalesStatistics;
 import cn.yummy.service.merchantService.ComprehensiveStatistics;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,8 +15,20 @@ import java.util.HashMap;
 
 @Service
 public class ComprehensiveStatisticsImpl implements ComprehensiveStatistics {
+
+    @Autowired
+    private ComprehensiveStatisticsDataService comprehensiveStatisticsDataService;
+
+
     @Override
-    public ConsumersCharacteristics getConsumersCharacteristics(LocalDate startTime, LocalDate endTime, String interval) {
+    public ConsumersCharacteristics getConsumersCharacteristics(LocalDate startTime, LocalDate endTime, String type,String idCode) {
+        if(type.equals("mock"))
+            return getConsumersCharacteristicsMock(startTime,endTime,idCode);
+        else
+            return comprehensiveStatisticsDataService.getConsumersCharacteristics(startTime,endTime,idCode);
+    }
+
+    private ConsumersCharacteristics getConsumersCharacteristicsMock(LocalDate startTime, LocalDate endTime,String idCode){
         //地域分布
         HashMap<Integer,Integer> locationInterval = new HashMap<>();
         locationInterval.put(1,56);
@@ -54,7 +68,16 @@ public class ComprehensiveStatisticsImpl implements ComprehensiveStatistics {
     }
 
     @Override
-    public SalesStatistics getSalesStatistics(LocalDate startTime, LocalDate endTime, String interval) {
+    public SalesStatistics getSalesStatistics(LocalDate startTime, LocalDate endTime, String type,String idCode) {
+        if(type.equals("mock"))
+            return getSalesStatisticsMock(startTime,endTime);
+        else
+            return comprehensiveStatisticsDataService.getSalesStatistics(startTime,endTime,idCode);
+    }
+
+
+    private SalesStatistics getSalesStatisticsMock(LocalDate startTime, LocalDate endTime)
+    {
         double income = 5432.35;
         //订单数
         int orderNums = 265;
@@ -95,7 +118,15 @@ public class ComprehensiveStatisticsImpl implements ComprehensiveStatistics {
     }
 
     @Override
-    public MarketStatistics getMarkerStatistics(LocalDate startTime, LocalDate endTime, String interval) {
-        return new MarketStatistics(0.98,0.004);
+    public MarketStatistics getMarkerStatistics(LocalDate startTime, LocalDate endTime, String type,String idCode) {
+        if(type.equals("mock"))
+            return new MarketStatistics(0.98,0.004);
+        else
+            return comprehensiveStatisticsDataService.getMarkerStatistics(startTime,endTime,idCode);
     }
+
+
+
+
+
 }

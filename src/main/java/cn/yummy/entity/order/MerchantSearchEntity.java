@@ -19,6 +19,17 @@ public class MerchantSearchEntity implements Serializable{
     public MerchantSearchEntity() {
     }
 
+    public MerchantSearchEntity(String idCode, LocalDate startTime, LocalDate endTime) {
+        this.idCode = idCode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+
+        lowPrice = 0;
+        highLevel =Integer.MAX_VALUE;
+        lowPrice = 1;
+        highLevel = 10;
+    }
+
     public String getIdCode() {
         return idCode;
     }
